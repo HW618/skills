@@ -1,0 +1,14 @@
+.DS_Store
+
+# Local rclone configuration and credentials. Do not commit these.
+rclone.conf
+codex-defaults.json
+*.token
+*.secret
+*.key
+*.pem
+
+# Local editor/cache noise.
+.idea/
+.vscode/
+__pycache__/

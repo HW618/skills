@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rclone Cloud Storage"
+  short_description: "Install, configure, upload, and list files with rclone"
+  default_prompt: "Use $rclone-cloud-storage to configure my cloud drive and upload files with rclone."
