@@ -1,0 +1,7 @@
+interface:
+  display_name: "UCloud Product Learning"
+  short_description: "UCloud product study manuals"
+  default_prompt: "Use $ucloud-product-learning to 学习 UHost，对标阿里云 ECS，生成产品学习手册。"
+
+policy:
+  allow_implicit_invocation: true
