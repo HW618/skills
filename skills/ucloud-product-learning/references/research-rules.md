@@ -19,7 +19,10 @@
    - Product overview or introduction.
    - Feature and advantage pages.
    - Specification, performance, limit, or scenario pages.
-6. Prefer current HTML documentation pages. For UCloud, do not cite `mdToPdf` PDF URLs when a matching HTML documentation page exists. Use official PDFs only as a last resort when HTML pages do not expose the needed product information, and state that the PDF was used because no page-level URL was found.
+6. **Fast-track concept pages:** When searching Alibaba Cloud docs, priority access pages whose URLs contain `what-is` or `product-overview` path segments for concept extraction:
+   - Example matching URLs: `https://help.aliyun.com/document-detail/what-is-ecs.html`, `https://help.aliyun.com/ecs/product-overview`
+   - Extract pre-requisite concepts from these pages first before expanding to feature/specification pages.
+7. Prefer current HTML documentation pages. For UCloud, do not cite `mdToPdf` PDF URLs when a matching HTML documentation page exists. Use official PDFs only as a last resort when HTML pages do not expose the needed product information, and state that the PDF was used because no page-level URL was found.
 
 ## Include
 
@@ -55,6 +58,7 @@
   - Good index: `https://docs.ucloud.cn/ufs/README`
   - Good: `https://docs.ucloud.cn/ufs/ufs_manual_instruction/limit`
   - Avoid: `https://docs.ucloud.cn/ufs/mdToPdf/ufs.pdf`
+- For Alibaba Cloud citations, use the specific page URL whose path contains `what-is` or `product-overview` for concept definitions, and feature/specification page URLs for functional details.
 - If a UCloud PDF contains the needed fact, search for the corresponding HTML page before citing it.
 - If no equivalent UCloud HTML page can be found, cite the PDF only as a fallback and add `未找到对应官网页面级链接`.
 - Do not cite search result snippets as final evidence when the source page can be opened.
