@@ -19,15 +19,20 @@
    - Product overview or introduction.
    - Feature and advantage pages.
    - Specification, performance, limit, or scenario pages.
-6. **Fast-track concept pages:** When searching Alibaba Cloud docs, priority access pages whose URLs contain `what-is` or `product-overview` path segments for concept extraction:
-   - Example matching URLs: `https://help.aliyun.com/document-detail/what-is-ecs.html`, `https://help.aliyun.com/ecs/product-overview`
-   - Extract pre-requisite concepts from these pages first before expanding to feature/specification pages.
-7. Prefer current HTML documentation pages. For UCloud, do not cite `mdToPdf` PDF URLs when a matching HTML documentation page exists. Use official PDFs only as a last resort when HTML pages do not expose the needed product information, and state that the PDF was used because no page-level URL was found.
+6. For chapter 2 pre-requisite concepts, use Alibaba Cloud pages whose URLs contain `what-is` or `product-overview` as the priority search candidates:
+   - These URL patterns are search-entry conditions, not extraction conditions.
+   - Example matching paths: `.../what-is-...`, `.../product-overview/...`.
+7. Extract chapter 2 pre-requisite concepts from the prioritized Alibaba Cloud candidate pages only when the source page contains a section that matches both conditions:
+   - The section title is `前置概念`.
+   - The section content contains `阅读本文前，您可能需要了解如下概念：`.
+   - Use only the concepts listed in that section for chapter 2. Do not synthesize chapter 2 concepts from unrelated Alibaba Cloud overview text.
+8. Prefer current HTML documentation pages. For UCloud, do not cite `mdToPdf` PDF URLs when a matching HTML documentation page exists. Use official PDFs only as a last resort when HTML pages do not expose the needed product information, and state that the PDF was used because no page-level URL was found.
 
 ## Include
 
 - Product positioning and definitions.
 - Core concepts and architecture-level descriptions.
+- Alibaba Cloud `前置概念` sections only when the section title and marker sentence match the chapter 2 rule.
 - Functional capabilities.
 - Product advantages and differentiators stated by the vendor.
 - Performance parameters, instance families, capacity limits, quotas, and specifications.
@@ -58,7 +63,8 @@
   - Good index: `https://docs.ucloud.cn/ufs/README`
   - Good: `https://docs.ucloud.cn/ufs/ufs_manual_instruction/limit`
   - Avoid: `https://docs.ucloud.cn/ufs/mdToPdf/ufs.pdf`
-- For Alibaba Cloud citations, use the specific page URL whose path contains `what-is` or `product-overview` for concept definitions, and feature/specification page URLs for functional details.
+- For Alibaba Cloud concept definitions, prefer specific page URLs whose paths contain `what-is` or `product-overview`; for chapter 2, still require the matched `前置概念` section and marker sentence before extracting concepts.
+- For chapter 2 `前置概念`, cite the exact Alibaba Cloud page containing the matched `前置概念` section. If no matching section is found, write `阿里云文档中未找到符合“前置概念”段落特征的内容`.
 - If a UCloud PDF contains the needed fact, search for the corresponding HTML page before citing it.
 - If no equivalent UCloud HTML page can be found, cite the PDF only as a fallback and add `未找到对应官网页面级链接`.
 - Do not cite search result snippets as final evidence when the source page can be opened.
