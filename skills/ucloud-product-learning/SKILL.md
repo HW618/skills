@@ -101,5 +101,6 @@ If the user says the mapped competitor is not correct, do not argue from the map
   - Use `售前分析` for reasoned interpretation based on documented facts.
 - Include official source links in the relevant bullets or tables, not only at the end.
 - Include only verified, working links. Invalid or guessed links are forbidden.
+- Generate the `前置概念` chapter only when Alibaba Cloud documentation contains a matching `前置概念` `<section>` with `阅读本文前，您可能需要了解如下概念：`; otherwise omit that chapter and renumber the manual.
 - After drafting, create a Markdown file in `references/` named with the exact pattern `ucloud-{product_name}.md`.
 - Send the user the generated file link in the final response.

@@ -12,13 +12,13 @@ Use this structure for the final Chinese Markdown manual after the Alibaba Cloud
 - 核心用户/业务类型：
 - 关键概念：
 
-## 2. 前置概念（阿里云文档引用）
+## 2. 前置概念
 
-在深入学习本产品前，建议先了解以下前置概念。优先从 URL 包含 `what-is` 或 `product-overview` 的阿里云官方文档页面检索候选内容；这一章最终必须从标题为 `前置概念`、且正文包含 `阅读本文前，您可能需要了解如下概念：` 的段落整理。
+Only generate this chapter when Alibaba Cloud documentation contains a matching pre-requisite concept section. If no matching section exists, omit this chapter entirely and renumber the later chapters.
 
-| 概念 | 说明 | 来源 |
-| --- | --- | --- |
-|  |  |  |
+| 概念 | 概念说明 |
+| --- | --- |
+|  | [说明文本](阿里云文档链接) |
 
 ## 3. 产品功能
 
@@ -123,7 +123,7 @@ Use this structure for the final Chinese Markdown manual after the Alibaba Cloud
 - Keep each section concise but complete enough for presales study.
 - Put source links close to the claim they support.
 - Only include verified working URLs. Do not generate, guess, or cite links that return 404 or cannot be opened. If no valid official URL is found, write `官方文档中未找到有效来源链接`.
-- Chapter 2 `前置概念` should prioritize Alibaba Cloud candidate pages whose URLs contain `what-is` or `product-overview`, then extract only from a section whose title is `前置概念` and whose content contains `阅读本文前，您可能需要了解如下概念：`. If no matching section is found, write `阿里云文档中未找到符合“前置概念”段落特征的内容`.
+- Chapter 2 `前置概念` should prioritize Alibaba Cloud candidate pages whose URLs contain `what-is` or `product-overview`, then extract only from a `<section>` whose title is `前置概念` and whose content contains `阅读本文前，您可能需要了解如下概念：`. From that `<section>`, extract its `<li>` items. For each `<li>`, put the concept name in the `概念` column and put the linked description text in the `概念说明` column as a Markdown link using the `<a href>` URL from Alibaba Cloud, for example `[什么是云计算？](https://www.aliyun.com/getting-started/what-is/what-is-cloud-computing)`. Do not include a `来源` column for this chapter. If no matching section is found, omit chapter 2 entirely and renumber subsequent chapters.
 - For UCloud sources, cite page-level official docs URLs whenever possible, such as `https://docs.ucloud.cn/ufs/ufs_manual_instruction/limit`; avoid `mdToPdf` PDF links unless no equivalent HTML page exists.
 - In chapter 10, include both UCloud and Alibaba Cloud application scenarios as separate subsections and add selection advice for each scenario.
 - Do not include long operational procedures.
