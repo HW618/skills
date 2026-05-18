@@ -15,9 +15,57 @@ Read [references/rclone-official-notes.md](references/rclone-official-notes.md) 
 
 - Treat cloud storage as user data. Do not delete, purge, sync, move, or overwrite intentionally unless the user explicitly asks.
 - For first-time transfers, use `--dry-run` or `--interactive` when the requested action is broad, ambiguous, or may affect many files.
-- Do not print secrets, OAuth tokens, or full decrypted rclone config content. Avoid `rclone config show` unless a narrow diagnostic requires it, and redact sensitive values.
+- Do not print secrets, OAuth tokens, environment variable values, or full decrypted rclone config content. Avoid `rclone config show` unless a narrow diagnostic requires it, and redact sensitive values.
 - Ask before installing dependencies or running commands that require network or elevated permissions.
 - Quote local paths and rclone paths in shell commands.
+- Never enable shell tracing (`set -x`) when reading or using `RSKILL_` environment variables.
+
+## Preflight Before Any User Operation
+
+Before upload, list, preview, default inspection, or configuration work, check the skill reference default file:
+
+```text
+skills/rclone-cloud-storage/references/rclone-defaults.json
+```
+
+Use this shape:
+
+```json
+{
+  "default_remote": "teracloud",
+  "default_upload_dir": "CodexUploads"
+}
+```
+
+Preflight flow:
+
+1. Read `references/rclone-defaults.json` if it exists.
+2. If `default_remote` exists, confirm that it is still configured:
+
+```bash
+rclone listremotes
+```
+
+3. Normalize remote names without trailing colons in the JSON file. Interpret `teracloud` as `teracloud:`.
+4. Validate the default remote before using it with a low-impact list command:
+
+```bash
+rclone lsf "teracloud:" --max-depth 1
+```
+
+5. If the defaults file is missing or has no valid `default_remote`, run:
+
+```bash
+rclone listremotes
+```
+
+Then select the first configured remote as `default_remote`, write it to `references/rclone-defaults.json`, and use `CodexUploads` as `default_upload_dir` unless the user specifies another directory.
+
+6. If the default remote is configured but invalid, unavailable, or fails validation:
+   - Do not silently switch remotes.
+   - Show the available remote names only, without secrets.
+   - Ask whether to use the next configured remote or create a new remote configuration.
+   - If the user chooses the next remote, validate it before saving it as the new default.
 
 ## Install
 
@@ -43,7 +91,59 @@ rclone version
 
 ## Configure
 
-Use rclone's interactive configuration unless the user requests a scripted setup and has supplied all required backend details.
+When the user runs first-time setup or asks for `rclone config`, first check whether `RSKILL_` environment variables provide a complete WebDAV or S3 configuration. If they do, create or update the remote from environment variables without printing their values. If they do not, use rclone's interactive configuration unless the user requests a scripted setup and has supplied all required backend details.
+
+Supported environment variables:
+
+Common:
+
+- `RSKILL_REMOTE_NAME`: remote name to create or update.
+- `RSKILL_REMOTE_TYPE`: `webdav` or `s3`.
+- `RSKILL_DEFAULT_UPLOAD_DIR`: optional default upload directory.
+
+WebDAV:
+
+- `RSKILL_WEBDAV_URL`
+- `RSKILL_WEBDAV_VENDOR`: optional rclone vendor value, for example `other`, `nextcloud`, or `owncloud`.
+- `RSKILL_WEBDAV_USER`
+- `RSKILL_WEBDAV_PASS`
+
+S3:
+
+- `RSKILL_S3_PROVIDER`: optional provider, for example `AWS`, `Minio`, or `Other`.
+- `RSKILL_S3_ACCESS_KEY_ID`
+- `RSKILL_S3_SECRET_ACCESS_KEY`
+- `RSKILL_S3_ENDPOINT`: optional custom endpoint.
+- `RSKILL_S3_REGION`: optional region.
+
+Environment setup rules:
+
+- Treat all `RSKILL_` values as secrets or sensitive configuration.
+- Do not echo, print, log, or summarize the values.
+- It is acceptable to report which variable names are present or missing.
+- Use shell variable references, not literal values, when showing example commands to the user.
+- After creating the remote, validate it with a low-impact list command and save `references/rclone-defaults.json` with the remote name and default upload directory.
+
+Example command shapes, with values referenced from the environment:
+
+```bash
+rclone config create "$RSKILL_REMOTE_NAME" webdav \
+  url "$RSKILL_WEBDAV_URL" \
+  vendor "${RSKILL_WEBDAV_VENDOR:-other}" \
+  user "$RSKILL_WEBDAV_USER" \
+  pass "$RSKILL_WEBDAV_PASS"
+```
+
+```bash
+rclone config create "$RSKILL_REMOTE_NAME" s3 \
+  provider "${RSKILL_S3_PROVIDER:-Other}" \
+  access_key_id "$RSKILL_S3_ACCESS_KEY_ID" \
+  secret_access_key "$RSKILL_S3_SECRET_ACCESS_KEY" \
+  endpoint "$RSKILL_S3_ENDPOINT" \
+  region "$RSKILL_S3_REGION"
+```
+
+If rclone requires an obscured password for a backend field, use official rclone behavior or commands without printing the raw value.
 
 ```bash
 rclone config
@@ -70,10 +170,10 @@ rclone config file
 
 ## Defaults
 
-Because rclone itself does not define a "default upload directory" for Codex workflows, store Codex-specific defaults in:
+Because rclone itself does not define a "default upload directory" for Codex workflows, store Codex-specific defaults in this skill reference file:
 
 ```text
-~/.config/rclone/codex-defaults.json
+skills/rclone-cloud-storage/references/rclone-defaults.json
 ```
 
 Use this shape:
@@ -94,6 +194,7 @@ Interpret the default destination as:
 When setting defaults:
 
 - Ensure the selected remote exists with `rclone listremotes`.
+- Validate the selected remote with `rclone lsf "<remote>:" --max-depth 1` before saving when possible.
 - Normalize a trailing colon away in `default_remote`; store `drive`, not `drive:`.
 - Store remote paths without a leading slash unless the backend documentation requires it.
 - Create the remote directory when the user wants it prepared:
@@ -102,7 +203,7 @@ When setting defaults:
 rclone mkdir "drive:CodexUploads"
 ```
 
-When showing defaults, read `codex-defaults.json` and report the resolved destination, for example `drive:CodexUploads`. If the defaults file is missing or incomplete, ask the user which remote and upload directory to use, then save it.
+When showing defaults, read `references/rclone-defaults.json` and report the resolved destination, for example `drive:CodexUploads`. If the defaults file is missing or incomplete, use the preflight flow to select the first configured valid remote and save it.
 
 ## Upload
 

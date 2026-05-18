@@ -54,6 +54,41 @@ rclone config create name type key value
 
 Default config file lookup order includes the executable directory, `%APPDATA%/rclone/rclone.conf` on Windows, `$XDG_CONFIG_HOME/rclone/rclone.conf`, `~/.config/rclone/rclone.conf`, and `~/.rclone.conf`. Use `rclone config file` to show the active path.
 
+## Skill Defaults
+
+This skill stores its Codex-specific default remote and upload directory in:
+
+```text
+skills/rclone-cloud-storage/references/rclone-defaults.json
+```
+
+This file is workflow state, not rclone's own configuration file. It should contain only non-secret values such as:
+
+```json
+{
+  "default_remote": "remote-name",
+  "default_upload_dir": "CodexUploads"
+}
+```
+
+Before using a saved default remote, verify that the remote is still configured with `rclone listremotes` and validate access with a low-impact command such as:
+
+```bash
+rclone lsf "remote-name:" --max-depth 1
+```
+
+## Environment Configuration
+
+This skill may create WebDAV or S3 remotes from `RSKILL_` environment variables during first-time setup or `rclone config` requests. Supported variable names are documented in `SKILL.md`.
+
+Security rules:
+
+- Never print `RSKILL_` values.
+- Never log command lines with literal secret values.
+- Show only variable names that are present or missing.
+- Prefer shell variable references such as `$RSKILL_WEBDAV_URL` when documenting commands.
+- Validate the created remote before saving it as the skill default.
+
 ## Path Syntax
 
 rclone commands use:
