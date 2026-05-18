@@ -3,30 +3,42 @@
 ## Research Order
 
 1. Confirm the Alibaba Cloud competitor product before drafting the manual.
-2. Resolve the UCloud product documentation path.
+2. Before searching for an Alibaba Cloud competitor, check [ucloud-aliyun-product-map.md](ucloud-aliyun-product-map.md):
+   - Match by UCloud product name, alias, or docs path.
+   - Use the mapped Alibaba Cloud product as the first recommendation.
+   - If the user rejects the mapping, perform fresh official-doc search and propose one revised competitor.
+3. Resolve the UCloud product documentation path.
    - If the product abbreviation maps directly to a docs path, use that path, for example UFS -> `ufs`.
    - Open the product README index page: `https://docs.ucloud.cn/{product-path}/README`.
    - Example: `https://docs.ucloud.cn/ufs/README`.
    - Treat the README page as the product documentation table of contents and extract the relevant page URLs from it.
-3. Search UCloud official docs for the confirmed UCloud product by following README links first:
+4. Search UCloud official docs for the confirmed UCloud product by following README links first:
    - Product overview or introduction.
    - Feature and advantage pages.
    - Specification, performance, quota, limit, or restriction pages.
    - Application scenario, solution, FAQ, and usage note pages.
    - Page-level HTML URLs under the product path, such as `https://docs.ucloud.cn/ufs/ufs_manual_instruction/limit`.
-4. If the README page is unavailable or does not contain the needed section, then use targeted web search scoped to `docs.ucloud.cn/{product-path}`.
-5. Search Alibaba Cloud official docs for the confirmed competitor product:
+5. If the README page is unavailable or does not contain the needed section, then use targeted web search scoped to `docs.ucloud.cn/{product-path}`.
+6. Search Alibaba Cloud official docs for the confirmed competitor product:
    - Product overview or introduction.
    - Feature and advantage pages.
    - Specification, performance, limit, or scenario pages.
-6. For chapter 2 pre-requisite concepts, use Alibaba Cloud pages whose URLs contain `what-is` or `product-overview` as the priority search candidates:
+7. For chapter 2 pre-requisite concepts, use Alibaba Cloud pages whose URLs contain `what-is` or `product-overview` as the priority search candidates:
    - These URL patterns are search-entry conditions, not extraction conditions.
    - Example matching paths: `.../what-is-...`, `.../product-overview/...`.
-7. Extract chapter 2 pre-requisite concepts from the prioritized Alibaba Cloud candidate pages only when the source page contains a section that matches both conditions:
+8. Extract chapter 2 pre-requisite concepts from the prioritized Alibaba Cloud candidate pages only when the source page contains a section that matches both conditions:
    - The section title is `前置概念`.
    - The section content contains `阅读本文前，您可能需要了解如下概念：`.
    - Use only the concepts listed in that section for chapter 2. Do not synthesize chapter 2 concepts from unrelated Alibaba Cloud overview text.
-8. Prefer current HTML documentation pages. For UCloud, do not cite `mdToPdf` PDF URLs when a matching HTML documentation page exists. Use official PDFs only as a last resort when HTML pages do not expose the needed product information, and state that the PDF was used because no page-level URL was found.
+9. Prefer current HTML documentation pages. For UCloud, do not cite `mdToPdf` PDF URLs when a matching HTML documentation page exists. Use official PDFs only as a last resort when HTML pages do not expose the needed product information, and state that the PDF was used because no page-level URL was found.
+
+## Manual Storage And Reuse
+
+- Save generated manuals in this skill's `references/` directory.
+- Use the filename pattern `ucloud-{product_name}.md`, for example `ucloud-ufs.md`, `ucloud-uhost.md`, or `ucloud-ulb.md`.
+- Normalize `{product_name}` to lowercase ASCII when possible. Keep common product abbreviations as lowercase, for example `UFS` -> `ufs`.
+- When answering user follow-up questions about product features, specifications, pricing, application scenarios, selection advice, or Alibaba Cloud comparison, read the matching manual first.
+- If the matching manual does not exist, prompt the user to generate it before answering.
 
 ## Include
 
@@ -50,6 +62,12 @@
 
 ## Citation Rules
 
+- Validate every URL before citing it in the final manual:
+  - Open the URL or otherwise confirm it resolves to an accessible official documentation page.
+  - Do not cite URLs that return 404, redirect to unrelated content, require unavailable access, or were guessed from a URL pattern but not opened.
+  - Do not fabricate page paths. URL patterns such as UCloud README paths and Alibaba Cloud `what-is`/`product-overview` paths are search hints, not citations until verified.
+  - If a mapped product URL in [ucloud-aliyun-product-map.md](ucloud-aliyun-product-map.md) is invalid, search the official documentation site for a valid current URL before citing.
+  - If no valid official URL can be found for a claim, write `官方文档中未找到有效来源链接` or omit the claim.
 - Cite official source links for:
   - Product definitions.
   - Key features.
@@ -82,11 +100,18 @@
 
 ## Scenario Analysis Rules
 
-For each scenario, synthesize UCloud and Alibaba Cloud documentation into presales language:
+For the application scenarios chapter, use both vendors' documentation and split the content into two subsections:
+
+- `### 10.1 UCloud 文档中的应用场景`
+- `### 10.2 阿里云文档中的应用场景`
+
+For each vendor scenario, synthesize the official documentation into presales language:
 
 - Describe the scenario characteristics.
 - Identify customer needs.
 - Identify likely customer pain points.
 - Name the selection concerns: performance, availability, scalability, compatibility, security, cost, operations, or compliance.
 - Explain how the UCloud product fits the scenario.
+- For Alibaba Cloud scenarios, explain what the scenario reveals about the general product category and how it should inform UCloud positioning.
+- Add product selection advice for each scenario, including when to recommend the UCloud product, when to be cautious, and what technical or commercial details to confirm before committing.
 - Mention product limits that may affect fit.
