@@ -12,3 +12,7 @@ codex-defaults.json
 .idea/
 .vscode/
 __pycache__/
+
+# Generated UCloud product manuals saved by ucloud-product-learning.
+skills/ucloud-product-learning/references/ucloud-*.md
+!skills/ucloud-product-learning/references/ucloud-aliyun-product-map.md
