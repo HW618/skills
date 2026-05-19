@@ -1,6 +1,6 @@
 ---
 name: ucloud-product-learning
-description: Generate and reuse Chinese Markdown learning manuals for UCloud products from official UCloud and Alibaba Cloud documentation. Use when the user wants to learn a UCloud product, create a UCloud product study guide, prepare UCloud presales product materials, compare a UCloud product with a confirmed Alibaba Cloud competitor, or ask follow-up questions about UCloud product features, specifications, pricing, scenarios, or Alibaba Cloud comparisons.
+description: Use when the user wants to learn UCloud product knowledge, including generating Chinese UCloud product learning manuals, preparing UCloud presales study materials, or asking follow-up questions about learned UCloud products.
 ---
 
 # UCloud Product Learning
@@ -96,6 +96,7 @@ If the user says the mapped competitor is not correct, do not argue from the map
   - UCloud product fit.
   - Alibaba Cloud scenario reference.
   - Product selection recommendation.
+- When describing UCloud product advantages, briefly explain likely customer usage scenarios for each advantage so a presales architect can connect product value to business context.
 - Separate official facts from presales analysis in comparison sections:
   - Use `官方文档事实` for statements directly supported by documentation.
   - Use `售前分析` for reasoned interpretation based on documented facts.

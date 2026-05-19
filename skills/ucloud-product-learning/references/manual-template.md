@@ -28,15 +28,15 @@ Only generate this chapter when Alibaba Cloud documentation contains a matching 
 
 ## 4. 产品特点
 
-- 特点一：
-- 特点二：
-- 特点三：
+| 特点 | 说明 | 售前关注点 | 来源 |
+| --- | --- | --- | --- |
+|  |  |  |  |
 
 ## 5. 产品优势
 
-- 优势一：
-- 优势二：
-- 优势三：
+| 优势 | 说明 | 可能使用场景 | 售前关注点 | 来源 |
+| --- | --- | --- | --- | --- |
+|  |  |  |  |  |
 
 ## 6. 产品性能
 
@@ -125,6 +125,7 @@ Only generate this chapter when Alibaba Cloud documentation contains a matching 
 - Only include verified working URLs. Do not generate, guess, or cite links that return 404 or cannot be opened. If no valid official URL is found, write `官方文档中未找到有效来源链接`.
 - Chapter 2 `前置概念` should prioritize Alibaba Cloud candidate pages whose URLs contain `what-is` or `product-overview`, then extract only from a `<section>` whose title is `前置概念` and whose content contains `阅读本文前，您可能需要了解如下概念：`. From that `<section>`, extract its `<li>` items. For each `<li>`, put the concept name in the `概念` column and put the linked description text in the `概念说明` column as a Markdown link using the `<a href>` URL from Alibaba Cloud, for example `[什么是云计算？](https://www.aliyun.com/getting-started/what-is/what-is-cloud-computing)`. Do not include a `来源` column for this chapter. If no matching section is found, omit chapter 2 entirely and renumber subsequent chapters.
 - For UCloud sources, cite page-level official docs URLs whenever possible, such as `https://docs.ucloud.cn/ufs/ufs_manual_instruction/limit`; avoid `mdToPdf` PDF links unless no equivalent HTML page exists.
+- In chapter 5, briefly connect each UCloud advantage to likely customer usage scenarios. Keep scenario text short and presales-oriented, focusing on where customers would use the advantage and why it matters.
 - In chapter 10, include both UCloud and Alibaba Cloud application scenarios as separate subsections and add selection advice for each scenario.
 - Do not include long operational procedures.
 - If a section has no official information, keep the section and write `官方文档中未找到明确说明`.

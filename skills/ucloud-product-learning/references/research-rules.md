@@ -49,6 +49,7 @@
 - Alibaba Cloud `前置概念` sections only when the `<section>` title and marker sentence match the chapter 2 rule.
 - Functional capabilities.
 - Product advantages and differentiators stated by the vendor.
+- Customer usage contexts implied by UCloud product advantages, especially scenarios tied to customer needs, pain points, or selection concerns.
 - Performance parameters, instance families, capacity limits, quotas, and specifications.
 - Usage restrictions, compatibility notes, region/zone constraints, billing-relevant constraints, and operational caveats that affect presales advice.
 - Application scenarios and solution descriptions.
@@ -101,6 +102,12 @@
   - `售前分析：在该场景下更应关注...`
 
 ## Scenario Analysis Rules
+
+When explaining UCloud product advantages outside the application scenarios chapter, add a brief likely-usage-scenario note for each advantage:
+
+- Identify what kind of customer or workload would benefit from the advantage.
+- Tie the advantage to a concrete business or technical need.
+- Keep the note short; the full scenario expansion belongs in chapter 10.
 
 For the application scenarios chapter, use both vendors' documentation and split the content into two subsections:
 
