@@ -27,16 +27,17 @@ Before generating the manual, confirm the Alibaba Cloud competitor product name.
 3. If the user did not supply the competitor name:
    - Read [references/ucloud-aliyun-product-map.md](references/ucloud-aliyun-product-map.md) first.
    - Search the mapping file for the UCloud product name, alias, or docs path.
-   - If a mapping exists, recommend the mapped Alibaba Cloud product and ask the user to confirm.
+   - If a mapping exists, use its UCloud and Alibaba Cloud navigation page URLs as the starting pages, recommend the mapped Alibaba Cloud product, and ask the user to confirm.
    - If the user rejects the mapping or no mapping exists, then search official UCloud and Alibaba Cloud docs and recommend one alternative Alibaba Cloud product.
    - Do not generate the full manual until the user confirms.
 4. After confirmation, research both products from official documentation:
    - UCloud docs: `https://docs.ucloud.cn/`
    - Alibaba Cloud docs: `https://help.aliyun.com/`
-5. Read [references/research-rules.md](references/research-rules.md) before researching and filtering sources.
-6. Read [references/manual-template.md](references/manual-template.md) before drafting the final Markdown manual.
-7. Save every completed learning manual under this skill's `references/` directory as `ucloud-{product_name}.md`, where `{product_name}` is the normalized lowercase UCloud product name, for example `ucloud-ufs.md`.
-8. Send the user a clickable local file link to the generated manual.
+5. Read or build the product index file `references/index-{product_name}.md`. Use this index as the source URL map for subsequent research.
+6. Read [references/research-rules.md](references/research-rules.md) before researching and filtering sources.
+7. Read [references/manual-template.md](references/manual-template.md) before drafting the final Markdown manual.
+8. Save every completed learning manual under this skill's `references/` directory as `ucloud-{product_name}.md`, where `{product_name}` is the normalized lowercase UCloud product name, for example `ucloud-ufs.md`.
+9. Send the user a clickable local file link to the generated manual.
 
 ## Answer From Manual Workflow
 
@@ -55,8 +56,14 @@ Use this workflow when the user asks about an already learned/generated UCloud p
 ## Source Rules
 
 - For UCloud products, first open the product README index page when the product path is known, using `https://docs.ucloud.cn/{product-path}/README`, for example `https://docs.ucloud.cn/ufs/README`.
-- Use the README page as the product documentation table of contents. Follow its page links to product overview, features, specifications, limits, performance, FAQ, and scenarios.
-- Prefer official product overview, introduction, architecture, feature, advantage, specification, performance, limit, usage note, FAQ, and application scenario pages.
+- Use the README page as the product documentation table of contents. Follow its page links to product overview, features, specifications, limits, performance, FAQ, and scenarios. For Alibaba Cloud, skip FAQ and practice-operation content.
+- For each product, create or reuse `references/index-{product_name}.md` to store module names and URLs from both the UCloud and Alibaba Cloud navigation pages.
+  - Apply the same indexing completeness standard to UCloud and Alibaba Cloud.
+  - Record parent modules, child modules, repeated modules, learning-path modules, billing modules, specification modules, feature modules, limit modules, scenario modules, developer-reference overview modules, and official external entry links when they appear in the navigation.
+  - For Alibaba Cloud, do not index FAQ modules, practice/tutorial modules, experience-lab modules, quick-start walkthroughs, or pure console/SDK/CLI/Terraform operation steps. Keep only product-knowledge pages that help understand concepts, features, specifications, limits, billing, selection, or architecture.
+  - Mark any discovered but unverified module as `未记录：URL未验证`, and do not use it as a citation source until refreshed.
+- Do not use product navigation pages as final evidence when a more specific indexed section URL exists.
+- Prefer official product overview, introduction, architecture, feature, advantage, specification, performance, limit, usage note, and application scenario pages. For Alibaba Cloud, do not use FAQ pages or practice-operation tutorials as research sources.
 - For UCloud sources, cite page-level official documentation URLs under `https://docs.ucloud.cn/`, for example `https://docs.ucloud.cn/ufs/ufs_manual_instruction/limit`.
 - Do not use UCloud `mdToPdf` PDF links as the normal citation source when an equivalent HTML documentation page exists.
 - Ignore configuration guides, operation guides, quick starts, step-by-step tutorials, and test procedures unless they contain product specifications, limits, performance data, or important usage notes.
