@@ -2,7 +2,7 @@
 
 Use this file before live searching for an Alibaba Cloud competitor. Match by UCloud product name, alias, or docs path. The mapping is a first recommendation for user confirmation, not a final authority. If the user rejects a mapping, search official documentation again and propose one revised Alibaba Cloud product.
 
-The Alibaba Cloud URLs in this file are search entry points. Verify that a URL opens successfully before citing it in a generated manual; replace stale or invalid links with current official documentation URLs.
+The navigation URLs in this file are search entry points for building product index files such as `index-uhost.md`. Verify that a navigation URL opens successfully before using it; replace stale or invalid links with current official documentation URLs. Do not cite navigation URLs as final evidence when a more specific index URL exists.
 
 Sources to refresh this file:
 
@@ -14,7 +14,7 @@ Sources to refresh this file:
 
 | UCloud 产品 | 常见别名/关键词 | UCloud docs path | 建议阿里云竞品 | 阿里云文档入口 | 置信度 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| UHost 云主机 | 云服务器、CVM、虚拟机 | `uhost` | 云服务器 ECS（Elastic Compute Service） | `https://help.aliyun.com/zh/ecs/` | 高 | 标准云服务器对标 |
+| UHost 云主机 | 云服务器、CVM、虚拟机 | `uhost`; 导航页：`https://docs.ucloud.cn/uhost/README` | 云服务器 ECS（Elastic Compute Service） | 导航页：`https://help.aliyun.com/zh/ecs/` | 高 | 标准云服务器对标；已建立 `index-uhost.md` |
 | GPU 云主机 | GPU、AI 训练、图形计算 | `gpu` / `uhost` | GPU 云服务器 | `https://help.aliyun.com/zh/ecs/user-guide/gpu-accelerated-compute-optimized-and-vgpu-accelerated-instance-families` | 中 | 以 ECS GPU 实例族为主 |
 | ULightHost 轻量云主机 | 轻量应用服务器 | `ulh` | 轻量应用服务器 Simple Application Server | `https://help.aliyun.com/zh/simple-application-server/` | 高 | 轻量级建站和开发测试场景 |
 | UPHost 物理云主机 | 裸金属、物理机 | `uphost` | 弹性裸金属服务器 EBM / ECS 裸金属实例 | `https://help.aliyun.com/zh/ecs/user-guide/ebm-instances` | 中 | 需按客户是否强调裸金属性能确认 |

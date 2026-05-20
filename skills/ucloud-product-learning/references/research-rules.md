@@ -6,33 +6,58 @@
 2. Before searching for an Alibaba Cloud competitor, check [ucloud-aliyun-product-map.md](ucloud-aliyun-product-map.md):
    - Match by UCloud product name, alias, or docs path.
    - Use the mapped Alibaba Cloud product as the first recommendation.
+   - Use the mapped UCloud navigation page URL and Alibaba Cloud navigation page URL as the starting pages.
    - If the user rejects the mapping, perform fresh official-doc search and propose one revised competitor.
-3. Resolve the UCloud product documentation path.
-   - If the product abbreviation maps directly to a docs path, use that path, for example UFS -> `ufs`.
-   - Open the product README index page: `https://docs.ucloud.cn/{product-path}/README`.
-   - Example: `https://docs.ucloud.cn/ufs/README`.
-   - Treat the README page as the product documentation table of contents and extract the relevant page URLs from it.
-4. Search UCloud official docs for the confirmed UCloud product by following README links first:
+3. Read or build `references/index-{product_name}.md`:
+   - If the index exists, use it as the first source URL map.
+   - If the index is missing, open the UCloud and Alibaba Cloud navigation page URLs from the product mapping table.
+   - Traverse the navigation pages and extract module or section names with their hyperlinks.
+   - Save the verified URLs into `index-{product_name}.md`, split into `## UCloud` and `## 阿里云` sections.
+   - For UHost, the UCloud navigation page should be `https://docs.ucloud.cn/uhost/README`; the Alibaba Cloud ECS navigation page should be a verified `https://help.aliyun.com/zh/ecs/` product page URL.
+4. Use only verified URLs from `index-{product_name}.md` for detailed research:
    - Product overview or introduction.
    - Feature and advantage pages.
    - Specification, performance, quota, limit, or restriction pages.
-   - Application scenario, solution, FAQ, and usage note pages.
-   - Page-level HTML URLs under the product path, such as `https://docs.ucloud.cn/ufs/ufs_manual_instruction/limit`.
-5. If the README page is unavailable or does not contain the needed section, then use targeted web search scoped to `docs.ucloud.cn/{product-path}`.
-6. Search Alibaba Cloud official docs for the confirmed competitor product:
-   - Product overview or introduction.
-   - Feature and advantage pages.
-   - Specification, performance, limit, or scenario pages.
-7. For chapter 2 pre-requisite concepts, use Alibaba Cloud pages whose URLs contain `what-is` or `product-overview` as the priority search candidates:
+   - Application scenario, solution, and usage note pages.
+   - Billing pages.
+   - For Alibaba Cloud, skip FAQ pages and practice-operation tutorials even if they appear in the navigation.
+5. If the index file is stale, missing a needed section, or contains invalid URLs, refresh the index from the navigation pages before drafting.
+6. For chapter 2 pre-requisite concepts, use Alibaba Cloud indexed pages whose URLs contain `what-is` or `product-overview` as the priority search candidates:
    - These URL patterns are search-entry conditions, not extraction conditions.
    - Example matching paths: `.../what-is-...`, `.../product-overview/...`.
-8. Extract chapter 2 pre-requisite concepts from the prioritized Alibaba Cloud candidate pages only when the source page contains a `<section>` element that matches both conditions:
+7. Extract chapter 2 pre-requisite concepts from the prioritized Alibaba Cloud candidate pages only when the source page contains a `<section>` element that matches both conditions:
    - The section title is `前置概念`.
    - The section content contains `阅读本文前，您可能需要了解如下概念：`.
    - Use only the `<li>` items listed in that `<section>` for chapter 2. Do not synthesize chapter 2 concepts from unrelated Alibaba Cloud overview text.
    - For each `<li>`, extract linked `<a href>` items and preserve the Alibaba Cloud link in the chapter 2 table's `概念说明` column.
    - If no matching `<section>` exists, omit chapter 2 entirely and renumber later chapters.
-9. Prefer current HTML documentation pages. For UCloud, do not cite `mdToPdf` PDF URLs when a matching HTML documentation page exists. Use official PDFs only as a last resort when HTML pages do not expose the needed product information, and state that the PDF was used because no page-level URL was found.
+8. Prefer current HTML documentation pages. For UCloud, do not cite `mdToPdf` PDF URLs when a matching HTML documentation page exists. Use official PDFs only as a last resort when HTML pages do not expose the needed product information, and state that the PDF was used because no page-level URL was found.
+
+## Product Mapping Table Rules
+
+- Product mapping rows must include:
+  - UCloud product name and aliases.
+  - UCloud navigation page URL, usually `https://docs.ucloud.cn/{product-path}/README`.
+  - Alibaba Cloud competitor product name.
+  - Alibaba Cloud navigation page URL, for example `https://help.aliyun.com/zh/ecs/`.
+  - Validation status or notes.
+- Navigation page URLs are starting points for building product indexes; they are not enough for final manual citations when a more specific indexed URL exists.
+- Verify navigation URLs before using them. If a navigation URL is invalid, refresh the mapping row before continuing.
+
+## Product Index File Rules
+
+- Name each product index file `index-{product_name}.md`, for example `index-uhost.md`.
+- Split each index file into two sections: `## UCloud` and `## 阿里云`.
+- Traverse both navigation pages and record every module that has a discoverable and verified URL, not only product-introduction modules.
+- Record parent modules, child modules, and repeated modules when they appear in the navigation. If several child modules are sections of the same page, reuse the verified parent page URL and note the relationship in `备注`.
+- For UCloud UHost, include every module from the product navigation that has a verified URL, including product introduction, host, feature, disk, image, network, monitoring, purchase guidance, quick start, operation guide, metadata, key pair, isolation group, performance data, and pricing modules.
+- For Alibaba Cloud products, apply the same completeness rule as UCloud:
+  - Record all parent modules, child modules, repeated modules, learning-path modules, billing modules, specification modules, feature modules, limit modules, architecture modules, selection-guidance modules, scenario-overview modules, developer-reference overview modules, and external official ecosystem links that appear in the product navigation page.
+  - For Alibaba Cloud ECS, include modules from the ECS navigation page that help product learning and presales analysis, including product introduction, billing, instance specification, creation and purchase overview, login concept overview, instance management overview, block storage, image and snapshot, network and security group, developer documentation overview, and price or purchase entry links.
+  - Do not index Alibaba Cloud FAQ modules, practice/tutorial modules, experience-lab modules, quick-start walkthroughs, or pure console/SDK/CLI/Terraform operation steps.
+  - Links that redirect to login pages, external console pages, or non-document official pages may be recorded for completeness, but mark their purpose in `备注` and do not use them as product-learning citation sources unless the content itself is accessible and relevant.
+- Every recorded URL must be verified as accessible before it is written into the index file.
+- Do not write guessed URLs into an index file. If a module name is visible but the URL cannot be verified, omit it or mark it as `未记录：URL未验证`.
 
 ## Manual Storage And Reuse
 
@@ -70,6 +95,7 @@
   - Do not cite URLs that return 404, redirect to unrelated content, require unavailable access, or were guessed from a URL pattern but not opened.
   - Do not fabricate page paths. URL patterns such as UCloud README paths and Alibaba Cloud `what-is`/`product-overview` paths are search hints, not citations until verified.
   - If a mapped product URL in [ucloud-aliyun-product-map.md](ucloud-aliyun-product-map.md) is invalid, search the official documentation site for a valid current URL before citing.
+  - If a URL in `index-{product_name}.md` is invalid, refresh that index before using it.
   - If no valid official URL can be found for a claim, write `官方文档中未找到有效来源链接` or omit the claim.
 - Cite official source links for:
   - Product definitions.
