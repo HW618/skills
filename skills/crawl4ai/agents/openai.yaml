@@ -1,0 +1,4 @@
+interface:
+  display_name: "Crawl4AI"
+  short_description: "Web crawling and extraction with Crawl4AI"
+  default_prompt: "Use $crawl4ai to crawl a website and extract content as markdown."

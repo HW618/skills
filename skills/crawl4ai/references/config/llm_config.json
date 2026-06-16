@@ -1,0 +1,16 @@
+{
+  "_doc": "Full LLMConfig parameters for Crawl4AI v0.8.9. Edit values to customize LLM provider behavior. See https://docs.crawl4ai.com/api/parameters/",
+  "provider": "openai/gpt-4o",
+  "api_token": null,
+  "base_url": null,
+  "temperature": null,
+  "max_tokens": null,
+  "top_p": null,
+  "frequency_penalty": null,
+  "presence_penalty": null,
+  "stop": null,
+  "n": null,
+  "backoff_base_delay": null,
+  "backoff_max_attempts": null,
+  "backoff_exponential_factor": null
+}
