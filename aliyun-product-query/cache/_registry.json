@@ -1,0 +1,59 @@
+{
+  "products": {
+    "ecs": {
+      "url": "https://help.aliyun.com/zh/ecs/llms.txt",
+      "updated_at": "2026-07-16T10:00:06Z",
+      "cached_pages_count": 721
+    },
+    "simple-application-server": {
+      "url": "https://help.aliyun.com/zh/simple-application-server/llms.txt",
+      "updated_at": "2026-07-16T10:00:06Z",
+      "cached_pages_count": 0
+    },
+    "nas": {
+      "url": "https://help.aliyun.com/zh/nas/llms.txt",
+      "updated_at": "2026-07-16T10:00:06Z",
+      "cached_pages_count": 0
+    },
+    "oss": {
+      "url": "https://help.aliyun.com/zh/oss/llms.txt",
+      "updated_at": "2026-07-16T10:00:06Z",
+      "cached_pages_count": 0
+    },
+    "vpc": {
+      "url": "https://help.aliyun.com/zh/vpc/llms.txt",
+      "updated_at": "2026-07-16T10:00:06Z",
+      "cached_pages_count": 0
+    },
+    "eip": {
+      "url": "https://help.aliyun.com/zh/eip/llms.txt",
+      "updated_at": "2026-07-16T10:00:06Z",
+      "cached_pages_count": 0
+    },
+    "slb": {
+      "url": "https://help.aliyun.com/zh/slb/llms.txt",
+      "updated_at": "2026-07-16T10:00:06Z",
+      "cached_pages_count": 0
+    },
+    "cdn": {
+      "url": "https://help.aliyun.com/zh/cdn/llms.txt",
+      "updated_at": "2026-07-16T10:00:07Z",
+      "cached_pages_count": 0
+    },
+    "rds": {
+      "url": "https://help.aliyun.com/zh/rds/llms.txt",
+      "updated_at": "2026-07-16T10:00:07Z",
+      "cached_pages_count": 0
+    },
+    "polardb": {
+      "url": "https://help.aliyun.com/zh/polardb/llms.txt",
+      "updated_at": "2026-07-16T10:00:07Z",
+      "cached_pages_count": 0
+    },
+    "redis": {
+      "url": "https://help.aliyun.com/zh/redis/llms.txt",
+      "updated_at": "2026-07-16T10:00:07Z",
+      "cached_pages_count": 0
+    }
+  }
+}

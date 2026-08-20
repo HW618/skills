@@ -1,0 +1,40 @@
+{
+  "skill_name": "aliyun-product-query",
+  "evals": [
+    {
+      "id": 1,
+      "name": "ecs-spec-families",
+      "prompt": "我是售前，客户问阿里云云主机都有哪些实例规格族，帮我整理一下，要能跟客户讲清楚不同规格族的区别和适用场景",
+      "expected_output": "列出 ECS 主要规格族（g/c/r/i/d/hf/GPU/裸金属等），说明各规格族的 vCPU:内存配比、特点、适用场景，附阿里云官方文档链接",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "ecs-billing-methods",
+      "prompt": "阿里云的云主机是怎么收费的？有几种计费方式？客户想了解哪种最划算",
+      "expected_output": "说明 ECS 计费方式（按量付费/包年包月/抢占式实例/节省计划/预留实例券等），各方式特点、适用场景、价格优劣对比，附文档链接",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "oss-storage-classes-pricing",
+      "prompt": "客户要存大量冷数据，问阿里云 OSS 对象存储的存储类型和价格，帮我查下有哪些类型、各自的价格和适用场景",
+      "expected_output": "列出 OSS 存储类型（标准/低频/归档/冷归档等），各类型的价格、存储费用、访问费用、适用场景，附文档链接",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "ecs-disk-specs-performance",
+      "prompt": "阿里云的云盘有什么规格？性能怎么样？客户跑数据库要选哪种云盘",
+      "expected_output": "列出云盘规格（ESSD PL0-PL3/ESSD AutoPL/SSD/高效云盘等），各规格的容量、IOPS、吞吐性能，并针对数据库场景给出选型建议，附文档链接",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "rds-vs-polardb-comparison",
+      "prompt": "客户在纠结选 RDS 还是 PolarDB，帮我对比下两者的区别，主要是规格、性能和价格方面",
+      "expected_output": "对比 RDS 和 PolarDB 的架构差异、规格范围、性能特点、计费方式、价格差异、适用场景，给出选型建议，附文档链接",
+      "files": []
+    }
+  ]
+}

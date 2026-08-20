@@ -1,0 +1,1307 @@
+# 云服务器 ECS
+> 云服务器 ECS（Elastic Compute Service）提供按需创建和管理虚拟机实例的 IaaS 能力，涵盖实例生命周期管理、块存储（云盘/本地盘/快照）、镜像、安全组、弹性网卡等核心资源的控制台操作与 OpenAPI 调用。支持包年包月、按量付费、抢占式实例和节省计划等计费模式。
+本文件为 LLM 和编程 Agent 提供 云服务器 ECS 在中国站（aliyun.com）的中文文档索引（含 `.md` 源文件链接）。
+**对应国际站**: [中文](https://www.alibabacloud.com/help/zh/ecs/llms.txt) | [English](https://www.alibabacloud.com/help/en/ecs/llms.txt) | [日本語](https://www.alibabacloud.com/help/ja/ecs/llms.txt) | [Bahasa](https://www.alibabacloud.com/help/id/ecs/llms.txt)
+
+
+## 用户指南
+- [云服务器 ECS 概述](https://help.aliyun.com/zh/ecs/user-guide/what-is-ecs.md): ECS 产品架构与核心概念：实例（x86/Arm/GPU/裸金属）、镜像、块存储、快照、安全组、VPC 网络，支持按量/包年包月/抢占式三种计费，可通过控制台、API、CLI、Terraform 管理
+- [图说 ECS 架构](https://help.aliyun.com/zh/ecs/user-guide/tew-ecs-cloud-server.md)
+- [快速购买 Windows 实例搭建 IIS](https://help.aliyun.com/zh/ecs/user-guide/quickly-purchase-a-windows-instance-and-build-an-iis-service.md): 通过控制台快速购买 Windows Server ECS 实例，含安全组 80 端口放行、IIS 服务安装和 Web 服务部署验证的完整流程
+- [自定义购买 Linux 实例并搭建 Apache](https://help.aliyun.com/zh/ecs/user-guide/use-the-ecs-instance-in-the-console.md): 控制台自定义购买按量付费 Linux 实例全流程：选规格镜像、创建 VPC/安全组/密钥对、SSH 连接实例，部署 Apache 服务并验证访问
+- [ECS 免费试用攻略](https://help.aliyun.com/zh/ecs/user-guide/ecs-free-trial.md): 个人用户 300 元/企业 660 元免费额度，3 个月有效期，按量付费模式，含试用条件、地域选择（7 个免费地域）、规格范围和常见问题解答
+- [免费试用规则图解](https://help.aliyun.com/zh/ecs/user-guide/step-by-step-guide-to-your-ecs-free-trial.md): 用图文类比解释免费试用有效期与免费额度的关系，帮助理解试用时长计算（免费总额度/每小时价格）等核心规则
+- [免费试用常见操作指南](https://help.aliyun.com/zh/ecs/user-guide/common-operations-for-the-ecs-free-trial.md): 查看试用进度、二次试用申请、释放试用实例、查看实例信息、登录 ECS 和重置密码等试用期常见操作的图文步骤
+- [免费试用能做什么](https://help.aliyun.com/zh/ecs/user-guide/exploring-the-benefits-of-the-ecs-free-trial.md): 图文说明免费试用期间可做的事项和最大化利用免费额度的建议，页面主体为一张信息图
+- [免费试用适用场景](https://help.aliyun.com/zh/ecs/user-guide/usage-scenarios-for-the-ecs-free-trial.md): 单台和多台 ECS 试用的典型场景列表，包含建站、数据库、开发测试、游戏服务器等单机场景和负载均衡、微服务、数据库集群等多机场景
+- [免费试用节省停机技巧](https://help.aliyun.com/zh/ecs/user-guide/use-of-economical-mode.md): 不使用实例时通过节省停机模式降低免费额度消耗，延长试用有效期内的可用时长，页面主体为一张操作指引图
+- [免费试用到期处理](https://help.aliyun.com/zh/ecs/user-guide/what-should-i-do-if-my-ecs-free-trial-is-about-to-expire.md): 到期前的 4 种处理场景及操作：续费、转包年包月、数据备份迁移和释放实例，页面主体为一张决策流程图
+- [按量付费新手指南](https://help.aliyun.com/zh/ecs/user-guide/ecs-pay-as-you-go-starter-guide.md): 图文说明按量计费出账逻辑（每小时结算）和防欠费三大策略：余额预警、自动续费、资源释放保护的操作指引
+- [ECS 付费类型选择最佳实践](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-ecs-billing-methods.md): 按量付费与包年包月的临界使用天数计算公式，帮助按使用时长选择最优计费方式，含多台实例混合付费的决策流程图
+- [ECS 登录方式全解析](https://help.aliyun.com/zh/ecs/user-guide/guide-and-best-practices-for-logging-into-ecs-5-methods-and-how-to-choose.md): 按场景推荐 Workbench/VNC/SSH/会话管理/阿里云客户端五种登录方式，含横向对比和选择建议，日常运维推荐 Workbench，无公网时用会话管理
+- [安全组配置入门](https://help.aliyun.com/zh/ecs/user-guide/5-minute-guide-to-security-groups-secure-and-precise-network-access-control.md): 安全组概念和 4 条最佳实践，含 4 个场景配置示例：Web 服务器 80/443 端口放行、SSH/RDP 来源 IP 限制、VPC 内网互通规则、出站流量管控
+- [ECS 使用限制与配额](https://help.aliyun.com/zh/ecs/user-guide/limitations.md): vCPU 配额、GPU 配额、按量/包年包月互转限制、安全组规则数、云盘数量等资源限额，部分可通过配额管理申请提升
+- [ECS 地域和可用区](https://help.aliyun.com/zh/ecs/user-guide/regions-and-zones.md): ECS 支持的中国及海外地域和可用区列表，含地域 ID（如 cn-hangzhou）、可用区选择建议，以及 DescribeRegions/DescribeZones API 查询示例
+- [ECS 实例概述](https://help.aliyun.com/zh/ecs/user-guide/overview-52.md): 实例基础配置（规格/镜像/存储/网络）、生命周期状态（Pending/Running/Stopped 等）、状态转换流程，以及选购/连接/部署/释放的操作指引
+- [在售实例规格族汇总](https://help.aliyun.com/zh/ecs/user-guide/overview-of-instance-families.md): 所有在售 ECS 实例规格族索引，按通用 g/计算 c/内存 r/大数据 d/本地 SSD i/高主频 hf/GPU/裸金属/HPC 等分类，列出各规格族特点、处理器型号和适用场景
+- [实例规格分类与命名](https://help.aliyun.com/zh/ecs/user-guide/instance-specification-naming-and-classification.md): 规格族群（x86/ARM/ebm/SCC/GPU）差异对比、规格族命名规则（如 ecs.g8ae.4xlarge 中 g=通用型/8=代际/ae=AMD增强），以及 vCPU/内存/网络/存储等指标说明
+- [ECS 实例规格选型指导](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-instance-type-selection.md): 按业务场景（Web/游戏/大数据/数据库/深度学习）和预装软件（Nginx/Redis/Kafka/MySQL/Elasticsearch）推荐 g/c/r/i/d/hfc 等规格族，含 GPU 选型和监控验证方法
+- [通用型实例 g 系列](https://help.aliyun.com/zh/ecs/user-guide/general-purpose-instance-families.md): vCPU:内存=1:4，含 g9ae/g9a/g9i/g8a/g8ae/g7 等 16 个规格族（Intel/AMD/倚天/ARM），规格从 2C8G 到 192C768G，适用于 Web/DB/Java 应用
+- [计算型实例 c 系列](https://help.aliyun.com/zh/ecs/user-guide/compute-optimized-instance-families.md): vCPU:内存=1:2，含 c9ae/c9a/c9i/c8a/c8ae/c7 等规格族（Intel/AMD/倚天），适用于计算密集型 Web 前端、视频编码、批量计算、ML 推理场景
+- [内存型实例 r 系列](https://help.aliyun.com/zh/ecs/user-guide/memory-optimized-instance-families-1.md): vCPU:内存=1:8，含 r9ae/r9a/r9i/r8a/r8ae/r7 等规格族（Intel/AMD/倚天），规格最高 192C1536G，适用于 Redis/Kafka/ES 等内存密集型应用
+- [通用算力型 U 实例](https://help.aliyun.com/zh/ecs/user-guide/general-work-force.md): 支持 1:1/1:2/1:4/1:8 多种 CPU 内存配比，含 u2a(AMD)/u2i(Intel)/u1 三个规格族，部署在多代际服务器平台，价格低于 g/c/r 系列但不保证性能一致性
+- [大数据型实例 d 系列](https://help.aliyun.com/zh/ecs/user-guide/big-data-instance-families.md): vCPU:内存=1:4，配备大容量本地 HDD 存储，含 d3s/d3c/d2c/d2s 规格族，适用于 Hadoop/HDFS/Hive/HBase/Kafka/ES 等大数据存储与计算场景，不支持变配
+- [本地盘实例 i 系列](https://help.aliyun.com/zh/ecs/user-guide/instance-families-with-local-ssds.md): vCPU:内存=1:4/1:8，配备 NVMe SSD 本地盘，含 i5g/i5/i4/i4g/i4r/i4p/i3g/i3/i2 等规格族，适用于 OLTP、NoSQL、Elasticsearch 和大数据存算分离
+- [HPC 优化型实例 hf 系列](https://help.aliyun.com/zh/ecs/user-guide/instance-families-with-high-clock-speeds.md): vCPU:内存=1:2/1:4/1:8 三种配比，主频 3.4-3.8 GHz，含 hfc9i/hfg9i/hfr9i/hfc8i/hfg8i/hfr8i 等规格族，适用于游戏、HPC 科学计算和中大型数据库
+- [配置使用持久内存](https://help.aliyun.com/zh/ecs/user-guide/configure-the-usage-mode-of-persistent-memory.md): 将 re6p/i4p 实例的持久内存配置为本地盘使用，含 ndctl/mkfs 初始化命令、fio 性能测试示例，以及 llpl 库内存池分配失败的解决方案
+- [持久内存实例部署 Redis](https://help.aliyun.com/zh/ecs/user-guide/deploy-redis-on-persistent-memory-optimized-instances.md): 在 re7p/r7p/re6p-redis 实例上部署 Redis，利用持久内存降低单 GiB 内存成本，支持 Alibaba Cloud Linux 2、CentOS 7.6+、Ubuntu 18.04/20.04
+- [GPU 实例 gn/vgn/sgn 系列](https://help.aliyun.com/zh/ecs/user-guide/gpu-accelerated-compute-optimized-and-vgpu-accelerated-instance-families-1.md): GPU 计算型（gn7/gn7i/gn8v 等搭载 A10/A100/H800）和 GPU 虚拟化型（vgn/sgn 含 GRID vWS License），适用于 AI 训练推理、HPC、图形渲染场景
+- [异构服务型 video-trans 实例](https://help.aliyun.com/zh/ecs/user-guide/heterogeneous-service.md): 专属硬件视频转码实例，1080P/30FPS/HEVC 场景支持 84 路并行码流，支持 H.264/H.265 编码、最高 8192x4096 分辨率
+- [弹性裸金属服务器 ebm 系列](https://help.aliyun.com/zh/ecs/user-guide/elastic-bare-metal-server-overview.md): 物理机级别性能和隔离的裸金属实例，含通用型 ebmg/计算型 ebmc/内存型 ebmr/高主频 ebmhf/GPU 计算型 ebmgn 五大类，支持二次虚拟化，适合非虚拟化上云场景
+- [创建弹性裸金属服务器实例](https://help.aliyun.com/zh/ecs/user-guide/create-an-ecs-bare-metal-instance.md): 在购买页选择弹性裸金属服务器或 GPU/FPGA/ASIC 分类下的 ebm 规格族创建实例，配置流程与自定义购买一致，支持包年包月、按量付费和抢占式三种计费方式
+- [HPC 优化型实例 hpc 系列](https://help.aliyun.com/zh/ecs/user-guide/overview-of-hpc-optimized-instance-families.md): hpc9a/hpc8i/hpc8ae/hpc7ip/hpc6id 五个规格族，物理核设计无超线程，支持 eRDMA 低延迟网络，适用于高性能计算、科学计算和 AI 训练，不支持规格变配
+- [创建 HPC 优化型实例](https://help.aliyun.com/zh/ecs/user-guide/create-an-hpc-optimized-instance.md): 在购买页全部规格中选择高性能计算优化型规格族创建实例，仅支持按量付费（可用节省计划抵扣），配置流程参考自定义购买
+- [SCC 超级计算集群实例规格](https://help.aliyun.com/zh/ecs/user-guide/overview-40.md): 基于弹性裸金属服务器加 RDMA 高速互联的 SCC 实例，含通用型 sccg/计算型 sccc/GPU 型 sccgn 规格族，RoCE 网络达 InfiniBand 级别性能，适用于 HPC 和 AI 并行计算
+- [创建超级计算集群 SCC 实例](https://help.aliyun.com/zh/ecs/user-guide/create-an-scc-instance.md): 基于弹性裸金属加 RDMA 互联的 SCC 实例，购买时需选择或新建超级计算集群 ID，同集群内实例才能互联，也可通过 E-HPC 控制台创建含调度器的 SCC 集群
+- [sccgn 系列实例使用说明](https://help.aliyun.com/zh/ecs/user-guide/sccgn-instance-family.md): GPU 计算型 SCC 实例（sccgn7ex 等）同时配备 GPU 和 Mellanox 网卡，支持 GPUDirect RDMA，创建时需选中安装 RDMA 软件栈和 GPU 驱动
+- [共享型实例](https://help.aliyun.com/zh/ecs/user-guide/shared-instance-families.md): 非独占 vCPU 的经济型实例，高负载时性能不稳定，无性能 SLA 仅有可用性 SLA，含经济型 e 系列和共享标准型 s6，适合小型网站和轻量应用
+- [突发性能实例 t 系列](https://help.aliyun.com/zh/ecs/user-guide/burst-performance-instance-overview.md): CPU 积分机制的经济型实例（t6/t5），基准性能 5%-40%，支持性能约束和无约束两种模式，无约束模式可透支积分但产生额外费用，适合低负载 Web 和开发测试
+- [突发性能实例优势](https://help.aliyun.com/zh/ecs/user-guide/benefits-1.md): t5/t6 实例比同配置共享型低 10%-48%，最小规格 1vCPU/0.5GiB，CPU 积分机制可预估突发性能，网络延迟为上一代的 1/3
+- [CPU 积分变化示例](https://help.aliyun.com/zh/ecs/user-guide/cpu-credit-change-examples.md): 以 ecs.t6-c2m1.large 为例，图文演示性能约束和无约束两种模式下 CPU 初始积分(每 vCPU 30 分)、获取速度和消耗的分阶段变化过程
+- [突发性能实例计费](https://help.aliyun.com/zh/ecs/user-guide/billing.md): 实例购买费用支持按量/包年包月/抢占式，性能约束模式无额外费用，无约束模式超额 CPU 积分按小时计费(中国内地 0.005 元/积分)，预支积分未恢复时停机或释放一次性收费
+- [创建突发性能实例](https://help.aliyun.com/zh/ecs/user-guide/create-a-burstable-instance.md): 在购买页选择 t 系列共享型规格创建 CPU 积分制实例，可选包年包月/按量/抢占式付费，支持创建时开启无性能约束模式，API 可用 RunInstances
+- [突发性能实例性能模式切换](https://help.aliyun.com/zh/ecs/user-guide/switch-the-performance-mode-of-a-burstable-instance.md): 通过控制台查看并切换性能约束/无约束模式，实例需处于运行中状态，节省停机后重启默认回到性能约束模式，欠费时自动关闭无约束模式
+- [监控突发性能实例](https://help.aliyun.com/zh/ecs/user-guide/monitor-burstable-instances.md): 通过 ECS 控制台查看已消耗/累积/超额/预支四类 CPU 积分曲线，通过云监控设置积分报警规则，累积积分低于阈值时触发通知
+- [查看突发性能实例账单](https://help.aliyun.com/zh/ecs/user-guide/view-bills-of-a-burstable-instance.md): 在费用与成本中心按计费项筛选超额积分账单，导出 CSV 查看 CPU 积分用量明细，计量规格选择 CPU 积分
+- [已停售实例规格](https://help.aliyun.com/zh/ecs/user-guide/retired-instance-types.md): 中国站已停售的 30+ 规格族(scchfc6/gn5/sn2/n1/e3 等)的详细参数，含变配至在售规格的路径说明，sn2/sn1/n1/n2/e3 在国际站仍在售
+- [图说 ECS 购买流程](https://help.aliyun.com/zh/ecs/user-guide/a-picture-is-to-teach-you-how-to-buy-cloud-server-ecs.md)
+- [快速购买 ECS 实例](https://help.aliyun.com/zh/ecs/user-guide/create-a-subscription-instance-on-the-quick-launch-tab.md): 通过预设套餐（基础/标准/专业/增强）快速创建实例，系统自动分配可用区、默认安全组和专有网络，创建后需重置登录密码
+- [自定义购买 ECS 实例](https://help.aliyun.com/zh/ecs/user-guide/create-an-instance-by-using-the-wizard.md): 全参数创建实例的完整流程，含付费类型（包年包月/按量/抢占式）、规格、镜像、存储、公网带宽、安全组、密钥对、RAM 角色、部署集等所有配置项说明，对应 RunInstances API
+- [从自定义镜像创建实例](https://help.aliyun.com/zh/ecs/user-guide/create-an-ecs-instance-by-using-a-custom-image.md): 用自定义镜像或共享镜像创建实例，支持控制台和 CLI（RunInstances --ImageId），跨地域需先复制镜像，跨账号需先共享镜像，基于付费镜像会产生额外 License 费用
+- [社区镜像创建实例](https://help.aliyun.com/zh/ecs/user-guide/create-an-instance-using-community-image.md): 通过购买页或控制台镜像列表使用完全公开的社区镜像创建实例，需在同账号同地域已有社区镜像，来源为付费镜像的社区镜像会收取 License 费用
+- [购买相同配置的实例](https://help.aliyun.com/zh/ecs/user-guide/purchase-an-instance-with-the-same-configuration.md): 通过控制台快速复制已有实例的规格、云盘、镜像和带宽配置创建新实例(不含环境和数据)，支持在购买前修改部分参数，也可用启动模板实现相同功能
+- [克隆 ECS 实例](https://help.aliyun.com/zh/ecs/user-guide/clone-instances.md): 通过控制台复制现有实例配置创建新实例，支持同地域/跨地域，可选是否包含实例数据，单任务最多 20 台源实例、每台最多 100 个副本，仅限 VPC 实例，公网 IP 不继承
+- [启动模板创建实例](https://help.aliyun.com/zh/ecs/user-guide/create-an-instance-by-using-a-launch-template.md): 通过控制台选择已有启动模板和版本快速创建实例，也可调用 RunInstances 指定 LaunchTemplateId 和 LaunchTemplateVersion 参数创建，模板可含除密码外的全部配置
+- [弹性供应组批量创建实例](https://help.aliyun.com/zh/ecs/user-guide/use-auto-provisioning-group-related-api-operations-to-create-multiple-ecs-instances-at-the-same-time.md): CreateAutoProvisioningGroup 单次最多创建 1000 台实例(RunInstances 上限 100 台)，支持多可用区、多规格、多磁盘类型组合和成本优化/优先级策略，含 Java SDK 调用示例
+- [抢占式实例概述](https://help.aliyun.com/zh/ecs/user-guide/what-is-a-spot-instance.md): 利用闲置资源低至 1 折的实例，价格随供需浮动，可选 1 小时保护期或无保护期，中断模式支持直接释放或节省停机保留云盘，适用于大数据、测试、无状态 Web 等容错场景
+- [抢占式实例 Advisor](https://help.aliyun.com/zh/ecs/user-guide/spot-instance-advisor.md): 查询各规格在指定可用区的实时价格、释放率和历史折扣率，支持历史价格曲线对比和选购推荐(容量最优/成本最优)，API 支持 DescribePrice/DescribeSpotAdvice/DescribeSpotPriceHistory
+- [创建抢占式实例](https://help.aliyun.com/zh/ecs/user-guide/create-a-spot-instance.md): 通过控制台、Java SDK 或 Terraform 创建低价抢占式实例，支持自动出价或设置单台上限价，中断模式可选直接释放或节省停机保留云盘
+- [抢占式实例数据保留与恢复](https://help.aliyun.com/zh/ecs/user-guide/preemptible-instance-data-retention-and-data-recovery-after-interrupt-reclamation.md): 三种中断数据保护方式：设置 SpotInterruptionBehavior=Stop 进入节省停机、设置云盘 DeleteWithInstance=false 不随实例释放、创建快照/自定义镜像，含各方式的恢复操作步骤
+- [查询抢占式实例中断事件](https://help.aliyun.com/zh/ecs/user-guide/query-the-interruption-events-of-preemptible-instances.md): 通过 DescribeInstances API 查询 OperationLocks 中 Recycling 状态、云监控订阅中断回收事件或实例元数据感知抢占式实例即将被回收，含 Java SDK 调用示例代码
+- [轻量消息队列感知抢占式实例中断](https://help.aliyun.com/zh/ecs/user-guide/receive-and-process-spot-instance-interrupt-notifications.md): 通过云监控事件订阅将 Instance:PreemptibleInstanceInterruption 事件推送到轻量消息队列(原 MNS)，含 SMQ Java SDK 消费消息和模拟中断事件调试的完整代码示例
+- [OOS 监控抢占式实例出价](https://help.aliyun.com/zh/ecs/user-guide/real-time-bid-monitoring-with-system-operation-and-maintenance-management-oos.md): 使用自动出价(SpotAsPriceGo)创建抢占式实例，通过 OOS 定时运维任务周期性检查价格/折扣是否超阈值，超出时通过钉钉 Webhook 自动告警
+- [批量设置实例名称/主机名](https://help.aliyun.com/zh/ecs/user-guide/batch-configure-sequential-names-or-hostnames-for-multiple-instances.md): 通过 name_prefix[begin_number,bits]name_suffix 语法批量生成有序编号的实例名和主机名，支持指定排序和自动排序两种方式，可通过 RunInstances 的 InstanceName/HostName 参数配置
+- [自定义数据实例初始化](https://help.aliyun.com/zh/ecs/user-guide/customize-the-initialization-configuration-for-an-instance.md): 通过 User-Data 脚本、Cloud Config 或 Gzip 压缩内容在实例首次启动时自动执行初始化(安装软件/修改配置)，Linux 用 cloud-init、Windows 用专有工具，数据上限 32KB，仅限 VPC 实例
+- [实例启动模式](https://help.aliyun.com/zh/ecs/user-guide/instance-startup-mode.md): BIOS 和 UEFI 两种启动模式的匹配规则，实例规格和镜像启动模式不匹配会导致启动失败，支持在导入自定义镜像时通过 ImportImage 的 BootMode 参数指定或通过 ModifyImageAttribute 修改
+- [ECS 远程连接方式选择](https://help.aliyun.com/zh/ecs/user-guide/connect-to-instance.md): Workbench/VNC/会话管理/阿里云客户端/SSH/RDP 六种连接方式对比，按操作系统、是否需要公网 IP、是否支持免密登录等维度选择
+- [实例登录凭证管理](https://help.aliyun.com/zh/ecs/user-guide/instance-logon-credential-management.md): Linux 默认 root、Windows 默认 Administrator，实例无默认密码，支持在线重置密码(不重启，依赖云助手)和离线重置(需重启)，建议使用 ecs-user 通过 sudo 获取临时 root 权限
+- [Workbench 登录 Linux 实例](https://help.aliyun.com/zh/ecs/user-guide/connect-to-a-linux-instance-by-using-a-password-or-key.md): 浏览器免密或 SSH 密钥/密码连接 Linux 实例，无需公网 IP，支持会话管理或临时 SSH 密钥对免密登录，会话最长维持 6 小时
+- [Workbench 登录 Windows 实例](https://help.aliyun.com/zh/ecs/user-guide/connect-to-a-windows-instance-through-workbench.md): 浏览器通过 RDP 协议连接 Windows 实例，默认端口 3389，支持私网连接无需公网 IP，密码认证登录，会话最长 6 小时
+- [阿里云 APP Workbench 登录实例](https://help.aliyun.com/zh/ecs/user-guide/login-using-the-workbench-instance-on-ali-cloud-app.md): 在移动端阿里云 APP 中通过 Workbench 连接 ECS 实例，支持 SSH(22 端口)/RDP(3389 端口)协议、密码/密钥/凭据三种认证方式，会话 6 小时无操作自动断开
+- [Workbench 免密登录原理](https://help.aliyun.com/zh/ecs/user-guide/workbench-password-free-login-principle-temporary-ssh-key-pair.md): 临时 SSH 密钥对免密登录机制：Workbench 动态生成 60 秒有效期的一次性密钥对，通过云助手 Agent 下发公钥完成认证后自动销毁，无需管理长期凭证
+- [Workbench 文件管理](https://help.aliyun.com/zh/ecs/user-guide/manage-files.md): 浏览器内管理 ECS 实例文件，支持文件树可视化上传下载、在线编辑和删除，仅 Workbench 终端连接方式支持，会话管理方式不可用
+- [Workbench AI Agent 运维模式](https://help.aliyun.com/zh/ecs/user-guide/workbench-ai-agent-mode.md): 通过自然语言指令在终端中自动规划和执行命令，支持问题诊断、软件安装、系统运维等场景，Agent 可调用 DescribeInstanceAttribute 等 OpenAPI 获取实例信息
+- [Workbench 终端助手](https://help.aliyun.com/zh/ecs/user-guide/intelligent-assistant.md): 基于千问大模型的 AI 命令生成、命令输出解释和智能问答三项功能，输入自然语言需求即可生成可执行命令并插入终端
+- [Workbench 多屏终端](https://help.aliyun.com/zh/ecs/user-guide/use-the-multi-terminal-feature.md): Workbench 1.0 多屏终端功能，同时连接最多 16 台 Linux 实例并同步执行命令，支持屏蔽/移除终端和窗口布局调整，适用于批量安装补丁、轮询进程等运维场景
+- [Workbench 录屏审计](https://help.aliyun.com/zh/ecs/user-guide/screen-recording-audit.md): 录制终端用户在实例内的操作视频用于安全审计，录屏文件存储到 OSS Bucket，通过 SetInstanceRecordConfig API 开启，支持按实例或全局配置
+- [Workbench 命令行审计](https://help.aliyun.com/zh/ecs/user-guide/command-audit.md): 审查 Workbench 会话中执行的历史命令，记录执行命令、时间和登录用户，通过 ListTerminalCommands API 查询命令列表
+- [Workbench 智能命令补全](https://help.aliyun.com/zh/ecs/user-guide/intelligent-command-completion.md): 终端内输入命令时实时预测并展示子命令、参数和选项的建议列表，Tab 键补全，默认启用且免费，可在 AI 设置中关闭
+- [Workbench 脚本库](https://help.aliyun.com/zh/ecs/user-guide/workbench-script-library.md): 将常用运维脚本保存云端一键执行，支持 Shell/Bat/PowerShell 类型，可从云助手导入已有命令，提供直接执行和创建临时文件执行两种模式
+- [Workbench Linux 系统管理](https://help.aliyun.com/zh/ecs/user-guide/workbench-system-management.md): 可视化面板管理 Linux 用户账号、Systemd 服务启停、Crontab 定时任务和登录历史，仅限 Workbench 终端连接方式，会话管理方式不支持
+- [Workbench 安装软件](https://help.aliyun.com/zh/ecs/user-guide/workbench-software-installation.md): 两种方式在 Linux 实例安装软件：AI Agent 模式用自然语言描述需求自动安装，OOS 软件包提供 Docker/Nginx 等预设一键部署，仅 Workbench 2.0 支持
+- [控制台会话管理连接实例](https://help.aliyun.com/zh/ecs/user-guide/connect-to-an-instance-by-using-session-manager-1.md): 基于云助手的免公网 IP 连接方式，仅需安全组出方向放行 443 端口，仅命令行界面，需安装云助手 Agent，可关闭 SSH 22/RDP 3389 入方向端口提升安全性
+- [会话管理开启加密](https://help.aliyun.com/zh/ecs/user-guide/turn-on-session-encryption-for-session-management.md): AES-256-CBC 端到端加密会话数据，支持自动协商密钥（零配置）和 KMS 客户主密钥两种模式，需云助手 Agent 2.2.4.1005 及以上版本
+- [ali-instance-cli 端口转发](https://help.aliyun.com/zh/ecs/user-guide/perform-port-forwarding-by-using-ali-instance-cli.md): portforward 命令将无公网实例的端口（80/22/3306 等）映射到本地，也支持以 ECS 为跳板访问 RDS 等私网服务，无需开放安全组入方向
+- [ali-instance-cli 临时公钥免密登录](https://help.aliyun.com/zh/ecs/user-guide/register-a-public-key-and-connect-to-an-instance-with-the-key-by-using-ali-instance-cli.md): 向实例注册 60 秒有效期的临时公钥，用第三方 SSH 工具通过对应私钥免密登录，无需在实例中预设永久密钥对，临时公钥存储在云助手服务端
+- [ali-instance-cli 免公网连接 OpenClaw](https://help.aliyun.com/zh/ecs/user-guide/connect-to-openclaw-without-internet-using-session-manager-cli.md): 通过 ali-instance-cli 端口转发将 OpenClaw Dashboard 端口 18789 映射到本地浏览器，或通过会话连接登录 TUI 界面，无需公网 IP 和安全组入方向规则
+- [图说阿里云客户端](https://help.aliyun.com/zh/ecs/user-guide/illustration-of-alibaba-cloud-client.md): 以图示形式介绍阿里云客户端桌面版的核心功能，提供 Windows/macOS x64/macOS arm64 三个平台的下载链接
+- [阿里云客户端概述](https://help.aliyun.com/zh/ecs/user-guide/overview-of-alibaba-cloud-client.md): 桌面应用程序，支持 SSH/RDP/会话管理/端口转发连接 ECS/ECI/SWAS/ACK 等资源，免密安全连接无需公网，支持多账号切换和 OSS 文件管理
+- [阿里云客户端配置身份凭证](https://help.aliyun.com/zh/ecs/user-guide/add-one-or-more-accounts-to-alibaba-cloud-client.md): 配置 AccessKey、角色扮演(Assume RamRole)、STS Token、控制台账号等身份凭证，支持添加多个凭证管理 ECS/ECI/轻量服务器资源
+- [阿里云客户端管理 ECS 实例](https://help.aliyun.com/zh/ecs/user-guide/use-alibaba-cloud-client-to-manage-ecs-instances.md): 免密免公网连接 ECS 实例，支持会话管理、SSH 密钥/密码、RDP 远程桌面等方式，含端口转发访问实例服务、启停实例操作
+- [阿里云客户端管理 ECI 容器实例](https://help.aliyun.com/zh/ecs/user-guide/use-alibaba-cloud-client-to-manage-elastic-container-instances.md): 通过客户端查看、远程连接和管理 ECI 弹性容器实例，支持容器组重启/删除、容器属性查看和终端连接
+- [阿里云客户端管理轻量应用服务器](https://help.aliyun.com/zh/ecs/user-guide/use-alibaba-cloud-client-to-manage-simple-application-servers.md): 通过客户端 SSH 或 RDP 连接轻量应用服务器（SWAS），支持 Linux 密码/密钥认证和 Windows 远程桌面连接
+- [阿里云客户端管理托管实例](https://help.aliyun.com/zh/ecs/user-guide/use-alibaba-cloud-client-to-manage-managed-instances.md): 通过客户端 SSH 或会话管理连接托管实例，支持临时密钥免密登录、注册新托管实例和注销实例
+- [阿里云客户端配置项说明](https://help.aliyun.com/zh/ecs/user-guide/use-alibaba-cloud-client.md): 客户端系统设置：本地终端环境变量导入（CLI/Terraform 凭证）、SSH 默认用户名/端口/密码保存策略、RDP 设置等配置项
+- [VNC 连接实例](https://help.aliyun.com/zh/ecs/user-guide/log-on-to-an-instance-by-using-vnc.md): 浏览器内 VNC 控制台连接实例，支持运行中和停止中状态的实例，不受安全组限制，适合排查 SSH/RDP 无法连接时的应急访问，闲置 300 秒自动断开
+- [OpenSSH/Xshell 连接 Linux 实例](https://help.aliyun.com/zh/ecs/user-guide/connect-to-a-linux-instance-by-using-an-ssh-key-pair.md): macOS/Windows 10+ 内置 OpenSSH 或 Xshell 连接 Linux，需公网 IP 和安全组放行 22 端口，支持密码和密钥对认证，含 ssh 命令示例和主机指纹验证说明
+- [远程桌面 MSTSC/Windows App 连接 Windows 实例](https://help.aliyun.com/zh/ecs/user-guide/connect-to-a-windows-instance-by-using-a-username-and-password.md): Windows 本地用 mstsc 命令启动远程桌面，macOS 用 Windows App，需公网 IP 和安全组放行 RDP 3389 端口，含修改默认端口提升安全性的注册表操作
+- [移动设备连接 Linux 实例](https://help.aliyun.com/zh/ecs/user-guide/connect-to-a-linux-instance-from-a-mobile-device.md): iOS 用 iTerminal、Android 用 JuiceSSH 通过 SSH 密码认证连接 Linux 实例，需公网 IP 和安全组放行 22 端口
+- [移动设备连接 Windows 实例](https://help.aliyun.com/zh/ecs/user-guide/connect-to-a-windows-instance-from-a-mobile-device.md): Android 设备使用 Microsoft Remote Desktop 通过 RDP 协议连接 Windows 实例，需公网 IP 和安全组放行 3389 端口
+- [选择文件传输方式](https://help.aliyun.com/zh/ecs/user-guide/choose-how-to-transfer-files.md): 按场景推荐传输方式：日常小文件用 Workbench/控制台（无需公网），大文件用 WinSCP/SCP/SFTP，多台实例分发用 OOS，无公网实例用对象存储中转
+- [控制台实例详情页上传下载文件](https://help.aliyun.com/zh/ecs/user-guide/upload-and-download-files-on-the-instance-details-page.md): 无需连接实例，直接在 ECS 控制台实例详情页上传（限 500MB）和下载文件，支持无公网实例，需 AliyunOOSFullAccess 权限
+- [Workbench 上传下载文件](https://help.aliyun.com/zh/ecs/user-guide/use-workbench-to-upload-a-file-to-a-linux-instance.md): 通过 Workbench 终端连接登录后，使用文件树上传下载文件，Linux 限 1200MB、Windows 限 100MB，会话管理方式连接不支持此功能
+- [WinSCP 传输文件到 Linux 实例](https://help.aliyun.com/zh/ecs/user-guide/use-winscp-to-upload-a-file-to-a-linux-instance.md): Windows 本地通过 WinSCP 以 SFTP 协议连接 Linux 实例传输文件，无文件大小限制，需实例有公网 IP 且安全组放通 22 端口
+- [远程桌面传输文件到 Windows 实例](https://help.aliyun.com/zh/ecs/user-guide/use-mstsc-exe-to-upload-a-file-to-a-windows-instance.md): 通过 MSTSC 远程桌面（Windows 本地）或 Windows App（macOS 本地）向 Windows 实例上传/下载文件，基于 RDP 协议需放行 3389 端口，连接时重定向本地磁盘驱动器实现文件拷贝
+- [sftp/scp/rsync 传输文件到 Linux 实例](https://help.aliyun.com/zh/ecs/user-guide/use-sftp-to-upload-files-to-a-linux-instance.md): scp 适合临时传单个文件，sftp 提供交互式管理和断点续传（reget/reput），rsync 增量同步效率最高支持 --partial 续传，均基于 SSH 协议需放行 22 端口
+- [OOS 批量分发文件到多台实例](https://help.aliyun.com/zh/ecs/user-guide/use-oos-to-upload-a-file-to-multiple-ecs-instances.md): 通过 OOS 将本地文件（上限 500MB）、OSS 文件或 HTTPS 远程文件批量上传至多台 ECS 实例，需实例状态为 Running
+- [OSS 对象存储中转传输文件](https://help.aliyun.com/zh/ecs/user-guide/transfer-files-to-an-instance-using-object-storage.md): 适合大文件或无公网实例：先用 ossbrowser 上传文件到同地域 OSS Bucket，再在实例通过内网地址（加 -internal 后缀）下载，内网下载不产生流量费用
+- [云助手上传文件到实例](https://help.aliyun.com/zh/ecs/user-guide/use-cloud-assistant-to-upload-files.md): 通过云助手将不超过 24KB 的配置文件或脚本上传到一台或多台 ECS 实例，API 为 SendFile，支持指定目标路径、权限和覆盖策略
+- [文件压缩与上传](https://help.aliyun.com/zh/ecs/user-guide/file-compression.md): 上传前将文件压缩为 zip 或 tar.gz 以提升传输效率，Windows 用系统自带或 7-Zip，macOS/Linux 用 zip/tar 命令，含压缩、解压和 md5sum 完整性校验步骤
+- [启动实例（控制台）](https://help.aliyun.com/zh/ecs/user-guide/start-an-instance.md): 通过控制台或 StartInstance API 启动已停止/已过期/欠费回收的实例，按量付费需账户余额不低于 100 元，库存不足时需变更规格
+- [重启实例（控制台）](https://help.aliyun.com/zh/ecs/user-guide/restart-instances.md): 通过控制台或 RebootInstance API 重启实例使配置变更生效，支持普通重启和强制重启，强制重启可能丢失内存缓存数据，建议低峰期操作并提前创建快照
+- [停止实例（控制台）](https://help.aliyun.com/zh/ecs/user-guide/stop-an-instance.md): 通过控制台或 StopInstance API 停止实例，支持正常关机和强制停止，按量实例可选节省停机模式释放 vCPU/内存停止计费，抢占式实例停后可能无法重启
+- [节省停机模式](https://help.aliyun.com/zh/ecs/user-guide/economical-mode.md): 按量付费实例停机释放 vCPU/内存/固定公网 IP 停止计费，保留云盘和私网 IP，重启可能因库存不足失败，可通过容量预定保障重启成功率
+- [修改实例名称和主机名](https://help.aliyun.com/zh/ecs/user-guide/modify-the-properties-of-an-instance.md): 通过控制台或 ModifyInstanceAttribute API 修改实例名称、HostName 和描述，修改主机名需通过控制台或 RebootInstance API 重启生效
+- [校准实例操作系统](https://help.aliyun.com/zh/ecs/user-guide/calibrate-the-operating-system.md): 实例内自行升级或转换操作系统（如 Ubuntu 20 升到 22、CentOS 7 转 RHEL 7）后，控制台显示与实际不一致时，通过操作系统校准功能修订平台信息，功能处于邀测中
+- [实例主机名（hostname）](https://help.aliyun.com/zh/ecs/user-guide/instance-hostnames.md): 三种主机名类型：自定义格式、IP 格式（ip-x-x-x-x.regionID.ecs.internal）和实例 ID ���式，支持创建时设置或运行中修改，含批量有序命名语法
+- [查看和修改 CPU 拓扑结构](https://help.aliyun.com/zh/ecs/user-guide/view-and-modify-cpu-topology.md): 通过 DescribeInstances 查看、RunInstances 或 ModifyInstanceAttribute 修改实例的 HT 连续/离散模式，支持 g9i/c9i/r9i 等规格族，需实例已停止
+- [修改 CPU 超线程配置](https://help.aliyun.com/zh/ecs/user-guide/specify-and-view-cpu-options.md): 通过 CpuOptions.Core 和 CpuOptions.ThreadsPerCore 参数调整启用的物理核心数和超线程开关，关闭超线程可优化内存密集型场景性能或降低按核心计费的软件许可证费用
+- [通用型 CPU 选项取值表](https://help.aliyun.com/zh/ecs/user-guide/cpu-options-of-general-purpose-instance-families.md): 通用型 g 系列（g9i/g8a/g8ae/g8i/g7a/g7/g6a/g6）各规格的 CPU 物理核心数和每核线程数取值范围，用于自定义 vCPU 和关闭超线程
+- [计算型 CPU 选项取值表](https://help.aliyun.com/zh/ecs/user-guide/cpu-options-of-compute-optimized-instance-families.md): 计算型 c 系列（c9i/c8a/c8ae/c8i/c7a/c7/c6a/c6）各规格的 CPU 物理核心数和每核线程数取值范围，用于自定义 vCPU 和关闭超线程
+- [内存型 CPU 选项取值表](https://help.aliyun.com/zh/ecs/user-guide/cpu-options-of-memory-optimized-instance-families.md): 内存型 r 系列（r9i/r8a/r8ae/r8i/r7a/r7/r6a）各规格的 CPU 物理核心数和每核线程数取值范围，用于自定义 vCPU 和关闭超线程
+- [高主频型 CPU 选项取值表](https://help.aliyun.com/zh/ecs/user-guide/cpu-options-of-instance-families-with-high-clock-speeds.md): 高主频型 hf 系列（hfg8i/hfc8i/hfr8i）各规格的 CPU 物理核心数和每核线程数取值范围，通过 RunInstances 的 CpuOptions 参数设置
+- [ECS 实例网络存储带宽配置](https://help.aliyun.com/zh/ecs/user-guide/network-and-storage-bandwidth-configuration-of-an-ecs-instance.md): 在 g9i/c9i/r9i/g9ae 等规格族的大规格实例上，通过 VPC-L1（网络增强）、EBS-L1/EBS-L2（存储增强）调整网络与存储带宽权重分配，修改后无需重启即可生效
+- [实例释放保护](https://help.aliyun.com/zh/ecs/user-guide/enable-or-disable-release-protection-for-ecs-instances.md): 为按量付费实例开启释放保护防止误删，开启后控制台/API/CLI 均无法手动释放，不阻止欠费自动释放和弹性伸缩缩容，API 参数 DeletionProtection
+- [实例标识（Instance Identity）鉴权](https://help.aliyun.com/zh/ecs/user-guide/use-instance-identities.md): 通过元数据服务获取实例标识文档（含实例 ID、IP、地域）和 PKCS#7 签名，用于软件授权激活、运行环境验证和权限控制，支持 audience 参数防止签名冒用
+- [PTP 时钟同步服务](https://help.aliyun.com/zh/ecs/user-guide/ptp-clock-synchronization.md): 基于 IEEE 1588 的亚微秒级时间同步，精度远超 NTP 毫秒级，目前邀测中仅支持中国香港地域的 g9i/c9i/r9i 等规格族，适用于高频金融交易场景
+- [发送远程命令](https://help.aliyun.com/zh/ecs/user-guide/send-remote-commands.md): 在控制台实例详情页直接向实例发送 Shell/Python/Perl（Linux）或 Bat/PowerShell（Windows）命令，基于云助手 Agent 实现，支持批量操作多台实例
+- [实例列表批量操作](https://help.aliyun.com/zh/ecs/user-guide/batch-operation-of-ecs-instances-through-the-ecs-console.md): 在控制台实例列表页勾选多台实例后批量执行升降配、发送命令、修改属性等操作，限同一地域，跨地域或跨账号批量操作需使用 OOS
+- [应用性能加速扩展程序](https://help.aliyun.com/zh/ecs/user-guide/booster-extensions.md): 通过 KeenTune 为 Nginx/MySQL/Redis/PostgreSQL 等应用自动全栈调优，平均提升约 20% 性能，适用于倚天/AMD/Intel 实例的 Alibaba Cloud Linux 3 系统，GPU 实例支持 AI 增强加速
+- [OOS 扩展程序快速安装](https://help.aliyun.com/zh/ecs/user-guide/oos-extension.md): 通过 OOS 扩展程序在 ECS 实例上一键安装 AI 编码助手（OpenCode/Qwen Code/QoderCLI）等软件，基于云助手下发安装任务，支持批量安装到多台实例
+- [VFIO 替代 UIO 驱动（DPDK）](https://help.aliyun.com/zh/ecs/user-guide/replace-uio-drivers-with-vfio-drivers.md): 在 g6/c6/r6 及更新规格上部署 DPDK 时，igb_uio 绑定可能异常，需在 GRUB 配置 intel_iommu=on 后改用 vfio-pci 驱动绑定网卡
+- [ECS 文件备份基础版](https://help.aliyun.com/zh/ecs/user-guide/configure-automatic-file-backup-and-restoration-for-ecs-instances.md): 每日自动增量备份 ECS 实例文件，最多保留 30 天，支持文件级粒度恢复到原实例或同地域其他实例，备份客户端由云助手自动安装管理
+- [文件备份基础版权益说明](https://help.aliyun.com/zh/ecs/user-guide/file-backup-essential-edition-benefit-description.md): ECS 文件备份基础版按块存储总容量计费，每账号赠送 100 GiB 免费额度全地域共享，超额按天出账，支持取消备份停止计费
+- [ECS 数据保护方案对比](https://help.aliyun.com/zh/ecs/user-guide/select-the-appropriate-ecs-data-protection-scheme-snapshot-and-file-backup-essential-edition.md): 快照与文件备份基础版对比：快照为云盘级块存储备份，文件备份为文件粒度恢复；快照按数据增量计费，文件备份按块存储容量计费含 100 GiB 免费额度
+- [升降配 ECS 实例概述](https://help.aliyun.com/zh/ecs/user-guide/overview-of-instance-configuration-changes.md): 包年包月和按量付费实例的规格变配（vCPU/内存）、公网带宽升降、数据盘计费转换方式汇总，变配后需重启生效，按量实例需先停止
+- [更改实例规格说明](https://help.aliyun.com/zh/ecs/user-guide/instance-families-that-support-instance-type-changes.md): 变配前自检流程：确认当前规格是否支持变配、操作系统兼容性检查（AMD/Intel/倚天）、NVMe 驱动安装检查，含可变配规格族对照表
+- [变配包年包月实例规格](https://help.aliyun.com/zh/ecs/user-guide/change-the-instance-types-of-subscription-instances.md): 升配或降配包年包月实例的 vCPU 和内存，升配需补差价，降配按月有 quota 额度限制，变更需重启实例生效
+- [变配按量付费实例规格](https://help.aliyun.com/zh/ecs/user-guide/change-the-instance-type-of-a-pay-as-you-go-instance.md): 变更按量付费实例的 vCPU 和内存规格，不含抢占式实例，需先停机（建议普通停机模式），变更后按新规格计费
+- [跨可用区更改实例规格](https://help.aliyun.com/zh/ecs/user-guide/change-instance-types-across-zones.md): 将实例迁移到同地域其他可用区并在同规格族内变配 vCPU/内存，迁移约 15 分钟需停机，固定公网 IP 不变但私网 IP 会变更，抢占式实例不支持
+- [修改固定公网带宽](https://help.aliyun.com/zh/ecs/user-guide/modify-the-bandwidth-configurations.md): 升降固定公网 IP 带宽值、按固定带宽和按流量计费方式互转，或通过设置非零带宽值分配固定公网 IP，带宽设为 0 时专有网络实例释放公网 IP
+- [包年包月实例临时升级带宽（连续时段）](https://help.aliyun.com/zh/ecs/user-guide/temporary-bandwidth-upgrade.md): 在指定连续时段内临时升级固定公网带宽，最长 6 个月，到期自动恢复，最大 200 Mbps，起止间隔不小于 3 小时，无需重启即时生效
+- [包年包月实例临时升级带宽（周期性）](https://help.aliyun.com/zh/ecs/user-guide/temporary-upgrade-bandwidth-on-a-daily-basis.md): 通过 OOS 自动化运维按 Cron 表达式周期性升级包年包月实例固定公网带宽，适用于每日/每周固定时段的流量高峰，需配置 OOS RAM 角色和 ModifyInstanceNetworkSpec 权限
+- [变更 EIP 带宽](https://help.aliyun.com/zh/ecs/user-guide/modify-the-bandwidth-of-an-eip.md): 按量付费 EIP 支持升降配带宽和按流量/按带宽计费互转，包年包月 EIP 仅支持升配和短时升配（按小时临时升级），续费时可变配带宽
+- [续费降配包年包月实例（用户指南）](https://help.aliyun.com/zh/ecs/user-guide/downgrade-instance-configurations-during-renewal.md): 续费时同步降低同规格族内实例配置、变更公网带宽或将数据盘转按量付费，到期前 15 日内可操作，降配在新计费周期重启后生效
+- [续费变配到期实例（用户指南）](https://help.aliyun.com/zh/ecs/user-guide/renewal-change.md): 包年包月实例到期后、释放前使用续费变配功能同时续费和变更实例规格（支持升降配），变配完成后实例自动重启，新规格立即生效
+- [释放实例](https://help.aliyun.com/zh/ecs/user-guide/release-an-instance.md): 通过控制台或 DeleteInstance/DeleteInstances API 立即或定时释放按量实例，包年包月需先退订；释放后本地盘和系统盘数据不可恢复，支持开启实例释放保护防误删
+- [镜像概述](https://help.aliyun.com/zh/ecs/user-guide/image-overview.md): ECS 镜像五种类型（公共/自定义/共享/云市场/社区）的功能对比，镜像选择要素（地域/OS/规格兼容性），以及自定义镜像与实例、快照的创建和关联关系
+- [图说镜像](https://help.aliyun.com/zh/ecs/user-guide/tew-mirror.md)
+- [查找镜像](https://help.aliyun.com/zh/ecs/user-guide/find-an-image.md): 通过控制台购买页、镜像目录或 DescribeImages API 查找公共/自定义/共享/云市场/社区镜像，镜像目录支持按标准镜像标识筛选
+- [Alibaba Cloud Linux 镜像概述](https://help.aliyun.com/zh/ecs/user-guide/alibaba-cloud-linux.md): 官方 Linux 发行版，ACL 3 基于 kernel 5.10 兼容 CentOS 8，ACL 2 基于 kernel 4.19 兼容 CentOS 7，提供标准版/快速启动版/等保版/UEFI 版/ARM 版
+- [Ubuntu 预装 NVIDIA GPU 驱动镜像](https://help.aliyun.com/zh/ecs/user-guide/ubuntu-pre-installed-nvidia-gpu-driver-image.md): Ubuntu 22.04/24.04 公共镜像预装 NVIDIA 驱动 580.x、CUDA 12.8/13.0、cuDNN 9.x、Docker、NCCL 和 NVIDIA Container Toolkit，支持 gn7/gn8 等 GPU 规格族，开箱即用部署 AI 训练推理
+- [ACL 3 预装 GPU 驱动镜像](https://help.aliyun.com/zh/ecs/user-guide/alibaba-cloud-linux-3-with-pre-installed-nvidia-gpu-drivers.md): 预装 NVIDIA GPU 驱动 580.126.09、CUDA 12.8/13.0、cuDNN 9.19、NCCL、Docker 和 Container Toolkit，支持 gn7/gn8/gn9 系列 GPU 实例
+- [自定义镜像概述](https://help.aliyun.com/zh/ecs/user-guide/overview-36.md): 通过实例、快照创建或本地导入的自定义镜像，支持创建/导入/复制/共享/导出/删除全生命周期管理，跨地域部署需先复制镜像
+- [共享镜像](https://help.aliyun.com/zh/ecs/user-guide/shared-image.md): 跨账号或企业组织同地域共享自定义镜像，支持共享给指定账号或通过资源目录自动同步，共享不收费但使用付费镜像创建实例时向使用方收费
+- [社区镜像](https://help.aliyun.com/zh/ecs/user-guide/overview-12.md): 完全公开的用户发布镜像，仅通过认证的企业客户可发布，加密镜像不可发布为社区镜像，不支持共享/导出/复制
+- [云市场镜像](https://help.aliyun.com/zh/ecs/user-guide/alibaba-cloud-market-mirror-images.md): ISV 提供的预装软件环境镜像，可在创建实例或更换系统盘时选用，支持宝塔面板、WDCP、Oracle/MySQL/SQL Server 数据库等预置环境
+- [快照创建自定义镜像](https://help.aliyun.com/zh/ecs/user-guide/create-a-custom-image-from-a-snapshot-1.md): 从系统盘快照创建自定义镜像用于环境复制，仅支持系统盘快照（数据盘和共享快照不可用），可附加数据盘快照，跨地域需先复制镜像，API 为 CreateImage
+- [实例创建自定义镜像](https://help.aliyun.com/zh/ecs/user-guide/create-a-custom-image-from-an-instance.md): 从运行中的实例创建自定义镜像，系统自动为每块云盘生成快照，适合批量部署相同环境。本地 SSD 型 i 系列不支持，建议停止实例后再操作以确保数据一致
+- [实例初始化工具 cloud-init 与 Vminit](https://help.aliyun.com/zh/ecs/user-guide/manage-the-instance-initialization-configuration.md): Linux 实例使用 cloud-init、Windows 实例使用 Vminit 完成自动初始化，包括网络配置、主机名设置和自定义脚本执行。cloud-init 通过 /etc/cloud/cloud.cfg 控制模块运行频率，Vminit 包含 10 个插件覆盖 RDP 开启、数据盘初始化、KMS 激活等功能
+- [导入镜像流程](https://help.aliyun.com/zh/ecs/user-guide/import-an-image.md): 将本地 Linux/Windows 镜像导入 ECS 的端到端流程：制作镜像(VirtualBox) - 安装 cloud-init/virtio - sersi 检测修复 - 上传 OSS - ImportImage 导入，支持 RAW/VHD/QCOW2/VMDK 格式
+- [Linux 镜像导入规范](https://help.aliyun.com/zh/ecs/user-guide/cloud-marketplace-mirror-specification.md): Linux 自定义镜像导入要求：磁盘分区用 UUID 配置 fstab/grub、安装 virtio/NVMe 驱动和 cloud-init 23.2.2、系统盘最小 20 GiB、不使用 SWAP/LVM，支持 BIOS/UEFI 启动模式
+- [Windows 镜像导入规范](https://help.aliyun.com/zh/ecs/user-guide/requirements-on-alibaba-cloud-marketplace-windows-images.md): Windows 自定义镜像导入要求：系统盘最小 20 GiB、安装 virtio 驱动和云助手、启用远程桌面 3389 端口、BIOS 需活动主分区 NTFS/UEFI 需 FAT32 EFI 分区
+- [VirtualBox 制作 Linux 镜像](https://help.aliyun.com/zh/ecs/user-guide/create-a-virtual-machine-and-install-an-operating-system-1.md): 使用 VirtualBox 创建虚拟机并安装 Linux（以 CentOS 7.9 为例），导出 VHD/VMDK 格式镜像文件后导入 ECS，支持 BIOS 和 UEFI 两种启动模式
+- [安装 cloud-init](https://help.aliyun.com/zh/ecs/user-guide/install-cloud-init.md): 迁移上云前在 Linux 镜像中安装 cloud-init 实现实例初始化，推荐阿里云版 23.2.2（支持加固模式元数据访问），提供 CentOS/Ubuntu/Debian 等系统的 rpm/deb 软件包下载
+- [Linux 镜像安装 virtio 驱动](https://help.aliyun.com/zh/ecs/user-guide/install-the-virtio-driver.md): 制作 Linux 自定义镜像时检查并安装 virtio 驱动，通过 grep CONFIG_VIRTIO_BLK 判断内核支持状态，用 dracut/mkinitramfs 将驱动添加到 initramfs，支持 CentOS/Debian/SUSE 系列
+- [配置定制版 Linux 镜像](https://help.aliyun.com/zh/ecs/user-guide/customize-linux-images.md): 非标准 Linux 镜像（无法安装 cloud-init）导入前需在 /aliyun_custom_image 目录添加 os.conf 解析脚本，实现首次启动时自动配置主机名、密码和网络
+- [sersi 镜像检测修复工具](https://help.aliyun.com/zh/ecs/user-guide/check-whether-an-image-meets-the-import-requirements.md): 导入镜像前用 sersi 工具扫描 virtio/NVMe 驱动、fstab/grub 配置、cloud-init、DHCP 等检测项，支持自动修复，适用于 RedHat/Debian/SUSE 系列，不支持 Windows 和 FreeBSD
+- [获取 VirtualBox Linux 镜像文件](https://help.aliyun.com/zh/ecs/user-guide/obtain-a-linux-image-file.md): 在 VirtualBox 管理器中找到已制作的 Linux 虚拟机 VHD 镜像文件的存储路径，用于后续导入 ECS，非 RAW/VHD/QCOW2/VMDK 格式需先转换
+- [VirtualBox 制作 Windows 镜像](https://help.aliyun.com/zh/ecs/user-guide/create-a-virtual-machine-and-install-an-operating-system.md): 使用 VirtualBox 创建虚拟机安装 Windows Server（以 2022 Datacenter 为例），磁盘选择 VHD 或 VMDK 格式以免转换，支持 BIOS 和 UEFI 启动模式
+- [安装 Vminit](https://help.aliyun.com/zh/ecs/user-guide/install-vminit.md): Windows 自定义镜像的初始化工具，提供配置网络、设置主机名、执行自定义脚本等能力。支持图形化和命令行安装（AliyunVminit_2.0.1.2_x86_64.exe /SILENT /FORCE），可通过 customized_config 禁用特定插件
+- [Windows 镜像安装 virtio 驱动](https://help.aliyun.com/zh/ecs/user-guide/install-the-virtio-driver-1.md): 制作 Windows 自定义镜像时安装阿里云 virtio 驱动（含 netkvm/viostor/vioser），支持图形化和 PowerShell 静默安装，通过 viostor.sys 版本号验证安装结果
+- [获取 VirtualBox Windows 镜像文件](https://help.aliyun.com/zh/ecs/user-guide/obtain-a-windows-image-file.md): 在 VirtualBox 管理器中找到已制作的 Windows 虚拟机 VHD 镜像文件的存储路径，用于后续导入 ECS，非 RAW/VHD/QCOW2/VMDK 格式需先转换
+- [转换镜像格式](https://help.aliyun.com/zh/ecs/user-guide/convert-the-format-of-an-image.md): 使用 qemu-img convert 在 RAW/QCOW2/VMDK/VHD/VHDX/VDI/QED 格式间互转，支持 Windows 和 Linux 环境，含 -f 源格式 -O 目标格式参数说明和命令示例
+- [导入自定义镜像](https://help.aliyun.com/zh/ecs/user-guide/import-a-custom-image.md): 将本地 QCOW2/VHD/RAW/VMDK 格式镜像文件上传到 OSS 后导入 ECS，支持 Windows 和 Linux 系统。需授权 AliyunECSImageImportDefaultRole 角色，导入后可开启镜像检测自动修复
+- [ImageBuilder 导入并修复镜像](https://help.aliyun.com/zh/ecs/user-guide/import-images-through-the-image-build-service-imagebuilder.md): 通过镜像构建服务在导入镜像时自动检测修复驱动缺失、配置异常等问题，支持自动安装云助手和 NVMe 驱动检测。流程包括导入、检测修复、构建、测试和分发五个阶段
+- [导出自定义镜像](https://help.aliyun.com/zh/ecs/user-guide/export-a-custom-image.md): 将自定义镜像导出到 OSS 下载到本地，支持 RAW/VHD/QCOW2/VDI/VMDK 格式。不支持导出加密镜像和 Windows Server 镜像，单盘最大 2 TiB（RAW），API 为 ExportImage
+- [使用共享镜像](https://help.aliyun.com/zh/ecs/user-guide/use-shared-images.md): 被共享者使用共享镜像创建实例、更换系统盘或复制为自定义镜像的操作流程。共享镜像不占被共享者镜像额度，加密共享镜像创建实例时必须指定 Encrypted=true
+- [取消共享镜像](https://help.aliyun.com/zh/ecs/user-guide/unshare-custom-images.md): 取消共享后被共享者无法查询和使用该镜像创建实例或更换系统盘，但已创建的实例不受影响
+- [检测自定义镜像并修复](https://help.aliyun.com/zh/ecs/user-guide/detect-custom-images-and-repair.md): 在创建或导入镜像后自动检测 Virtio/NVMe 驱动、Fstab/Grub 配置、DHCP 网络、cloud-init 等 15+ 项目，支持 OOS 一键修复。通过 CreateImage 设置 DetectionStrategy=Standard 开启
+- [OOS 更新自定义镜像](https://help.aliyun.com/zh/ecs/user-guide/update-a-custom-image.md): 通过 OOS 公共模板 ACS-ECS-UpdateImage 自动创建临时实例、执行云助手脚本更新软件环境、生成新版镜像并释放临时资源，支持镜像复制和跨账号共享分发
+- [复制自定义镜像](https://help.aliyun.com/zh/ecs/user-guide/copy-an-image.md): 跨地域复制镜像用于多地域部署，支持普通复制和加密复制（非加密转加密或更换 KMS 密钥）。最多同时复制到 5 个地域，大于 2 TiB 镜像建议先复制快照再创建镜像，API 为 CopyImage
+- [修改自定义镜像属性和标签](https://help.aliyun.com/zh/ecs/user-guide/modify-the-attributes-of-a-custom-image.md): 修改自定义镜像的名称、描述、镜像族系、NVMe 驱动支持和启动模式（UEFI/BIOS），以及镜像标签的绑定和解绑
+- [下载镜像列表信息](https://help.aliyun.com/zh/ecs/user-guide/download-a-list-of-image-information.md): 在控制台导出当前地域下自定义镜像、公共镜像或共享镜像的列表为 CSV 文件，包含镜像 ID、名称、操作系统类型、容量、标签等信息
+- [自定义镜像加密](https://help.aliyun.com/zh/ecs/user-guide/encrypt-custom-images-1.md): 通过加密镜像创建加密云盘或复制镜像实现加密状态变更。支持非加密转加密和更换 KMS 密钥，加密行为不可逆。创建实例时通过 Encrypted=true 和 KMSKeyId 参数指定加密
+- [自动化构建镜像概述](https://help.aliyun.com/zh/ecs/user-guide/overview-20.md): ImageBuilder、OOS 和 Packer 三种自动化构建方式对比。ImageBuilder 兼容 Dockerfile 且可视化，OOS 使用公共模板无需编码，Packer 开源支持多云平台
+- [ImageBuilder 构建命令](https://help.aliyun.com/zh/ecs/user-guide/commands-supported-by-image-builder.md): 支持 YAML 和 Dockerfile 两种格式。YAML 命令包括 RunShellCommand、RunPowerShellCommand、OSSDownload/Upload、WebDownload、Reboot 等 Action，Dockerfile 支持 RUN/ENV/COPY/WORKDIR 等指令
+- [创建镜像组件](https://help.aliyun.com/zh/ecs/user-guide/create-an-image-component.md): 通过控制台创建自定义镜像组件（Build 或 Test 类型），支持 YAML 和 Dockerfile 格式指令，每个组件最多 127 条命令，单条不超过 16KB，对应 API CreateImageComponent
+- [创建镜像模板与构建任务](https://help.aliyun.com/zh/ecs/user-guide/create-an-image-template.md): 指定源镜像和组件创建镜像模板，支持跨地域（最多 20 个目标地域）和跨账号分发，自动检测修复 CloudInit/Virtio/Grub 等问题，构建时创建按量计费中转实例
+- [删除镜像模板和镜像组件](https://help.aliyun.com/zh/ecs/user-guide/view-and-execute-an-image-template.md): 通过控制台或 DeleteImagePipeline/DeleteImageComponent API 删除镜像模板和自定义组件，删除前需无运行中的构建任务，被引用的组件需先删除模板
+- [ImageBuilder 一键修复镜像](https://help.aliyun.com/zh/ecs/user-guide/use-image-builder-to-fix-images-with-a-single-click.md): 标准修复覆盖 Fstab/Grub/DHCP/Virtio 等启动问题，全量修复额外安装云助手、NVMe 驱动和云安全中心 Agent。修复过程创建按量付费临时实例，完成后自动释放
+- [ImageBuilder 服务关联角色](https://help.aliyun.com/zh/ecs/user-guide/manage-the-service-linked-role-for-image-builder.md): 管理 AliyunServiceRoleForECSImageBuilder 角色，授权镜像构建服务访问 OOS、ECS、VPC 资源。创建镜像组件或模板时自动创建，删除前需先清除所有镜像模板
+- [OOS 创建自定义镜像](https://help.aliyun.com/zh/ecs/user-guide/use-oos-to-create-a-custom-image.md): 使用 OOS 公共模板 ACS-ECS-CreateAndCopyImage 一键完成发送远程命令、创建自定义镜像、跨地域复制和共享镜像，支持自动更新伸缩配置
+- [Packer 创建自定义镜像](https://help.aliyun.com/zh/ecs/user-guide/use-packer-to-create-a-custom-image.md): 在 ECS 实例上安装 Packer，通过 HCL/JSON 模板定义 alicloud-ecs Builder 和 Shell Provisioner 自动化构建自定义镜像，含 AccessKey 环境变量配置和 packer build 命令
+- [Packer 创建并导入本地镜像](https://help.aliyun.com/zh/ecs/user-guide/use-packer-to-create-and-import-an-on-premises-image.md): 在本地 Ubuntu 服务器上通过 KVM+Packer 制作 CentOS 6.9 镜像并上传至阿里云，需安装 qemu-kvm 和配置 OSS Bucket，镜像文件不超过 5 GB
+- [Packer DevOps 常用配置](https://help.aliyun.com/zh/ecs/user-guide/alicloud-image-builder-parameters-used-to-implement-devops.md): Packer 构建 ECS 镜像的常用配置：tags 绑定镜像标签、image_ignore_data_disks 排除数据盘、快照超时设置等参数示例，适用于标准化 CI/CD 镜像构建流程
+- [镜像族系概述](https://help.aliyun.com/zh/ecs/user-guide/overview-37.md): ImageFamily 将一组相关镜像分类管理，通过 RunInstances 设置 ImageFamily 参数自动使用族系内最新可用镜像创建实例。支持公共/自定义/共享/社区镜像，族系内最多 100 个镜像
+- [设置镜像族系](https://help.aliyun.com/zh/ecs/user-guide/set-an-image-family.md): 在创建自定义镜像或编辑镜像属性时指定 ImageFamily 参数。通过控制台或 CreateImage API 设置，族系名称 2-128 字符且不能以 acs 开头，复制镜像不继承族系信息
+- [镜像族系创建实例](https://help.aliyun.com/zh/ecs/user-guide/create-an-ecs-instance-from-an-image-family.md): RunInstances 时指定 ImageFamily 参数替代 ImageId，系统自动选取族系内最新可用镜像，可通过 DescribeImageFromFamily 验证当前最新镜像
+- [弃用或恢复镜像族系中的镜像](https://help.aliyun.com/zh/ecs/user-guide/set-the-state-of-an-image-to-deprecated-or-restore-an-image.md): 将族系内最新镜像标记为弃用，使系统自动回退到上一可用版本创建实例。弃用镜像仍可直接创建实例但不能共享和复制，通过 ModifyImageAttribute API 或控制台操作
+- [删除自定义镜像（控制台）](https://help.aliyun.com/zh/ecs/user-guide/delete-a-custom-image.md): 通过控制台删除自定义镜像，可选同步删除关联快照。已创建实例的镜像需强制删除，删除后实例仍可用但无法重新初始化系统盘。共享镜像需先解除共享关系，API: DeleteImage
+- [更换操作系统（更换系统盘）](https://help.aliyun.com/zh/ecs/user-guide/replace-the-operating-system-of-an-instance.md): 通过更换系统盘切换操作系统，原系统盘数据永久删除不可恢复，仅中国内地支持 Windows/Linux 互换，API 为 ReplaceSystemDisk，操作前需创建快照备份
+- [操作系统迁移及升级（更换与迁移）](https://help.aliyun.com/zh/ecs/user-guide/migrate-the-operating-system-of-an-ecs-instance.md): EOL 操作系统原地迁移升级，保留系统盘数据。Windows 支持 2008R2→2012R2→2016/2019/2022 逐级升级，Linux 支持 CentOS 7/8 迁移至 Alibaba Cloud Linux 2/3，迁移工具不支持热迁移需停机
+- [操作系统 EOL 生命周期概述](https://help.aliyun.com/zh/ecs/user-guide/eol-overview.md): 操作系统主流支持（MS）、延长支持（ELS）和停服（EOL）三个生命周期阶段的特点。EOL 后无安全更新，面临安全、兼容性和合规风险，应对方案包括订阅 ELS 或迁移升级操作系统
+- [CentOS EOL 迁移方案](https://help.aliyun.com/zh/ecs/user-guide/options-for-dealing-with-centos-linux-end-of-life.md): CentOS 5/6/7/8 已全部 EOL，迁移目标可选 Alibaba Cloud Linux、Anolis OS、RHEL、Rocky Linux、AlmaLinux 等。支持原地迁移（保留数据）、更换系统盘和重新部署三种方案
+- [Alibaba Cloud Linux EOL 应对方案](https://help.aliyun.com/zh/ecs/user-guide/solution-for-alibaba-cloud-linux-2-entering-the-els-phase.md): Alibaba Cloud Linux 2 于 2026-03-31 停服，应对方案包括升级到 Alibaba Cloud Linux 3、更换系统盘重新部署或订阅免费一年延保服务，含升级前测试准备和数据备份流程
+- [Ubuntu EOL 应对方案](https://help.aliyun.com/zh/ecs/user-guide/ubuntu-eol-solution.md): Ubuntu 14.04~20.04 LTS 各版本停服时间线，应对方案包括通过 do-release-upgrade 命令升级到新 LTS 版本或订阅 Ubuntu Pro ESM 获得额外 5 年安全更新
+- [RHEL EOL 应对方案](https://help.aliyun.com/zh/ecs/user-guide/actions-to-take-when-red-hat-7-enters-the-extended-life-phase.md): RHEL 7 于 2024-06-30 进入延长生命阶段，可通过 Leapp 工具原地升级到 RHEL 8/9 或购买 ELS 订阅（适用于 RHEL 7.9，有效期至 2028-06-30），含 ELS 按 vCPU 阶梯定价说明
+- [Windows Server EOL 应对方案](https://help.aliyun.com/zh/ecs/user-guide/windows-server-eol-guide.md): Windows Server 2008/2012 已停服，2012 ESU 于 2026-10-13 终止，可通过操作系统迁移功能原地升级到 2016/2019/2022 版本，支持保留现有应用和配置
+- [其他操作系统生命周期](https://help.aliyun.com/zh/ecs/user-guide/other-operating-systems.md): Debian/Anolis OS/FreeBSD/OpenSUSE/SUSE Linux/Fedora/Rocky Linux/AlmaLinux/Fedora CoreOS 各版本的发布日期、EOL 日期和扩展支持时间汇总，含 Debian 9/10/11 EOL 后切换阿里云归档源的方法
+- [ECS 软件许可证购买](https://help.aliyun.com/zh/ecs/user-guide/purchase-software-licenses-for-ecs-instances.md): 为 ECS 实例购买 RHEL/RHEL ELS/SUSE/SUSE for SAP 软件许可证，支持 CentOS 转 RHEL、迁移实例激活和延长生命周期等场景，按 vCPU 阶梯计费，需专有网络和云助手 Agent
+- [KMS 域名激活 VPC Windows 实例](https://help.aliyun.com/zh/ecs/user-guide/how-to-use-the-kms-domain-name-to-activate-a-windows-instance-in-a-vpc.md): 通过 slmgr -skms 和 slmgr -ato 命令手动激活 VPC 网络下的 Windows Server 系统，含各地域 KMS 域名（如 kms.cloud.aliyuncs.com）和经典网络域名差异
+- [块存储概述](https://help.aliyun.com/zh/ecs/user-guide/elastic-block-storage-devices.md): 云盘（ESSD/ESSD AutoPL/ESSD PL-X/ESSD Entry/同城冗余）、本地盘和弹性临时盘三大类块存储介绍，含本地冗余(9 个 9)与同城冗余(12 个 9)可靠性对比及各类型适用场景
+- [ESSD AutoPL 云盘](https://help.aliyun.com/zh/ecs/user-guide/essd-autopl-disks.md): 容量与性能解耦的 ESSD 云盘，性能=基准+预配置+突发，最高 100 万 IOPS/4 GB/s 吞吐，突发每小时 10 万 IO 免费额度，费用封顶机制保证成本可控
+- [ESSD PL-X 云盘（邀测）](https://help.aliyun.com/zh/ecs/user-guide/essd-pl-x-cloud-disk.md): 最高 300 万 IOPS/12 GB/s 吞吐/0.03ms 写延迟的自定义 IOPS 云盘，仅支持 g8ise 规格族和上海 M 可用区，不支持快照/加密/多重挂载，容量 40~32768 GiB
+- [ESSD 云盘](https://help.aliyun.com/zh/ecs/user-guide/essds.md): 四个性能级别（PL0~PL3）的企业级 SSD 云盘，PL3 最高 100 万 IOPS/4000 MB/s，PL0 最高 1 万 IOPS/180 MB/s，写延迟 0.2ms，适用于 OLTP/NoSQL/ELK 等场景
+- [弹性临时盘](https://help.aliyun.com/zh/ecs/user-guide/elastic-ephemeral-disks.md): 可自定义容量的临时块存储，最高 100 万 IOPS/4 GB/s 吞吐，支持随实例或单独创建/卸载/扩容，故障小时级恢复（优于本地盘），仅支持 g8ise/g8a/g8i/c8a 等规格族
+- [本地盘](https://help.aliyun.com/zh/ecs/user-guide/local-disks.md): ECS 物理机本地硬盘，分 NVMe SSD（i 系列/gn5）和 SATA HDD（d 系列大数据型）两类，存在单点故障数据丢失风险，不支持单独创建/扩容/快照，适合高性能缓存和 Hadoop 场景
+- [ESSD 云盘数据可靠性](https://help.aliyun.com/zh/ecs/user-guide/essd-cloud-disk-data-reliability.md): 三副本同步写入（机架隔离分布）确保强一致性，CRC 全链路校验防止静默数据损坏，故障时自动从健康副本恢复，本地冗余 9 个 9/同城冗余 12 个 9 数据可靠性
+- [块存储性能](https://help.aliyun.com/zh/ecs/user-guide/block-storage-performance.md): IOPS/吞吐量/时延/容量四大性能指标说明，含 ESSD PL0~PL3/AutoPL/PL-X/同城冗余/Entry/SSD/高效云盘的性能对比表和单盘 IOPS/吞吐量计算公式
+- [存储 I/O 性能](https://help.aliyun.com/zh/ecs/user-guide/storage-i-or-o-performance.md): 实例规格对云盘 I/O 的限制关系：云盘性能超过实例规格上限时以实例为准。七代及以后小规格实例支持 IOPS/带宽突发（large 5 分钟到 4xlarge 40 分钟），含 g7se 实例与 ESSD 搭配示例
+- [NVMe 协议概述](https://help.aliyun.com/zh/ecs/user-guide/nvme-protocol.md): NVMe 协议挂载 ESSD/ESSD AutoPL 云盘降低 I/O 延迟，要求实例规格支持 NVMe（DescribeInstanceTypes 查 NvmeSupport）且镜像含 NVMe 驱动，设备名为 /dev/nvmeXn1
+- [系统盘使用指引](https://help.aliyun.com/zh/ecs/user-guide/create-and-use-a-system-disk.md): 系统盘全生命周期操作索引：随实例创建、快照备份与回滚、变更云盘类型/性能级别、在线扩容、初始化重置、卸载修复，系统盘仅支持随实例释放
+- [数据盘使用指引](https://help.aliyun.com/zh/ecs/user-guide/create-and-use-a-data-disk.md): 数据盘全生命周期操作索引：创建空盘或从快照/克隆创建、挂载到实例、Linux/Windows 分区初始化、扩容、变更类型、卸载释放，支持跨实例迁移
+- [创建空数据盘](https://help.aliyun.com/zh/ecs/user-guide/create-a-disk.md): 创建全新数据盘扩展存储，包年包月盘需随实例创建且到期随实例释放，按量付费盘可单独创建。支持 ESSD 多重挂载和加密，API 为 CreateDisk
+- [快照创建数据盘](https://help.aliyun.com/zh/ecs/user-guide/create-a-disk-from-a-snapshot.md): 从已有快照创建数据盘实现跨可用区数据复制，新盘容量不能小于原盘，系统盘快照创建的云盘仅能作为数据盘。已含分区和文件系统无需初始化，挂载后直接 mount 使用
+- [克隆云盘](https://help.aliyun.com/zh/ecs/user-guide/public-preview-clone-cloud-disk.md): 同可用区内复制 ESSD 系列云盘数据到新盘，支持自定义容量和加密属性，新盘仅支持按量付费数据盘。克隆功能本身免费，数据加载完成前读时延增加
+- [挂载数据盘](https://help.aliyun.com/zh/ecs/user-guide/attach-a-data-disk.md): 将单独购买的数据盘挂载到 ECS 实例，支持控制台云助手一键初始化（GPT 分区+ext4）或命令行手动初始化，可设置云盘随实例释放和自动快照随云盘释放
+- [初始化数据盘概述](https://help.aliyun.com/zh/ecs/user-guide/overview-27.md): Linux 用 fdisk/Parted 分区 + ext4/xfs 文件系统，Windows 用磁盘管理 + NTFS，小于 2 TiB 可选 MBR/GPT 分区，大于 2 TiB 必须用 GPT，含 NVMe 云盘设备名规则
+- [初始化数据盘（Linux）](https://help.aliyun.com/zh/ecs/user-guide/initialize-a-data-disk-whose-size-does-not-exceed-2-tib-on-a-linux-instance.md): Linux 实例新数据盘分区和挂载文件系统，支持控制台云助手初始化（GPT+ext4）或命令行 fdisk/parted 分区+mkfs 格式化，含开机自动挂载 /etc/fstab 配置
+- [初始化数据盘（Windows）](https://help.aliyun.com/zh/ecs/user-guide/initialize-a-data-disk-up-to-2-tib-in-size-on-a-windows-instance.md): Windows 实例 2 TiB 以内新数据盘初始化，通过磁盘管理执行联机、MBR/GPT 分区、NTFS 格式化。扩容至 16-32 TiB 选分配单元 8192，32-64 TiB 选 16K
+- [云盘管理：更换系统盘](https://help.aliyun.com/zh/ecs/user-guide/replace-the-operating-system-of-an-instance-1.md): 从云盘管理入口更换系统盘实现操作系统切换，原盘释放后数据不可恢复，系统盘 ID 变更但 IP 和 MAC 不变，跨类型更换需重新初始化数据盘
+- [重新初始化系统盘](https://help.aliyun.com/zh/ecs/user-guide/re-initialize-a-system-disk.md): 将系统盘恢复到创建时状态，清空所有已写入数据。需先停止实例且使用普通停机模式，不影响数据盘数据但 Linux 实例需重新挂载数据盘分区
+- [重新初始化数据盘](https://help.aliyun.com/zh/ecs/user-guide/re-initialize-a-data-disk.md): 将数据盘恢复到创建时状态：从快照创建的盘恢复到快照数据，空盘恢复到无分区无文件系统状态。需停止实例，不支持多重挂载云盘和旧版极速可用快照
+- [快照回滚云盘（云盘入口）](https://help.aliyun.com/zh/ecs/user-guide/roll-back-a-disk-by-using-a-snapshot-1.md): 通过云盘管理入口使用快照回滚云盘数据到历史时间点，需先停止实例，仅支持回滚到原盘，更换过操作系统的系统盘快照不可回滚，API 为 ResetDisk
+- [在线变更云盘类型](https://help.aliyun.com/zh/ecs/user-guide/change-the-category-of-a-disk.md): 不中断服务在线变更 ESSD/高效云盘之间的类型，支持本地冗余和同城冗余切换，不同 PL 级别间可互换，不支持普通云盘和本地盘
+- [修改 ESSD 云盘性能级别](https://help.aliyun.com/zh/ecs/user-guide/modify-the-performance-levels-of-essds.md): 在 PL0/PL1/PL2/PL3 之间调整 ESSD 云盘性能，包年包月仅支持升级，按量付费支持升降但不能降到 PL0，可通过 ModifyDiskSpec API 操作，性能级别与云盘容量相关
+- [修改 ESSD AutoPL 云盘性能配置](https://help.aliyun.com/zh/ecs/user-guide/modify-the-performance-configurations-of-an-essd-autopl-disk.md): 开启/关闭预配置 IOPS 和性能突发，调整预配置 IOPS 值（间隔须超 1 小时），IOPS 设为 0 自动关闭预配置，通过 ModifyDiskAttribute API 管理性能突发开关
+- [云盘多重挂载](https://help.aliyun.com/zh/ecs/user-guide/enable-multi-attach.md): 将一块 ESSD/ESSD AutoPL/同城冗余云盘挂载到最多 16 台 NVMe 实例实现数据共享，适用于 Oracle RAC 故障转移、分布式缓存加速和机器学习数据并行，仅支持按量付费数据盘
+- [加密云盘](https://help.aliyun.com/zh/ecs/user-guide/encryption-overview.md): 通过 KMS 服务密钥或自管主密钥加密云盘数据，支持系统盘和数据盘，加密不可逆，通过 RunInstances/CreateDisk API 的 Encrypted 和 KMSKeyId 参数控制
+- [块存储账号级默认加密](https://help.aliyun.com/zh/ecs/user-guide/account-level-ebs-default-encryption.md): 按地域开启默认加密后，所有新建云盘、复制快照和镜像强制加密，API 为 EnableDiskEncryptionByDefault/DisableDiskEncryptionByDefault，加密密钥支持服务密钥或 KMS 自定义主密钥
+- [查看云盘监控信息](https://help.aliyun.com/zh/ecs/user-guide/view-the-monitoring-data-of-a-disk.md): ECS 控制台分钟级和 CloudLens for EBS 秒级两种粒度查看云盘 IOPS、吞吐量、延迟、使用率和 inode 使用率，ESSD AutoPL 云盘还可查看 Burst IO 费用
+- [CloudLens for EBS 云盘分析](https://help.aliyun.com/zh/ecs/user-guide/cloud-disk-analysis.md): 通过 EBS 控制台查看云盘秒级监控数据（IOPS/吞吐量/BPS 水位线/IO 平均大小），支持查看 ESSD AutoPL 云盘 Burst 详情和单云盘风险事件
+- [CloudLens for EBS 云盘事件](https://help.aliyun.com/zh/ecs/user-guide/view-and-handle-risk-events.md): 通过 CloudLens for EBS 查询并处理云盘风险事件，如性能达上限、快照未备份等异常，支持 DescribeEvents API 和 EventBridge 事件订阅
+- [CloudLens for EBS 应用管理](https://help.aliyun.com/zh/ecs/user-guide/ebs-application-management.md): 将云盘监控数据按标签分组生成周期性报告，通过邮件或站内信发送通知，支持按周/双周/月重复，每个账号最多 5 个自定义应用加 1 个 default 应用
+- [CloudLens for EBS 云盘事件类型说明](https://help.aliyun.com/zh/ecs/user-guide/risk-events-overview.md): CloudLens 支持上报的 13 种云盘事件：数据保护、成本优化、IO Hang、实例/云盘 IOPS/BPS 达上限、慢 IO、突发 IO、非 4K 对齐等，含 EventType/EventLevel 属性和处理建议
+- [查看块存储序列号](https://help.aliyun.com/zh/ecs/user-guide/query-the-serial-number-of-a-disk.md): 在 Linux 中用 udevadm info 或 lsblk --output=SERIAL、Windows 中用 PowerShell 查看云盘/本地盘序列号，用于识别块存储设备和确认块存储 ID，仅支持 2020-06-10 后创建的块存储
+- [卸载或挂载系统盘](https://help.aliyun.com/zh/ecs/user-guide/detach-or-attach-a-system-disk.md): 将系统盘卸载后作为数据盘挂载到其他实例，用于数据迁移或系统盘文件损坏修复，卸载后实例不可启动且无法变配，仅支持离线卸载（实例需已停止）
+- [修改云盘标签](https://help.aliyun.com/zh/ecs/user-guide/modify-the-tags-of-a-disk.md): 在控制台为云盘绑定、编辑或解绑标签，支持单块或批量操作，绑定后可基于标签筛选云盘并批量创建快照或统计成本
+- [卸载数据盘](https://help.aliyun.com/zh/ecs/user-guide/detach-a-data-disk.md): 从实例分离数据盘，含 Linux umount 和 /etc/fstab 注释、Windows 脱机两种操作系统的步骤，包年包月云盘需先转为按量付费，不支持卸载本地盘
+- [释放云盘](https://help.aliyun.com/zh/ecs/user-guide/release-a-disk.md): 手动释放按量付费数据盘或设置云盘随实例自动释放，释放后数据不可恢复，API 为 DeleteDisk 和 ModifyDiskAttribute，系统盘仅支持随实例释放
+- [专属块存储集群计费](https://help.aliyun.com/zh/ecs/user-guide/billing-description.md): 仅支持包年包月，费用=集群容量(TiB)x时长x云盘类型单价（公共云2倍），最短购买6个月，基础型创建 ESSD PL0、性能型创建 ESSD PL1，含扩容/迁移/续费/退款计费规则
+- [创建专属块存储集群](https://help.aliyun.com/zh/ecs/user-guide/create-a-dedicated-block-storage-cluster.md): 创建物理隔离的专属块存储集群，仅包年包月，容量 60-2280 TiB（按 12 TiB 递增），分基础型（ESSD PL0）和性能型（ESSD PL1），需提交工单申请开通
+- [专属块存储集群创建云盘](https://help.aliyun.com/zh/ecs/user-guide/create-a-cloud-disk-in-a-dedicated-block-storage-cluster.md): 在专属块存储集群中创建物理隔离的云盘，可作为系统盘（需创建按量付费实例时启用）或数据盘。基础型集群创建 ESSD PL0，性能型集群创建 ESSD PL1
+- [专属块存储集群迁移云盘](https://help.aliyun.com/zh/ecs/user-guide/migrate-disks-into-and-out-of-dedicated-block-storage-clusters.md): 将按量付费云盘在公有云和专属块存储集群之间迁入迁出，迁移期间不支持创建快照/变配/扩容，同一地域最多同时 5 个迁移任务，API 为 ModifyDiskDeployment
+- [扩容专属块存储集群](https://help.aliyun.com/zh/ecs/user-guide/cluster-scale-out-1.md): 集群容量上限 2,280 TiB，扩容费用=扩容容量x剩余到期时长x单价，集群剩余时间不足一个月时需先续费才能扩容
+- [扩容云盘（Linux）](https://help.aliyun.com/zh/ecs/user-guide/resize-linux-cloud-disks.md): Linux 实例云盘扩容两步：控制台购买扩容空间 + 操作系统扩容分区与文件系统，支持在线扩容和离线扩容，可通过云助手一键执行或手动 growpart/resize2fs 命令
+- [扩容云盘（Windows）](https://help.aliyun.com/zh/ecs/user-guide/resize-windows-cloud-disks.md): Windows 实例云盘扩容两步：控制台购买扩容空间 + 磁盘管理工具扩展卷，MBR 分区扩容超 2 TiB 需先转 GPT，支持扩容现有分区或新建分区
+- [数据盘 MBR 转 GPT 分区](https://help.aliyun.com/zh/ecs/user-guide/convert-data-disk-mbr-partition-to-gpt-partition.md): 数据盘扩容超 2 TiB 时需将 MBR 转换为 GPT 分区，Linux 使用 sgdisk -g 命令无损转换，Windows 需通过磁盘管理重新分区（数据会清除需先快照备份）
+- [FIO 测试块存储性能](https://help.aliyun.com/zh/ecs/user-guide/test-the-performance-of-block-storage-devices.md): Linux 上用 FIO 测试云盘裸盘 IOPS、吞吐量和时延，含随机读写和顺序读写测试命令。测试前需创建快照备份，建议在未初始化的空数据盘上测试
+- [测试 ESSD 云盘 IOPS 性能](https://help.aliyun.com/zh/ecs/user-guide/test-the-iops-performance-of-an-essd.md): ESSD PL3 云盘 FIO 压测配置，单盘最高 100 万 IOPS。推荐 g7se.32xlarge 规格+Alibaba Cloud Linux 3 镜像，测试裸盘随机读写性能
+- [测试 ESSD PL-X 云盘性能](https://help.aliyun.com/zh/ecs/user-guide/test-essd-pl-x-cloud-disk-performance.md): FIO 测试 ESSD PL-X 裸盘的时延和 IOPS，推荐 g8ise.12xlarge 规格和 Alibaba Cloud Linux 3 镜像，测时延需至少 40,000 IOPS，测 IOPS 需 3,000 GiB 以上云盘，含 idle=poll 内核参数调优
+- [创建云盘异步复制](https://help.aliyun.com/zh/ecs/user-guide/create-a-replication-pair.md): 为单块 ESSD/ESSD AutoPL 云盘创建跨地域或跨可用区异步复制实现容灾，主盘和从盘需同类型同容量，支持单次同步和按 RPO 15 分钟自动持续复制
+- [异步复制单盘容灾恢复](https://help.aliyun.com/zh/ecs/user-guide/implement-disaster-recovery.md): 单块云盘异步复制的容灾全流程：容灾演练（克隆从盘验证）→ 故障切换（开启从盘读写）→ 反向复制（从盘数据回写主盘），反向复制后主从关系自动颠倒
+- [删除云盘异步复制（控制台）](https://help.aliyun.com/zh/ecs/user-guide/delete-a-replication-pair.md): 在 EBS 控制台删除云盘异步复制关系，需先停止复制使其处于已停止状态。已加入一致性复制组的复制对不支持直接删除，需先移除。删除后从盘数据回滚到最近一次完成的复制数据
+- [创建一致性复制组](https://help.aliyun.com/zh/ecs/user-guide/create-a-replication-pair-consistent-group.md): 将多组云盘异步复制加入一致性复制组统一管理容灾，单组最多 17 个复制对，支持 RTC 保障 RPO<=10 分钟，启动后所有复制对同时同步
+- [一致性复制组多盘容灾恢复](https://help.aliyun.com/zh/ecs/user-guide/use-replication-pair-consistent-groups-to-implement-disaster-recovery.md): 通过一致性复制组对多块云盘同时执行故障切换和反向复制，所有复制对统一操作，反向复制后主从站点关系自动颠倒，支持容灾演练验证灾备站点应用完整性
+- [删除一致性复制组（控制台）](https://help.aliyun.com/zh/ecs/user-guide/delete-a-replication-pair-consistent-group.md): 在 EBS 控制台删除一致性复制组，需先停止复制组并移除组内所有异步复制对。删除后不会删除云盘异步复制关系和云盘数据，但从站点数据回滚到最近一次完成的复制点
+- [异步复制时间控制 RTC](https://help.aliyun.com/zh/ecs/user-guide/replication-time-control-of-ebs-asynchronously-replication.md): 开启 RTC 后异步复制的 RPO 保证不超过 10 分钟，支持同地域跨可用区（免费）和跨地域复制（0.1 元/GB），单个复制对 5 分钟内主盘写数据上限 60 GB，SLA 未达标按月赔付
+- [图说快照](https://help.aliyun.com/zh/ecs/user-guide/tew-snapshot.md)
+- [快照原理](https://help.aliyun.com/zh/ecs/user-guide/how-do-snapshots-work.md): 首份快照为全量快照，后续为增量快照仅备份变化数据块，存储在不可见 OSS 中；归档快照可降低长期存储成本，删除增量快照时数据块自动合并到相邻快照
+- [开通快照服务](https://help.aliyun.com/zh/ecs/user-guide/activate-ecs-snapshot.md): 首次使用快照前需在 ECS 控制台开通快照服务，开通免费但后续创建快照按各地域容量和时长计费，开通后无法关闭，可通过删除快照停止计费
+- [手动创建快照](https://help.aliyun.com/zh/ecs/user-guide/create-a-snapshot.md): 为单块系统盘或数据盘手动创建快照备份数据，ESSD 系列默认开启极速可用（秒级可用），第一份为全量快照后续增量。ESSD PL-X、本地盘和弹性临时盘不支持
+- [创建自动快照策略](https://help.aliyun.com/zh/ecs/user-guide/create-an-automatic-snapshot-policy-1.md): 设置重复日期（周一至周日）、执行时间和保留时间创建周期性快照策略，支持跨地域加密复制快照到目标地域实现容灾，对应 API CreateAutoSnapshotPolicy
+- [云盘绑定多个自动快照策略](https://help.aliyun.com/zh/ecs/user-guide/configure-multiple-automatic-snapshot-policies-for-a-cloud-disk-whitelist.md): 单块云盘最多绑定 10 个自动快照策略，ESSD 系列支持 10 个并发快照任务、上一代云盘仅支持 1 个，支持设置自动快照随云盘释放，策略启用跨地域复制会产生额外流量费
+- [修改自动快照策略](https://help.aliyun.com/zh/ecs/user-guide/modify-an-automatic-snapshot-policy.md): 修改自动快照的创建时间、重复日期、保留时间和跨地域复制策略，也可修改策略标签。保留时间修改仅对新快照生效，不影响历史快照。API：ModifyAutoSnapshotPolicyEx
+- [删除自动快照策略（控制台）](https://help.aliyun.com/zh/ecs/user-guide/delete-an-automatic-snapshot-policy.md): 通过控制台或 DeleteAutoSnapshotPolicy API 删除不再需要的自动快照策略，删除后关联云盘不再自动创建快照，已创建的快照不受影响。
+- [快照极速可用](https://help.aliyun.com/zh/ecs/user-guide/enable-or-disable-the-instant-access-feature.md): ESSD 系列云盘快照创建后秒级可用，无需等待上传 OSS 即可回滚云盘、创建新盘和共享快照，默认开启不额外收费，不支持手动关闭
+- [复制快照](https://help.aliyun.com/zh/ecs/user-guide/copy-a-snapshot.md): 同地域或跨地域复制快照，支持普通复制和加密复制两种模式，加密复制可变更快照加密属性（需 KMS），跨地域复制产生流量费，归档快照不支持复制。
+- [归档快照](https://help.aliyun.com/zh/ecs/user-guide/archive-snapshots.md): 将标准快照归档为低价存储，存储单价约为标准快照一半。标准快照需保留满 14 天才可归档，归档层最短保留 60 天，提前删除需补费，归档操作不可逆。API: ModifySnapshotCategory。
+- [共享快照](https://help.aliyun.com/zh/ecs/user-guide/share-a-snapshot.md): 跨账号或基于资源目录在企业内共享快照，共享对象可用共享快照创建云盘。每份快照最多共享 64 个账号，服务密钥加密的快照不支持直接共享，需先用 CopySnapshot 更换为自定义密钥。
+- [快照回滚云盘（快照入口）](https://help.aliyun.com/zh/ecs/user-guide/roll-back-a-disk-by-using-a-snapshot.md): 通过快照管理入口使用历史快照回滚云盘，回滚不可逆且回滚后扩容部分丢失需重新扩容，共享快照和复制快照不支持回滚，回滚系统盘后自动绑定当前密钥对
+- [快照预热](https://help.aliyun.com/zh/ecs/user-guide/public-preview-snapshot-prefetch.md): 预加载快照数据消除创建云盘首次读延迟，配置预热可用区、保留时长和并发创盘数，预付费按快照容量乘以时长乘以并发数计费，适用于实例启动加速和大规模环境克隆
+- [锁定快照（控制台）](https://help.aliyun.com/zh/ecs/user-guide/lock-snapshot.md): WORM 特性锁定快照防误删，锁定时长 1-36500 天，冷静期 0-72 小时内可解锁，超过冷静期后任何用户无法删除或解锁。API: LockSnapshot/UnlockSnapshot。欠费超期仍可能被删除。
+- [快照创建云盘](https://help.aliyun.com/zh/ecs/user-guide/create-a-cloud-disk-using-a-snapshot.md): 从快照创建新数据盘复制数据，新盘已含分区和文件系统无需初始化，容量不能小于原盘，超过 2048 GiB 需确认 GPT 分区格式。本地盘和弹性临时盘不支持
+- [快照创建自定义镜像（快照入口）](https://help.aliyun.com/zh/ecs/user-guide/create-a-custom-image-from-a-snapshot.md): 从系统盘快照创建自定义镜像（快照页面入口），仅支持系统盘快照，可附加数据盘快照。快照关联镜像后无法直接删除，需先删镜像再删快照
+- [优化快照使用成本](https://help.aliyun.com/zh/ecs/user-guide/reduce-snapshot-fees.md): 三种降低快照存储费用的方式：合理控制快照保留数量和频率、取消不需要的自动快照策略并开启随云盘释放、将长期保留的标准快照归档（存储单价减半）。
+- [延长快照保留时间](https://help.aliyun.com/zh/ecs/user-guide/extend-the-snapshot-retention-period.md): 对自定义保留天数的快照延长保留时间，仅支持延长不支持缩短。永久保留、云备份和共享来的快照不支持延长。API: ModifySnapshotAttribute。
+- [查看快照容量](https://help.aliyun.com/zh/ecs/user-guide/view-the-snapshot-size.md): 通过快照链查看单盘快照容量（标准/归档分别统计），按时间段查看地域快照用量（最多 15 天），或在概览页查看全地域快照总量，API 可用 DescribeSnapshotLinks 和 DescribeSnapshotsUsage
+- [编辑快照标签](https://help.aliyun.com/zh/ecs/user-guide/edit-the-tags-of-a-snapshot.md): 在控制台为已有快照绑定或修改标签，绑定后可基于标签筛选快照进行批量复制、成本统计等管理操作。
+- [删除快照（控制台）](https://help.aliyun.com/zh/ecs/user-guide/delete-a-snapshot-1.md): 手动删除、到期自动删除、自动快照随云盘释放三种方式清理快照。已创建数据盘的快照需强制删除，已创建镜像的快照需先删除镜像。共享中和云备份创建的快照不可直接删除
+- [创建快照一致性组](https://help.aliyun.com/zh/ecs/user-guide/create-a-snapshot-consistent-group.md): 为同可用区多块 ESSD 系列云盘同时创建快照保证数据一致性，单组最多 16 块盘且总容量不超 32 TiB，支持应用一致性快照功能
+- [MySQL 应用一致性快照实践（Linux）](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-creating-application-consistent-snapshots-for-a-linux-instance-on-which-mysql-is-deployed.md): 以 CentOS 7.9 + MySQL 8.0 为例，通过 prescript.sh/postscript.sh 脚本暂停和恢复数据库写操作，创建应用一致性快照并验证数据恢复效果，需 ESSD 云盘和云助手
+- [SQL Server 应用一致性快照实践（Windows）](https://help.aliyun.com/zh/ecs/user-guide/best-practice-for-creating-application-consistent-snapshots-for-a-windows-instance-on-which-sql-server-is-deployed.md): 在 Windows Server 2019 + SQL Server 2019 实例上创建应用一致性快照，系统暂停数据库写入确保快照数据一致，需 ESSD 云盘且配置 RAM 角色授权云助手。含创建、验证和回滚完整流程。
+- [一致性组回滚云盘](https://help.aliyun.com/zh/ecs/user-guide/roll-back-disks-by-using-a-snapshot-consistent-group.md): 通过快照一致性组同时回滚多块云盘到同一时间点，需先停止实例且使用普通停机模式，按量实例若启用节省停机可能导致回滚后无法启动
+- [修改和删除快照一致性组](https://help.aliyun.com/zh/ecs/user-guide/modify-and-delete-a-snapshot-consistent-group.md): 修改一致性组名称/描述或删除整个一致性组及组内快照。删除前需先取消组内快照的共享，并释放已创建的云盘或镜像。API: ModifySnapshotGroup / DeleteSnapshotGroup。
+- [ECS 实例开通公网](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-configuring-public-bandwidth.md): 固定公网 IP、EIP、Anycast EIP、NAT 网关、SLB 五种公网方案对比，含 IPv4/IPv6 两种协议的适用场景和特点
+- [主私网 IP 地址](https://help.aliyun.com/zh/ecs/user-guide/modify-a-private-ip-address.md): ECS 实例主私网 IPv4 的概念、购买时指定和修改方法。修改需停止实例并先释放辅助私网 IP，修改后硬编码原 IP 的业务程序和白名单需手动更新。API：RunInstances 的 PrivateIpAddress 参数
+- [辅助私网 IP](https://help.aliyun.com/zh/ecs/user-guide/assign-secondary-private-ip-addresses.md): 为弹性网卡分配多个辅助私网 IP 实现一台实例多公网 IP、故障转移和负载均衡，分配后需在操作系统内配置才能生效。单网卡 IP 上限由实例规格决定。API: AssignPrivateIpAddresses。
+- [固定公网 IP 分配与管理](https://help.aliyun.com/zh/ecs/user-guide/public-ip-address.md): 创建实例或后续通过控制台/API 分配固定公网 IP，支持按固定带宽和按使用流量两种计费模式，IP 会因带宽设为 0 或节省停机被回收
+- [弹性公网 IP 绑定与解绑](https://help.aliyun.com/zh/ecs/user-guide/associate-or-disassociate-an-eip.md): 创建 EIP 并绑定/解绑 VPC 类型 ECS 实例，支持按量或包年包月计费。可找回 7 天内释放的 EIP/固定公网 IP。API: AllocateEipAddress。EIP 通过 NAT 映射，可与 ECS、SLB、NAT 网关等资源绑定。
+- [固定公网 IP 转 EIP](https://help.aliyun.com/zh/ecs/user-guide/convert-the-public-ip-address-of-an-instance-in-a-vpc-to-an-eip.md): 将 VPC 实例的固定公网 IP 转换为弹性公网 IP，转换后 IP 地址不变但计费独立，转换不可逆；需实例为 VPC 网络且处于运行中或已停止状态，可调用 ConvertNatPublicIpToEip API
+- [IP 前缀](https://help.aliyun.com/zh/ecs/user-guide/ip-prefix.md): 为弹性网卡分配 CIDR 格式 IP 地址段（IPv4 /28、IPv6 /80），提升单节点 IP 密度，适合多 IP 容器网络。每个前缀算一个 IP 配额，仅部分地域支持。API: AssignPrivateIpAddresses。
+- [ECS 实例 IPv6 通信](https://help.aliyun.com/zh/ecs/user-guide/step-1-create-a-vpc-that-supports-ipv6-addressing-step-1-create-a-vpc-that-supports-ipv6-addressing.md): 在 VPC 和交换机开通 IPv6 网段后创建带 IPv6 地址的 ECS 实例，默认仅私网通信，需通过 IPv6 网关开通公网带宽。部分旧规格族（ic5/se1/d1/hfc5 等）不支持 IPv6。
+- [ECS 实例私网域名解析](https://help.aliyun.com/zh/ecs/user-guide/ecs-private-domain-resolution.md): VPC 内为 ECS 实例自动分配四级私网域名（如 i-xxx.region.ecs.internal），支持基于 IP 和实例 ID 两种主机名格式，提供 A/AAAA/PTR 记录解析。仅 VPC 内生效，不支持跨 VPC。
+- [弹性网卡概述](https://help.aliyun.com/zh/ecs/user-guide/eni-overview.md): ENI 虚拟网络接口，分主网卡和辅助弹性网卡，支持多 IP、热插拔、跨实例迁移。每实例可绑定网卡数由规格决定，部分小规格（s6/e/t5/t6）不支持热插拔。
+- [创建并使用弹性网卡](https://help.aliyun.com/zh/ecs/user-guide/create-and-use-an-eni.md): 通过 CreateNetworkInterface 创建辅助弹性网卡，绑定到实例实现流量隔离或故障转移，部分规格需停机绑定，绑定后需在 OS 内配置网卡生效
+- [释放实例时保留弹性网卡](https://help.aliyun.com/zh/ecs/user-guide/eni-retention-and-reuse.md): 设置 DeleteOnRelease=false 使弹性网卡在实例释放时保留 IP、安全组和路由配置，保留后可绑定到同 VPC 同可用区的新实例。辅助网卡全地域支持，主网卡保留仅部分地域支持。
+- [管理弹性网卡](https://help.aliyun.com/zh/ecs/user-guide/manage-eni.md): 修改弹性网卡名称/描述/安全组、解绑辅助网卡、删除未绑定的网卡。主网卡安全组通过实例安全组设置变更，辅助网卡至少保留一个安全组。API: ModifyNetworkInterfaceAttribute。
+- [托管弹性网卡](https://help.aliyun.com/zh/ecs/user-guide/managed-enis.md): 由 ACK、NAT 网关等云产品通过 STS 授权创建和管理的特殊网卡，用户仅可查询（DescribeNetworkInterfaces）不可操作。ServiceManaged=true 标识为托管网卡，防止误操作影响云产品服务。
+- [弹性网卡策略路由配置](https://help.aliyun.com/zh/ecs/user-guide/configure-nic-routing.md): 为辅助弹性网卡配置策略路由，解决多网卡环境下出站流量走主网卡导致 EIP 通信异常的问题，含 ip route/ip rule 命令和 /etc/rc.local 持久化配置，支持 Linux 和 Windows
+- [弹性网卡源目的检查](https://help.aliyun.com/zh/ecs/user-guide/source-and-destination-check.md): 通过 SourceDestCheck 参数开启或关闭网卡的源/目的 IP 校验，防止 IP 欺骗攻击。NAT 网关、VPN 终端、自定义路由器等场景需关闭此功能，支持控制台和 CreateNetworkInterface API 配置
+- [弹性网卡连接超时管理](https://help.aliyun.com/zh/ecs/user-guide/connection-timeout-management.md): 配置 TCP ESTABLISHED 超时(30-910秒)、TCP TIME_WAIT/CLOSED 超时(3-15秒)和 UDP 流超时(10-100秒)，释放空闲连接资源，建议与 NLB/CLB 监听超时保持一致
+- [网卡多队列](https://help.aliyun.com/zh/ecs/user-guide/nic-multi-queue.md): 将网络流量分发到多个 CPU 核心并行处理，通过 DescribeInstanceTypes 查询 MaximumQueueNumberPerEni 和 TotalEniQueueQuantity，含 ethtool 调整队列数和 RSS 中断亲和性配置
+- [物理网卡映射](https://help.aliyun.com/zh/ecs/user-guide/network-card-mapping.md): 通过 AttachNetworkInterface 指定 NetworkCardIndex 将弹性网卡绑定到不同物理通信信道，用 DescribeInstanceTypes 查询 NetworkCardQuantity 确认规格是否支持
+- [弹性 RDMA 网卡 ERI](https://help.aliyun.com/zh/ecs/user-guide/elastic-rdma-network-interface-card-eri.md): ERI 依附于弹性网卡 ENI 开启 RDMA 通信，通过 CreateNetworkInterface 设置 NetworkInterfaceTrafficMode=HighPerformance 创建，用 ibv_devices 验证设备，DescribeInstanceTypes 的 EriQuantity 查询支持数量
+- [企业级实例启用 eRDMA](https://help.aliyun.com/zh/ecs/user-guide/configure-erdma-on-a-cpu-instance.md): 为 g9a/c9a/r9a/g8i 等企业级实例配置 eRDMA 网络，支持购买时选择 eRDMA 驱动扩展程序或已有实例通过脚本/手动安装驱动，需为网卡开启弹性 RDMA 接口(ERI)
+- [GPU 实例启用 eRDMA](https://help.aliyun.com/zh/ecs/user-guide/on-the-gpu-instance-configuration-erdma.md): 在 ebmgn7ex/ebmgn8is 等 GPU 规格上创建或配置 ERI 网卡实现 RDMA 直通互连，含购买时自动安装 eRDMA 软件栈和巨型帧 MTU 8500 配置
+- [Docker 容器启用 eRDMA](https://help.aliyun.com/zh/ecs/user-guide/configure-erdma-in-a-docker-container.md): 通过 docker run --device 映射 /dev/infiniband 设备在容器内使用 eRDMA，自建 K8s 集群可用 eRDMA Controller 组件自动配置 Pod。支持 Alibaba Cloud Linux 3/Ubuntu 22.04 等镜像
+- [eRDMA 监测与诊断](https://help.aliyun.com/zh/ecs/user-guide/erdma-monitoring-and-diagnosis.md): eadm stat 实时监控 eRDMA 设备流量和统计信息，rdma link 查询设备状态，配合云监控 eri 指标项实现告警，含 eadm ver 查看驱动版本
+- [eRDMA 应用适配概述](https://help.aliyun.com/zh/ecs/user-guide/description-of-application-adapter.md): 内核态 SMC-R 透明替换 TCP 无需改代码，用户态 NetACC 通过 LD_PRELOAD 加速 TCP 应用。适配场景包括 Redis(SMC-R)、HPC(E-HPC NEXT)、Spark(JVERBS)、Kafka
+- [SMC-R 共享内存通信配置](https://help.aliyun.com/zh/ecs/user-guide/smc-instructions.md): 通过 modprobe smc 加载内核模块，sysctl net.smc.tcp2smc=1 开启 TCP 到 SMC 透明转换，smc-ebpf 实现进程级策略控制，基于 Alibaba Cloud Linux 3 和 eRDMA
+- [NetACC 加速 TCP 应用](https://help.aliyun.com/zh/ecs/user-guide/netacc-instructions.md): 用户态网络加速库，通过 LD_PRELOAD 方式加载无需改代码，配置文件 /etc/netacc.conf 可调 NACC_SOR_MSG_SIZE 和 IO 线程数。适用于高 PPS 小包、低延迟敏感和短连接场景
+- [网络 MTU 配置](https://help.aliyun.com/zh/ecs/user-guide/network-mtu.md): ECS 默认 MTU 1500，开启巨型帧后支持 8500。链路层 MTU、IP MTU、PMTU 的区别说明，含 Windows netsh 和 Linux ip link 查看与修改 MTU 的操作命令
+- [路径 MTU 发现机制 PMTUD](https://help.aliyun.com/zh/ecs/user-guide/pmtu-discovery.md): 通过 IP 头 DF 标志和 ICMP Type 3 Code 4 错误消息动态发现路径 PMTU 避免分片，6 代及以下不支持巨型帧的机型暂不支持 PMTUD，需控制数据包 <=1500 字节
+- [安全组概述](https://help.aliyun.com/zh/ecs/user-guide/overview-44.md): 虚拟防火墙控制 ECS 实例出入站流量，分普通安全组(组内互通)和企业级安全组(可容纳更多 IP)，每实例关联一个或多个安全组，规则含协议/端口/授权对象/优先级
+- [安全组规则](https://help.aliyun.com/zh/ecs/user-guide/security-group-rules.md): 规则由协议类型(TCP/UDP/ICMP/GRE)、端口范围、授权对象(CIDR/安全组/前缀列表)、授权策略和优先级(1-100)组成，有状态会话最长 910 秒，TCP 25 端口默认受限建议用 465
+- [使用安全组](https://help.aliyun.com/zh/ecs/user-guide/start-using-security-groups.md): 安全组的创建、规则添加/修改/删除和关联实例的完整操作流程，含控制台快捷配置常用端口规则、CreateSecurityGroup 和 AuthorizeSecurityGroup API
+- [普通安全组与企业级安全组](https://help.aliyun.com/zh/ecs/user-guide/basic-security-groups-and-advanced-security-groups.md): 普通安全组容纳 6000 私网 IP 且支持组内互通和安全组授权规则，企业级安全组容纳 65536 私网 IP 但默认组内隔离且不支持安全组授权。两者均免费，不可混合关联
+- [安全组应用指导和案例](https://help.aliyun.com/zh/ecs/user-guide/security-groups-for-different-use-cases.md): 按场景配置安全组规则的最佳实践：公网服务与内网服务分组、不同应用隔离、白名单方式使用、最小授权原则(禁用 0.0.0.0/0 全开)，含 Web/SSH/数据库隔离案例
+- [常用端口](https://help.aliyun.com/zh/ecs/user-guide/common-ports.md): SSH(22)、RDP(3389)、HTTP(80)、HTTPS(443)、MySQL(3306)、PostgreSQL(5432)、Redis(6379) 等典型服务端口列表，含端口对应安全组规则配置示例。25/135/445 等高危端口运营商默认屏蔽
+- [前缀列表与端口列表概述](https://help.aliyun.com/zh/ecs/user-guide/overview-32.md): 前缀列表管理 CIDR 地址块集合(单账号单地域上限 100 个，条目上限 200)，端口列表管理端口集合(上限 1000 个，条目上限 2000)，在安全组规则中引用可避免重复添加多条规则
+- [管理前缀列表](https://help.aliyun.com/zh/ecs/user-guide/create-a-prefix-list.md): CIDR 地址块集合，可在安全组规则中引用避免重复添加多条 IP 规则。支持 IPv4/IPv6，最大 200 条目，支持跨地域克隆。API 为 CreatePrefixList
+- [管理端口列表](https://help.aliyun.com/zh/ecs/user-guide/configure-port-list.md): 通过控制台或 CreatePortRangeList API 创建端口列表，设置最大条目容量(1-2000)后不可更改，支持跨地域克隆和条目增删改，关联安全组规则后自动生效
+- [前缀列表与端口列表管理安全组规则](https://help.aliyun.com/zh/ecs/user-guide/use-prefix-lists-to-simplify-management-of-security-group-rules.md): 将 CIDR 地址块放入前缀列表、端口放入端口列表后在安全组规则中引用，修改列表条目等效于批量修改所有关联安全组规则，支持跨地域克隆
+- [专有网络 VPC 概念](https://help.aliyun.com/zh/ecs/user-guide/vpc.md): VPC 由私网网段（192.168.0.0/16 等 CIDR）、路由器 vRouter 和交换机 vSwitch 组成，支持二层逻辑隔离、自定义 IP 范围和路由规划
+- [VPC 内网访问](https://help.aliyun.com/zh/ecs/user-guide/internal-network-access-within-a-vpc.md): 通过私网 IP 或私网域名实现 VPC 内 ECS 实例间通信，安全组和网络 ACL 实现访问控制，云企业网/VPC 对等连接/PrivateLink 实现跨 VPC 互联
+- [更换实例所属 VPC](https://help.aliyun.com/zh/ecs/user-guide/change-the-vpc-of-an-ecs-instance.md): 将 ECS 实例从一个 VPC 迁移到另一个，需停机操作，私网 IP 变更但公网 IP 不变，需提前解绑辅助网卡、SLB 后端和 HaVip 等关联资源
+- [更换 ECS 实例交换机](https://help.aliyun.com/zh/ecs/user-guide/replace-the-switch-of-an-ecs-instance.md): 将实例主网卡的交换机更换为同 VPC 同可用区的另一台交换机，需先停止实例，私网 IP 会变更但公网 IP 不变，API 为 ModifyInstanceVpcAttribute
+- [VPC 流量加密](https://help.aliyun.com/zh/ecs/user-guide/vpc-traffic-encryption.md): 基于 CIPU 硬件卸载的 AES-GCM-256 全流量自动加密，支持 g9ae/c9ae/r9ae 等规格族，通过 RunInstances 的 EnableNetworkEncryption 参数开启，目前限华东2和中国香港地域
+- [资源管家概述](https://help.aliyun.com/zh/ecs/user-guide/overview-29.md): ECS 资源全链路保障体系：购前资源规格推荐和供应健康分，购中弹性保障/容量预定/私有池/授权候补确保实例创建成功，购后 CPU/内存利用率的性能与成本优化建议
+- [资源管家诊断信息](https://help.aliyun.com/zh/ecs/user-guide/view-the-diagnostic-information-about-resources.md): 在资源管家查看创建失败分析、供应健康预警和配额预警，支持设置告警阈值，系统推荐资源预定或更换配置等解决方案
+- [资源供应健康分](https://help.aliyun.com/zh/ecs/user-guide/view-the-provision-health-scores-of-resources.md): 由充足度、补货能力、热度三维度计算的规格供应评分（-3 到 6 分），5-6 分供应确定性高，0 分以下建议换规格，可按地域/可用区/规格筛选后直接购买或预定
+- [资源规格推荐](https://help.aliyun.com/zh/ecs/user-guide/obtain-recommendations-on-resource-schemes.md): IDC 上云：输入 CPU 型号/芯片数/内存推荐匹配 ECS 规格方案；总算力换算：输入 vCPU/内存需求推荐资源方案和价格，支持直接购买或预定资源
+- [弹性保障概述](https://help.aliyun.com/zh/ecs/user-guide/overview-of-elasticity-assurance.md): 通过私有池为按量付费实例预留指定可用区和规格的资源，支持分时保障（按周期性时段预留）和持续保障两种模式，私有池分专有和开放两类
+- [立即生效容量预定概述](https://help.aliyun.com/zh/ecs/user-guide/overview-of-immediate-capacity-reservation.md): 购买后立即锁定指定可用区和规格的按量付费实例容量，无论是否创建实例均按按量费率计费，支持节省计划和地域级预留实例券抵扣，不支持抢占式实例
+- [指定时间生效容量预定](https://help.aliyun.com/zh/ecs/user-guide/specify-a-time-effective-summary-of-capacity-reservation.md): 在未来指定时间开始预留资源的两种方式：节省计划容量预定（保障按量付费实例，同步购买 0 预付节省计划抵扣费用）和包年包月容量预定（7 天提货期内创建包年包月实例）
+- [购买资源预定](https://help.aliyun.com/zh/ecs/user-guide/purchase-a-resource-reservation.md): 在控制台创建弹性保障/立即生效容量预定/指定时间生效容量预定，配置可用区、实例规格、预留数量和私有池类型（开放/专用），支持标签匹配和资源方案推荐
+- [查看和修改弹性保障](https://help.aliyun.com/zh/ecs/user-guide/view-and-modify-an-elasticity-assurance.md): 在控制台查看弹性保障的状态、私有池容量和关联实例，支持修改名称、描述和缩容，对应 API：DescribeElasticityAssurances/ModifyElasticityAssurance
+- [查看和修改容量预定](https://help.aliyun.com/zh/ecs/user-guide/view-and-modify-a-capacity-reservation.md): 在控制台查看容量预定的状态、私有池容量和关联实例，支持修改名称、描述、失效方式和预留实例数，对应 API：DescribeCapacityReservations/ModifyCapacityReservation
+- [释放容量预定](https://help.aliyun.com/zh/ecs/user-guide/release-an-immediate-capacity-reservation.md): 在控制台释放到期方式为手动释放的立即生效容量预定，释放后关联实例仍正常运行，也可调用 ReleaseCapacityReservation API 操作
+- [查看私有池及关联实例](https://help.aliyun.com/zh/ecs/user-guide/view-a-private-pool.md): 在资源管家控制台查看私有池列表（获取方式、资源池类型、状态）和已关联实例信息，支持通过 DescribeInstanceAttachmentAttributes API 查询实例匹配的私有池
+- [共享私有池](https://help.aliyun.com/zh/ecs/user-guide/shared-private-pools.md): 将弹性保障或容量预定的私有池共享给其他账号或企业组织使用，共享本身不收费，闲置容量费由所有者承担，已创建实例费由创建者承担
+- [私有池容量创建实例](https://help.aliyun.com/zh/ecs/user-guide/use-a-private-pool-to-create-instances.md): 通过控制台或 RunInstances API 使用私有池容量创建 ECS 实例，PrivatePoolOptions.MatchCriteria 参数支持 Open/Target/None 三种匹配模式，确保热门规格库存充足时创建成功
+- [已有实例设置私有池](https://help.aliyun.com/zh/ecs/user-guide/configure-a-private-pool-for-existing-instances.md): 为按量付费实例设置私有池匹配模式：指定（Target）、开放（Open）或不使用（None），支持标签匹配开放私有池，可用于库存不足时通过已有实例匹配购买容量预定
+- [云监控查看私有池容量](https://help.aliyun.com/zh/ecs/user-guide/use-cloudmonitor-to-view-private-pools.md): 通过云监控控制台 ECS 私有资源池大盘或 DescribeMetricList API（Namespace: acs_ecs_privatepool）查看私有池容量指标，支持查询最近 30 天监控数据
+- [私有池保障资源流转](https://help.aliyun.com/zh/ecs/user-guide/use-a-private-pool-to-ensure-resource-scaling.md): 通过立即生效容量预定创建开放私有池，在释放实例 A 后保留容量以确保重建实例 B 成功，适用于弹性伸缩、灾备恢复、DevOps 环境轮换等先释放后创建场景
+- [私有池保障节省停机重启](https://help.aliyun.com/zh/ecs/user-guide/use-a-private-pool-to-ensure-that-an-ecs-instance-stopped-in-economical-mode-can-be-restarted.md): 按量实例开启节省停机模式后可能因库存不足无法重启，通过创建立即生效容量预定并设置实例私有池类型为开放，预留对应规格资源保障重启成功率
+- [创建授权候补](https://help.aliyun.com/zh/ecs/user-guide/create-authorized-alternate.md): 库存不足购买实例失败时，授权系统在 1 小时内有货自动支付创建实例，无额外服务费，到期未成功不收费，适合短期少量补货场景
+- [查看和取消授权候补](https://help.aliyun.com/zh/ecs/user-guide/to-view-and-cancel-the-authorization-alternate.md): 在资源管家控制台查看候补订单状态（候补中/生产中/已兑现/已取消/已到期/已失败），支持单个或批量取消候补订单
+- [查看 ECS 优化建议](https://help.aliyun.com/zh/ecs/user-guide/view-optimization-suggestions.md): 性能优化：14 天内 CPU/MEM 利用率超 85% 的实例推荐升配；成本优化：30 天内 CPU/MEM 利用率低于 5% 的实例推荐降配或调整节省计划
+- [资源创建失败分析](https://help.aliyun.com/zh/ecs/user-guide/view-the-details-of-resource-creation-failures.md): 查看 ECS 资源创建失败的原因分析，系统推荐资源预定、到货通知或更换配置三种解决方案，可查看操作历史辅助决策
+- [专有宿主机 DDH](https://help.aliyun.com/zh/ecs/user-guide/dedicated-hosts.md): 独占物理服务器，可查看 Socket 数/物理核数/内存等硬件属性，支持 BYOL 许可证上云、超分型规格降低部署成本，创建的 ECS 实例无需支付计算资源费用
+- [实例启动模板概述](https://help.aliyun.com/zh/ecs/user-guide/overview-30.md): 保存实例创建配置（规格、镜像、网络、密钥对等）为模板，支持多版本管理，每账号每地域最多 30 个模板各 30 个版本，可用于快速创建实例、弹性伸缩组和弹性供应组
+- [创建实例启动模板](https://help.aliyun.com/zh/ecs/user-guide/create-a-launch-template.md): 预设实例规格、镜像、网络等配置创建启动模板，用于快速创建实例、弹性伸缩组或弹性供应组。每地域最多 30 个模板，创建后不可修改但可新增版本
+- [管理启动模板版本](https://help.aliyun.com/zh/ecs/user-guide/create-a-launch-template-version.md): 通过创建新版本更改启动模板配置参数（模板本身不可修改），每个模板最多 30 个版本，版本号按创建顺序递增，可设置默认版本或删除不需要的版本
+- [删除实例启动模板（控制台）](https://help.aliyun.com/zh/ecs/user-guide/delete-a-launch-template-and-a-template-version.md): 通过控制台删除启动模板，支持单个或批量删除。删除模板会同时删除其下所有版本，已通过模板创建的实例不受影响。如仅需删除某个版本可单独操作
+- [弹性供应概述](https://help.aliyun.com/zh/ecs/user-guide/overview-46.md): 基于启动模板跨多可用区、多规格自动交付按量付费+抢占式实例集群，支持容量优化/多可用区均衡/成本最优/优先级四种供应策略，持续保持型自动补足被回收的抢占式实例
+- [弹性供应服务关联角色](https://help.aliyun.com/zh/ecs/user-guide/manage-the-service-linked-role-for-auto-provisioning.md): 管理 AliyunServiceRoleForAutoProvisioning 角色，授权弹性供应组创建和管理实例。创建供应组时自动触发创建，删除前需先清除所有地域的供应组
+- [创建弹性供应组](https://help.aliyun.com/zh/ecs/user-guide/create-an-auto-provisioning-group.md): 跨可用区批量交付按量和抢占式混合实例，供应策略含容量优化、成本最优和多可用区均衡三种，支持按实例数或 vCPU 数设置容量，抢占式实例回收后可自动补充
+- [弹性供应组配置示例](https://help.aliyun.com/zh/ecs/user-guide/configure-an-auto-provisioning-group.md): 四个配置示例：GPU 机器学习集群（成本最优策略）、购票网站（多可用区均衡策略+按量保底）、API 多资源池最低价（SpotInstancePoolsToUseCount）、API 优先级策略（prioritized）
+- [查看弹性供应组详情](https://help.aliyun.com/zh/ecs/user-guide/view-an-auto-provisioning-group.md): 在控制台查看弹性供应组的容量配置、模板设置、已创建实例列表和调度历史，对应 API：DescribeAutoProvisioningGroups/DescribeAutoProvisioningGroupInstances/DescribeAutoProvisioningGroupHistory
+- [修改弹性供应组配置](https://help.aliyun.com/zh/ecs/user-guide/modify-an-auto-provisioning-group.md): 修改弹性供应组的名称、目标容量（实例数/vCPU 数）、按量实例配额、抢占式实例价格上限，以及过期或超容量时是否释放实例。修改后自动触发一次调度任务
+- [删除弹性供应组（控制台）](https://help.aliyun.com/zh/ecs/user-guide/delete-auto-provisioning-groups.md): 控制台单个或批量删除弹性供应组，可选择同时释放组内所有实例或仅删除供应组保留实例，对应 API：DeleteAutoProvisioningGroup
+- [ROS 资源编排部署 ECS](https://help.aliyun.com/zh/ecs/user-guide/ros.md): 通过 ROS 模板定义 ECS 实例及依赖资源（安全组、VPC、RDS 等），编排引擎自动完成创建和配置。列出所有可编排的 ECS 资源类型（ALIYUN::ECS::Instance/InstanceGroup/Disk/SecurityGroup 等）及对应数据源。
+- [ECS 实例交付方式](https://help.aliyun.com/zh/ecs/user-guide/provisioning-methods-of-ecs-instances.md): 手动创建（控制台/RunInstances/CreateInstance）、部署集高可用、弹性供应组（1~1000 台跨可用区）、弹性伸缩（Auto Scaling）四种实例交付模式的适用场景和 API 对比。
+- [基于实例创建伸缩组](https://help.aliyun.com/zh/ecs/user-guide/create-a-scaling-group-based-on-an-existing-ecs-instance.md): 选择已有 ECS 实例自动提取规格、镜像、安全组等配置创建弹性伸缩组，支持定时扩缩容、基于监控指标自动扩缩容和期望实例数保有。创建后可手动添加原实例到伸缩组
+- [OSS 部署物](https://help.aliyun.com/zh/ecs/user-guide/oss-objects.md): 将 OSS 中的应用源文件（如 JAR 包）发布到 ECS 实例组，先停后启流程自动下载文件并执行启动/停止 Shell 脚本，仅支持 Linux 实例。
+- [Git 部署物](https://help.aliyun.com/zh/ecs/user-guide/git-object.md): 从 Git 仓库（Gitee/GitHub）拉取代码自动部署到 ECS 实例组，代码拉取到 code_deploy_application 目录后执行启动/停止脚本，仅支持 Linux 实例。
+- [ECS 镜像部署物](https://help.aliyun.com/zh/ecs/user-guide/ecs-image-deployment-object.md): 用自定义镜像替换应用分组中 ECS 实例的系统盘来发布应用，支持多地域镜像自动匹配。替换操作会重置系统盘，所有用户密码失效。
+- [Docker 镜像部署物](https://help.aliyun.com/zh/ecs/user-guide/docker-image-object.md): 从 ACR（个人版或企业版）拉取 Docker 镜像到 ECS 实例自动部署，镜像在发布时自动拉取，启动脚本执行 docker run 即可。第三方仓库需用仅执行命令部署物。
+- [仅执行命令部署物](https://help.aliyun.com/zh/ecs/user-guide/execute-command-only-deployments.md): 无需指定应用源文件，完全通过启动/停止 Shell 脚本实现应用发布，适合从远程 URL 下载文件或直接运行命令的场景，仅支持 Linux 实例。
+- [应用部署参数](https://help.aliyun.com/zh/ecs/user-guide/application-parameters.md): 创建普通参数或加密参数存储配置和密码，部署时作为环境变量（如 ${port}）注入启动/停止脚本，支持不同分组配置不同值。
+- [应用分组安装组件环境](https://help.aliyun.com/zh/ecs/user-guide/install-application-required-components-or-environment.md): 通过扩展程序为应用分组内 ECS 实例批量安装 Docker、Java 等运行环境，公共扩展程序可直接使用，自定义需求可创建自定义扩展程序。
+- [部署集概述](https://help.aliyun.com/zh/ecs/user-guide/overview-43.md): 三种部署策略：高可用（分散到不同物理机，单可用区上限 20 台）、部署集组高可用（7 组 x 20 台）、网络低时延（集中到同一网络拓扑）。通过 CreateDeploymentSet 创建，RunInstances 指定 DeploymentSetId 使用。
+- [共享部署集](https://help.aliyun.com/zh/ecs/user-guide/shared-deployment-sets.md): 通过资源共享服务将部署集授权给其他账号，被共享方可在该部署集内创建实例。谁创建谁付费，共享方和被共享方权限不同，取消共享需被共享方先释放实例。
+- [云助手概述](https://help.aliyun.com/zh/ecs/user-guide/overview-10.md): 免登录免跳板机的自动化运维工具，支持批量执行 Shell/PowerShell/Bat 命令、上传文件、公共命令和自定义参数。脚本上限 18~24 KB，文件上传上限 32 KB。
+- [安装云助手 Agent](https://help.aliyun.com/zh/ecs/user-guide/install-the-cloud-assistant-agent.md): 在 Linux/Windows/FreeBSD 实例上安装云助手 Agent，支持控制台一键安装和脚本安装，2017年12月后公共镜像已预装，通过 systemctl status aliyun.service 检查运行状态
+- [云助手状态查看与异常处理](https://help.aliyun.com/zh/ecs/user-guide/check-the-status-of-cloud-assistant-and-handle-exceptions.md): 通过控制台或 DescribeCloudAssistantStatus API 查看云助手 Agent 运行状态（正常/未安装/异常），异常时按 Linux（systemctl status aliyun.service）和 Windows 分别排查
+- [停止和卸载云助手 Agent](https://help.aliyun.com/zh/ecs/user-guide/stop-and-uninstall-the-cloud-assistant-agent.md): 停止或卸载后 Workbench 免密登录、OOS 命令执行等功能不可用。需先停守护进程 assist_daemon，再按 init 系统（systemd/Upstart/SysVinit）停止 aliyun.service。
+- [升级或禁止升级云助手 Agent](https://help.aliyun.com/zh/ecs/user-guide/upgrade-or-disable-upgrades-for-the-cloud-assistant-agent.md): Agent 每 30 分钟自动运行 aliyun_assist_update 升级程序，可在控制台设置允许升级的时间段。禁止升级可通过重命名 aliyun_assist_update 或创建配置文件实现。
+- [云助手 Agent 网络权限配置](https://help.aliyun.com/zh/ecs/user-guide/configure-network-permissions-for-the-cloud-assistant-agent.md): 企业安全组需放行出方向 TCP 443/80、UDP 53 端口，通用配置放行 100.100.0.0/16 网段，精细配置按地域放行具体云助手服务器 IP（如杭州 100.100.45.106）。
+- [云助手域名解析配置](https://help.aliyun.com/zh/ecs/user-guide/configure-dns-resolution-for-cloud-assistant.md): 当默认 DNS Nameserver 被覆盖导致云助手功能不可用时，需手动解析 {region-id}.axt.aliyun.com 域名并写入 /etc/hosts 文件恢复连接。
+- [云助手命令自动落盘](https://help.aliyun.com/zh/ecs/user-guide/enable-automatic-saving-for-cloud-assistant-commands-on-instances.md): 2.x.3.704 版本起命令内容默认不落盘，通过 aliyun-service configure set --item task.keepScriptFile=enabled 开启，脚本保存在 /usr/local/share/aliyun-assist/work/script/
+- [云助手创建和执行命令](https://help.aliyun.com/zh/ecs/user-guide/use-the-immediate-execution-feature.md): 通过控制台或 aliyun ecs RunCommand CLI 在多台实例上执行 Shell/PowerShell 脚本，支持自定义参数、Cron 定时执行、Base64 编码内容，最多选择 100 台实例批量执行
+- [创建云助手命令](https://help.aliyun.com/zh/ecs/user-guide/create-a-command.md): 创建 Shell/PowerShell/Bat 类型的云助手命令用于自动化运维，支持 {{parameter}} 自定义参数和内置参数如 {{ACS::InstanceId}}，脚本 Base64 编码后不超过 18 KB
+- [执行已有云助手命令](https://help.aliyun.com/zh/ecs/user-guide/run-a-command.md): 在控制台或 CLI 中对已创建的命令执行操作，支持立即执行、定时执行（Cron/Rate 表达式）、开机自动执行，单次最多 100 台实例。可通过 InvokeCommand API 调用。
+- [云助手命令内容加密](https://help.aliyun.com/zh/ecs/user-guide/cloud-assistant-command-content-encryption.md): 基于 RSA-OAEP 非对称加密保护命令中的密码/密钥等敏感信息，临时密钥对在实例内存中生成（默认 60 秒过期），私钥不落盘不传输，防止 ActionTrail 日志明文泄露。
+- [云助手执行结果与故障排查](https://help.aliyun.com/zh/ecs/user-guide/check-execution-results-and-troubleshoot-common-issues.md): 通过控制台、CLI（DescribeInvocationResults）或 API 查看命令执行状态。常见错误码：ClientNotRunning（Agent 未运行）、ClientNetworkBlocked（网络异常）、ExecutionTimeout（超时）、ExitCodeNonzero（退出码非 0）。
+- [修改云助手任务执行信息](https://help.aliyun.com/zh/ecs/user-guide/modify-task-execution-information.md): 修改定时任务的命令内容、执行频率或添加实例，仅支持 Pending/Running/Scheduled 状态的任务。Agent 版本需不低于 Linux 2.2.3.541 / Windows 2.1.3.541，添加实例后总数不超过 100。
+- [执行云助手公共命令](https://help.aliyun.com/zh/ecs/user-guide/view-and-run-common-cloud-assistant-commands.md): 查看和执行阿里云预置的公共命令（软件安装、磁盘扩容诊断、密钥轮转等），支持控制台、InvokeCommand API 和 aliyun ecs InvokeCommand CLI 三种方式
+- [管理云助手命令](https://help.aliyun.com/zh/ecs/user-guide/modify-a-command.md): 对已创建的云助手命令执行启动、删除、克隆和修改名称/描述操作。克隆命令可修改类型和内容创建新版本，删除命令释放命令配额
+- [云助手插件管理](https://help.aliyun.com/zh/ecs/user-guide/use-cloud-assistant-plug-ins.md): acs-plugin-manager 命令行工具管理云助手插件，支持 --list 查询、--exec 执行、--status 状态检查、--remove 删除，含本地和线上插件操作
+- [ecsgo-scarlet 故障演练插件](https://help.aliyun.com/zh/ecs/user-guide/use-the-cloud-assistant-plug-in-ecsgo-scarlet-to-perform-ecs-fault-drills.md): 云助手插件 ecsgo-scarlet 在 Linux 测试实例中注入故障（如 SshdConfigValidationFailed），通过 inject/revoke 命令模拟和恢复 SSH 配置错误等场景，验证应用韧性
+- [云助手命令停止或重启实例](https://help.aliyun.com/zh/ecs/user-guide/use-a-specified-exit-code-to-stop-or-restart-instances.md): 通过云助手执行命令时指定特殊退出码触发实例停止（Linux exit 193/Windows exit 3009）或重启（Linux exit 194/Windows exit 3010），含 Python SDK 批量重启示例代码
+- [云助手 Cron 表达式](https://help.aliyun.com/zh/ecs/user-guide/cron-expressions.md): 云助手定时任务的 Cron 表达式语法，6-7 个字段（秒/分/时/日/月/周/年），支持 L/W/# 等特殊字符，也可用 rate() 固定间隔或 at() 一次性执行
+- [云助手安装 OpenClaw](https://help.aliyun.com/zh/ecs/user-guide/install-openclaw-using-cloud-assistant-public-commands.md): 通过云助手公共命令一键部署 OpenClaw，支持 plugin（推荐）和 native 两种安装方式，含模型配置、消息渠道（飞书/企微/钉钉）管理和 Gateway 启停，默认端口 18789
+- [云助手服务关联角色](https://help.aliyun.com/zh/ecs/user-guide/manage-the-service-linked-role-for-ecs-cloud-assistant.md): 管理 AliyunServiceRoleForECSArchiving 角色，授权云助手将运维任务执行记录和会话操作记录投递到 OSS 或 SLS。使用记录投递功能时自动创建，删除前需关闭所有地域的投递功能
+- [阿里云托管实例](https://help.aliyun.com/zh/ecs/user-guide/manage-servers-that-are-not-provided-by-alibaba-cloud.md): 将非阿里云服务器（IDC/其他云）注册为托管实例，通过激活码和云助手 Agent 完成注册，即可使用云助手免登录执行命令、OOS 运维等在线服务，免费功能
+- [云助手任务执行记录投递](https://help.aliyun.com/zh/ecs/user-guide/use-the-operation-content-and-result-delivery-feature.md): 将云助手命令执行记录和文件下发记录投递到 OSS 或 SLS 持久化存储，用于安全审计和合规追踪，不支持跨地域投递，通过 DescribeCloudAssistantSettings API 查询配置
+- [云助手会话操作记录投递](https://help.aliyun.com/zh/ecs/user-guide/use-the-session-record-delivery-feature.md): 将 Session Manager 会话操作记录投递到 OSS 或 SLS，记录含 LoginUser/SessionId/ChannelId 等字段，OSS 投递文件为 YAML 格式，适用于安全合规审计场景
+- [订阅云助手事件](https://help.aliyun.com/zh/ecs/user-guide/subscribe-to-cloud-assistant-events.md): 通过 EventBridge 或云监控订阅云助手任务状态事件（ecs:CloudAssistant:TaskCompleted），任务成功/失败/超时时自动告警，替代 SDK 轮询
+- [云助手与本地执行差异（Linux）](https://help.aliyun.com/zh/ecs/user-guide/differences-between-running-commands-remotely-and-locally-on-linux-instances.md): Linux 实例云助手执行命令不加载 /etc/profile 和 ~/.bashrc，环境变量可能缺失，需在脚本中显式 source 启动文件或用 #!/bin/sh -il 启用交互登录模式
+- [云助手与本地执行差异（Windows）](https://help.aliyun.com/zh/ecs/user-guide/differences-between-running-commands-remotely-and-locally-on-windows-instances.md): Windows 实例云助手不支持调用图形界面程序、不支持 net use 挂载 NAS，错误输出顺序与本地不同（先合并 stdout 再合并 stderr）
+- [SDK 执行云助手命令](https://help.aliyun.com/zh/ecs/user-guide/java-programs-use-cloud-assistant-to-manage-ecs-instances.md): 通过 ECS Java SDK 调用 RunCommand/DescribeInvocations 批量执行 Shell/Bat/PowerShell 命令并查询执行结果，含完整 Java 代码示例
+- [脚本解释器执行云助手命令](https://help.aliyun.com/zh/ecs/user-guide/use-a-script-interpreter-to-run-cloud-assistant-commands.md): 通过 RunCommand/InvokeCommand 的 Launcher 参数指定 Python、kubectl 等脚本解释器，支持自定义脚本文件路径和后缀名，突破默认 Shell/PowerShell/Bat 限制
+- [云助手命令自定义参数](https://help.aliyun.com/zh/ecs/user-guide/use-custom-parameters-in-cloud-assistant-commands.md): 用 {{parameter}} 语法定义命令模板变量，支持普通自定义参数和 acs:: 前缀的内置环境参数，通过 EnableParameter=true 启用，最多 20 个参数，含 Java/Python 代码示例
+- [OpenVPN 场景云助手白名单配置](https://help.aliyun.com/zh/ecs/user-guide/add-the-ip-address-of-the-cloud-assistant-server-to-a-whitelist-by-using-openvpn.md): Windows 实例配置 OpenVPN 后云助手无法运行，通过 route-nopull+vpn_gateway 或 net_gateway 参数将云助手服务端 IP 排除出 VPN 通道
+- [云助手在容器内执行命令](https://help.aliyun.com/zh/ecs/user-guide/use-cloud-assistant-to-run-commands-in-containers.md): 通过 RunCommand/InvokeCommand API 指定 ContainerId 或 ContainerName 参数，免跳板机直接在 Kubernetes 容器内执行 Shell 命令，支持 Docker/containerd/CRI-O 运行时
+- [普通用户执行云助手命令](https://help.aliyun.com/zh/ecs/user-guide/run-cloud-assistant-commands-as-a-regular-user.md): 通过 RAM 策略 ecs:CommandRunAs 条件键限制云助手以普通用户（非 root/system）身份执行命令，支持白名单和黑名单两种策略模式
+- [授权 RAM 用户使用云助手](https://help.aliyun.com/zh/ecs/user-guide/use-ram-to-implement-permission-control.md): 为 RAM 用户配置云助手自定义策略，含命令管理/执行/发送文件/托管实例/会话管理等维度的权限示例，系统策略 AliyunECSAssistantFullAccess 和 ReadonlyAccess
+- [发现和排查实例问题](https://help.aliyun.com/zh/ecs/user-guide/identify-and-troubleshoot-instance-issues.md): 实例问题排查总览：健康诊断检测系统/网络/磁盘状态，系统事件通知异常，云监控追踪 CPU/内存/网络指标，报警服务自动通知
+- [实例全面诊断](https://help.aliyun.com/zh/ecs/user-guide/diagnose-the-health-status-of-an-instance.md): 通过控制台或 CreateDiagnosticReport API 对实例进行全面体检，覆盖计算/网络/存储/安全组/费用/配额/操作系统等诊断项，生成含修复建议的诊断报告
+- [诊断项与诊断结果说明](https://help.aliyun.com/zh/ecs/user-guide/diagnosis-and-diagnosis-result.md): 控制台诊断项（计算/网络/存储/配置/安全组/费用/配额/Linux和Windows操作系统）和 OpenAPI 诊断指标（DiagnosticMetric）的完整列表及每项异常的修复建议
+- [安全组规则检测](https://help.aliyun.com/zh/ecs/user-guide/safety-set-of-rules-to-detect.md): 一键检测安全组入方向常用端口（22/3389/80/443/8080/ICMP）放行状态，或自定义检测指定 IP 和端口的通行规则，检测结果可一键开通端口
+- [诊断网络连通性](https://help.aliyun.com/zh/ecs/user-guide/diagnose-network-connectivity.md): 创建诊断线路指定源端和目的端（ECS/网卡/公网 IP），诊断 TCP/UDP/ICMP 协议的网络连通性，检查安全组、ACL、路由、iptables 等配置，定位不通原因
+- [网络连通性诊断项说明](https://help.aliyun.com/zh/ecs/user-guide/diagnostic-items-of-ecs-network-connectivity-diagnostics.md): ECS 实例（SSH 服务/DHCP/iptables/路由/CPU 负载/带宽）、弹性网卡（安全组配置）、交换机（网络 ACL）三类诊断项的检查范围和严重程度说明
+- [网络连通性诊断服务关联角色](https://help.aliyun.com/zh/ecs/user-guide/manage-the-service-linked-role-for-ecs-network-connectivity-diagnostics.md): 管理 AliyunServiceRoleForECSNetworkInsights 角色，授权 ECS 访问 VPC 路由表、网络 ACL、NAT 网关等资源用于网络连通性诊断。创建诊断线路时自动创建
+- [ECS 系统事件概述](https://help.aliyun.com/zh/ecs/user-guide/overview-of-ecs-system-events.md): 计划内运维、非预期故障、实例到期/欠费、抢占式中断等系统事件类型，含 Scheduled/Executing/Executed 等状态流转和云监控集成，用于搭建自动化运维
+- [ECS 系统事件汇总](https://help.aliyun.com/zh/ecs/user-guide/summary.md): 所有 ECS 系统事件的完整列表：计划内运维（Reboot/Stop/Redeploy）、非预期故障、费用到期/欠费、底层升级迁移、抢占式实例中断、性能达上限等，含事件 Code、云监控事件名和处理建议
+- [查询和响应 ECS 系统事件](https://help.aliyun.com/zh/ecs/user-guide/query-and-handle-ecs-system-events.md): 通过控制台事件页面或 aliyun ecs DescribeInstanceHistoryEvents CLI 命令查询待处理/历史系统事件，按事件类型执行重启、重新部署或续费等响应操作
+- [底层升级实例迁移方案](https://help.aliyun.com/zh/ecs/user-guide/instance-migration-due-to-upgrades-at-the-underlying-layer.md): SystemUpgrade.Migrate 事件的迁移方案：经典网络实例迁移到 VPC、VPC 实例通过 OOS 模板克隆、经典网络云产品（RDS/Redis）混访模式切换，迁移约 15 分钟
+- [实例创建失败事件](https://help.aliyun.com/zh/ecs/user-guide/view-instance-creation-failure-events.md): SystemFailure.Delete 事件说明：实例因库存或交换机 IP 不足创建失败后自动释放并退款，可通过 DescribeAvailableResource 预检或弹性供应/弹性保障提高成功率
+- [ECS 计划维护窗口](https://help.aliyun.com/zh/ecs/user-guide/ecs-scheduled-maintenance-window.md): 配置每周/每天的运维时间窗口（最低 4 小时），将 SystemMaintenance.Reboot 和 Redeploy 事件集中在业务低峰期执行，支持按资源组或标签圈定实例范围
+- [ECS 事件通知概述](https://help.aliyun.com/zh/ecs/user-guide/overview-35.md): ECS 事件通知格式说明，事件名称为 <资源类型>:<事件类型>:<状态>（如 Instance:StateChange），JSON 消息体含 eventTime/level/content 等字段，可对接消息中间件实现事件驱动运维
+- [云监控订阅 ECS 系统事件](https://help.aliyun.com/zh/ecs/user-guide/configure-event-notifications.md): 在云监控控制台创建订阅策略，选择云服务器 ECS 的系统事件类型，通过短信、邮件、钉钉或 Webhook 自动推送事件通知，事件量大时建议改用 EventBridge 订阅
+- [钉钉机器人发送事件通知](https://help.aliyun.com/zh/ecs/user-guide/send-event-notifications-by-using-a-dingtalk-chatbot.md): 创建钉钉机器人获取 Webhook 地址，关联为云监控报警联系人，ECS 系统事件（生命周期变化、运维事件等）发生时自动在钉钉群推送通知
+- [EventBridge 订阅 ECS 事件](https://help.aliyun.com/zh/ecs/user-guide/use-eventbridge-to-quickly-subscribe-to-ecs-events.md): 通过事件总线 EventBridge 主动订阅 ECS 事件，毫秒级触发钉钉/邮件通知、HTTP 推送、函数计算或消息队列，比 DescribeInstanceHistoryEvents 轮询方式时效更高、成本更低
+- [实例事件通知](https://help.aliyun.com/zh/ecs/user-guide/instance-event-notification.md): 实例级事件通知的 JSON 结构：运维事件（SystemMaintenance.Reboot 等）、生命周期状态变化、抢占式实例释放、专有宿主机热迁移、突发性能实例模式切换和性能受限
+- [镜像事件通知](https://help.aliyun.com/zh/ecs/user-guide/image-event-notification.md): 镜像状态改变事件（Image:StateChange）的 JSON 结构，覆盖创建、导入、复制、删除等操作引起的状态变化，currentState 取值包括 Waiting/Creating/Available/CreateFailed/Deleted/Deprecated
+- [块存储事件通知](https://help.aliyun.com/zh/ecs/user-guide/ebs-event-notifications.md): 块存储相关事件通知的 JSON 结构：系统事件（Degraded/SeverelyDegraded/Stalled 性能异常）、挂载卸载数据盘、云盘保留和欠费释放，含 diskId/device/eventType 等字段说明
+- [快照事件通知](https://help.aliyun.com/zh/ecs/user-guide/snapshot-event-notifications.md): 快照创建完成事件（Snapshot:CreateSnapshotCompleted）的 JSON 结构，result 区分 accomplished/failed，含 snapshotType（user/timer/copied/imported）等字段
+- [弹性网卡事件通知](https://help.aliyun.com/zh/ecs/user-guide/eni-operation-event-notifications.md): 辅助网卡操作完成事件（NetworkInterface:NetworkInterfaceOperateCompleted）的 JSON 结构，operation 取值 CreateNetworkInterface/AttachNetworkInterface/DetachNetworkInterface/DeleteNetworkInterface
+- [交换机事件通知](https://help.aliyun.com/zh/ecs/user-guide/vswitch-event-notifications.md): 交换机变更完成事件（Instance:VSwitchChanged）的 JSON 结构，更换 VPC、经典网络迁移、跨可用区变配、更换交换机、实例过户等场景触发，含 vswitchId/privateIpAddress/vpcId 字段
+- [IP 地址事件通知](https://help.aliyun.com/zh/ecs/user-guide/ip-address-event-notification.md): 私网 IPv4/IPv6 地址分配和回收完成事件（PrivateIPAssigned/PrivateIPUnassigned/IPv6Assigned/IPv6Unassigned）的 JSON 结构，含 eniId/primaryPrivateIp/secondaryPrivateIps 等字段
+- [性能风险事件通知](https://help.aliyun.com/zh/ecs/user-guide/performance-risk-event-notification.md): CPU/存储/网络性能达到规格上限或连通性异常时触发的四类事件：CPUPerformanceReachLimit、StoragePerformanceReachLimit、NetworkPerformanceReachLimit、StatusCheckFailed，含 reasonCode 细分类型
+- [本地盘实例运维场景和系统事件](https://help.aliyun.com/zh/ecs/user-guide/operations-and-maintenance-scenarios-and-system-events-for-instances-equipped-with-local-disks.md): 本地盘实例六类运维场景及对应系统事件：SystemMaintenance.Reboot/Redeploy、SystemFailure.Reboot/Redeploy、Disk:ErrorDetected 磁盘受损隔离修复、SystemMaintenance.StopAndRepair 停机修复
+- [重新部署本地盘实例](https://help.aliyun.com/zh/ecs/user-guide/redeploy-an-instance-equipped-with-local-disks.md): 响应 SystemMaintenance.Redeploy 或 SystemFailure.Redeploy 系统事件，将本地盘实例迁移到新宿主机，需提前修改 /etc/fstab 添加 nofail 参数并备份本地盘数据，重新部署后本地盘数据清空
+- [本地盘隔离与修复](https://help.aliyun.com/zh/ecs/user-guide/isolate-repair-disk.md): 收到本地盘受损事件后，先修改 /etc/fstab 并 umount 损坏磁盘，再通过控制台或 DescribeInstanceHistoryEvents API 隔离坏盘，等待更换后恢复挂载，仅 d1/d2/d3/i4 支持在线隔离换盘
+- [修改实例维护属性（控制台）](https://help.aliyun.com/zh/ecs/user-guide/modify-instance-maintenance-attributes.md): 设置实例在宿主机故障时的默认行为：自动重启恢复（默认）、禁止重启恢复（保持停机）、自动重新部署（仅本地盘实例），通过控制台或 ModifyInstanceMaintenanceAttributes API 修改
+- [修改预约重启时间](https://help.aliyun.com/zh/ecs/user-guide/modify-the-scheduled-restart-time.md): 针对计划内运维系统事件，在控制台调整实例的预约重启日期和时间，预约时间不能超过最晚可预约时间（事件计划执行时间前 30 分钟）
+- [查看历史系统事件](https://help.aliyun.com/zh/ecs/user-guide/view-historical-system-events.md): 通过控制台或 aliyun ecs DescribeInstanceHistoryEvents CLI 命令查询过去一周内已处理的系统事件，获取事件类型、状态等故障诊断和复盘数据
+- [实例状态与报警](https://help.aliyun.com/zh/ecs/user-guide/status-and-alerts.md): 实例详情页监控页签聚合实例健康状态检查（宿主机/操作系统）、性能风险事件和云监控报警，支持通过 ECS AI 助手自动执行远程命令进行根因分析和修复建议
+- [查看 ECS 实例监控信息](https://help.aliyun.com/zh/ecs/user-guide/view-the-monitoring-information-of-an-ecs-instance.md): ECS 控制台查看 vCPU 使用率、网络流量、磁盘 IOPS 等基础监控项（1 分钟粒度），安装云监控插件后可获取 15 秒粒度的操作系统监控项，API 可用 DescribeInstanceMonitorData
+- [设置 ECS 实例报警规则](https://help.aliyun.com/zh/ecs/user-guide/configure-alerts-for-an-ecs-instance.md): 在实例详情页开启一键报警（CPU/磁盘/内存/带宽使用率，全账号生效）或创建自定义报警规则（单实例生效），支持通知联系组和 Webhook 回调
+- [查看 ECS 实例健康状态](https://help.aliyun.com/zh/ecs/user-guide/view-the-health-status-of-an-instance.md): HealthStatus 字段反映实例操作系统是否可用：OK 表示可 SSH/RDP 访问，Impaired 表示系统异常需重启，InsufficientData 表示已关机，每分钟更新，可用 DescribeInstancesFullStatus API 或 aliyun ecs CLI 查询
+- [查看实例系统日志和屏幕截图](https://help.aliyun.com/zh/ecs/user-guide/view-system-logs-and-screenshots.md): 获取实例最近一次启动/重启/关机的串口系统日志和实时屏幕截图，用于诊断操作系统无响应、异常重启或无法连接等故障，API：GetInstanceConsoleOutput/GetInstanceScreenshot
+- [ECS 实例操作记录](https://help.aliyun.com/zh/ecs/user-guide/check-the-ecs-instance-operating-records.md): 基于 ActionTrail 保留 90 天的实例及关联资源操作日志，支持按变更范围、影响等级（高/中/低）、操作者等条件筛查，用于故障定位和责任认定
+- [ECS Insight 使用成熟度评估](https://help.aliyun.com/zh/ecs/user-guide/overview-of-ecs-usage-maturity-assessment-and-insight.md): 从基础能力、成本管理、自动化、可靠性、弹性、安全合规六个维度评估 ECS 使用风险并提供优化建议，T+1 天自动更新评分，产品本身免费
+- [ECS Insight 服务关联角色](https://help.aliyun.com/zh/ecs/user-guide/service-linked-role-for-ecs-insight.md): AliyunServiceRoleForEcsInsight 角色及策略 AliyunServiceRolePolicyForEcsInsight，拥有查询账户余额、预留实例券和节省计划使用情况的权限，启用成熟度评估时自动创建
+- [ECS Insight 成熟度评估报告](https://help.aliyun.com/zh/ecs/user-guide/view-the-ecs-usage-maturity-assessment-and-insight-report.md): ECS Insight 从安全、成本、可用性等六大维度评估 ECS 使用成熟度，按严重等级展示风险并给出最佳实践修复建议，需申请开通（1-2 个工作日审核），T+1 天自动更新
+- [ECS Insight 评估能力详情](https://help.aliyun.com/zh/ecs/user-guide/ecs-insight-capabilities.md): ECS Insight 六维评估的完整评估项说明：基础能力（可用区分布/停售规格/安全组）、成本洞察（节省停机/预留券使用率）、自动化（OpenAPI/OOS/云助手）、可靠性（快照备份/CPU 内存使用率）、弹性（伸缩组负载）、安全（密钥对/端口限制/DDoS），含评分标准和最佳实践
+- [ECS 任务管理](https://help.aliyun.com/zh/ecs/user-guide/ecs-task-management.md): 查看和管理 ECS 异步任务：导入导出镜像、变更云盘类型、自动备份、OOS 扩展程序安装、批量续费等后台任务的状态跟踪、取消和删除操作，API 通过 DescribeTasks/CancelTask 查询和取消
+- [系统运维管理 OOS](https://help.aliyun.com/zh/ecs/user-guide/overview-3.md): 通过 OOS 模板自动化管理 ECS：定时开关机、批量修改计费方式、批量释放实例、创建更新镜像、跨可用区克隆实例、CPU 告警自动重���，支持事件驱动、审批和跨地域运维场景
+- [计算 AI 助手](https://help.aliyun.com/zh/ecs/user-guide/user-guide-for-ai-assistant.md): ECS 控制台内置 AI 工具，支持智能问答、全局资源搜索、故障一键诊断、购买咨询、Workbench 命令解释和划词释义，RAM 用户需授权 agent:ChatMessages 等 Action
+- [ECS 全局搜索](https://help.aliyun.com/zh/ecs/user-guide/search-for-resources.md): 控制台搜索框（快捷键 Ctrl+/ 或 Cmd+/）快速查找实例/云盘/安全组等资源、唤起重启/远程连接等操作、搜索文档和菜单直达，支持按资源 ID/名称/IP 批量查询
+- [小规格实例 Linux 内存管理](https://help.aliyun.com/zh/ecs/user-guide/operation-and-maintenance-of-linux-memory-management-for-small-ecs-instances.md): 小规格 ECS 实例安装 atop 内存监控工具并开启 swap 分区，缓解内存不足导致的卡死问题
+- [ECS 安全概述](https://help.aliyun.com/zh/ecs/user-guide/security-overview.md): 攻击应急处置（DDoS/登录异常/恶意程序）、五大安全域加固基线（操作系统/数据/网络/身份/审计）和等保 2.0 合规检查三类场景的安全操作路径索引
+- [ECS 使用须知](https://help.aliyun.com/zh/ecs/user-guide/usage-notes.md): ECS 实例使用的操作限制和注意事项：禁止流量穿透、勿卸载驱动、勿改网卡 MAC、4GiB 以上内存需用 64 位系统、Windows/Linux 各自的账号和目录权限禁忌
+- [ECS 专属安全防护包领取](https://help.aliyun.com/zh/ecs/user-guide/free-usage-guide-for-the-ecs-dedicated-security-package.md): 免费领取主机安全（云安全中心 3 个月）和数据防护（100GiB 快照备份额度），加固安全和防止数据丢失
+- [ECS 安全责任共担模型](https://help.aliyun.com/zh/ecs/user-guide/ecs-shared-responsibility-model.md): 云上安全由平台和客户共担：平台负责物理硬件/虚拟化/管控服务安全，客户负责操作系统补丁、安全组配置、数据加密和应用安全，含数据中心/虚拟化/租户隔离四层安全架构说明
+- [ECS 安全最佳实践](https://help.aliyun.com/zh/ecs/user-guide/best-security-practices.md): 账号安全（MFA/RAM 用户/实例角色/AK 防泄露）、网络隔离（VPC/安全组）、数据加密（云盘/快照）、应用防护（DDoS/云安全中心/WAF）和 GuestOS 系统安全（登录/弱口令/审计）全维度安全配置指南
+- [ECS 基础安全服务](https://help.aliyun.com/zh/ecs/user-guide/basic-security-services.md): 云安全中心免费版提供漏洞扫描、异常登录检测、AK 泄露检测和合规检查。创建实例时可选免费安全加固自动安装客户端，也可通过 RunInstances 的 SecurityEnhancementStrategy=Active 参数开启
+- [RAM 用户实现 ECS 访问控制](https://help.aliyun.com/zh/ecs/user-guide/control-access-to-resources-by-using-ram-users.md): 为管理/开发/运维三类角色创建 RAM 用户并分配差异化权限策略：Manager 拥有 ecs:* 全权限，Developer 仅 Describe+Workbench 登录，Operator 可创建快照镜像但不可删除资源
+- [RAM 角色实现 ECS 访问控制](https://help.aliyun.com/zh/ecs/user-guide/use-a-ram-role-to-control-access-to-ecs-instances.md): 通过 RAM 角色实现跨账号 ECS 访问控制，含创建可信实体为阿里云账号的角色、授权 ecs:Describe*/ecs-workbench:LoginInstance 权限策略、以及 AssumeRole 程序调用示例
+- [实例 RAM 角色](https://help.aliyun.com/zh/ecs/user-guide/attach-an-instance-ram-role-to-an-ecs-instance.md): ECS 实例内无需配置 AccessKey，通过 IMDS 自动获取 STS 临时凭证调用其他云产品 API，含 CreateRole/AttachInstanceRamRole API 操作步骤和信任策略配置
+- [ECS 服务关联角色](https://help.aliyun.com/zh/ecs/user-guide/service-linked-roles.md): ECS 各功能自动创建的服务关联角色汇总：Workbench/云助手归档/EBS/镜像构建/弹性供应/网络诊断等，含角色名、权限说明和删除注意事项
+- [ECS 自定义权限策略](https://help.aliyun.com/zh/ecs/user-guide/custom-policies-for-ecs.md): ECS 自定义 RAM 权限策略示例：授权创建按量/包年包月实例、变配/释放、安全组管理、快照创建等场景的 JSON 策略模板，含 RunInstances/bss 支付等 Action 组合
+- [ECS 系统权限策略参考](https://help.aliyun.com/zh/ecs/user-guide/ecs.md): ECS 所有系统权限策略列表：AliyunECSFullAccess（全权限）、AliyunECSReadOnlyAccess（只读）、AliyunECSAssistantFullAccess（云助手）等产品系统策略，以及服务角色和服务关联角色策略
+- [ECS 加密相关权限](https://help.aliyun.com/zh/ecs/user-guide/encryption-related-permissions.md): 用 KMS 用户主密钥加密云盘/快照/镜像时需授权 AliyunECSDiskEncryptDefaultRole 角色，跨账号共享加密快照/镜像需修改 RAM 信任策略允许被共享账号 ECS 服务扮演角色
+- [RAM 策略禁止高危安全组规则](https://help.aliyun.com/zh/ecs/user-guide/prohibit-ram-users-from-creating-high-risk-security-group-rules.md): 通过 RAM Condition 条件关键字 ecs:SecurityGroupSourceCidrIps 拦截 0.0.0.0/0 等高危规则，ecs:NotSpecifySecurityGroupId 禁止创建实例时使用默认安全组，含可复用的 JSON 策略代码
+- [RAM 策略禁止密码登录 Linux 实例](https://help.aliyun.com/zh/ecs/user-guide/prohibit-ram-users-from-creating-linux-instances-using-password-login.md): 通过 RAM 条件关键字 ecs:PasswordCustomized 禁止 RAM 用户创建密码登录的 Linux 实例，同时阻止重置密码和更换系统盘重设密码，仅允许 SSH 密钥对登录
+- [RAM 策略禁止 root 初始用户](https://help.aliyun.com/zh/ecs/user-guide/prohibit-ram-users-from-creating-linux-instances-with-root-as-initial-user.md): 通过 RAM 条件关键字 ecs:LoginAsNonRoot 强制 RAM 用户创建 Linux 实例时使用 ecs-user 而非 root 作为初始登录用户，同时阻止更换系统盘重设 root 凭证
+- [RAM 策略强制云盘加密](https://help.aliyun.com/zh/ecs/user-guide/prohibit-ram-users-from-creating-unencrypted-cloud-disks.md): 通过 RAM 条件关键字 ecs:IsDiskEncrypted 强制创建实例或单独创建云盘时必须开启加密。扩展策略支持 ecs:IsDiskByokEncrypted 要求使用 KMS 主密钥而非服务密钥
+- [RAM 策略禁止分配公网 IP](https://help.aliyun.com/zh/ecs/user-guide/prohibit-ram-users-from-assigning-public-ip-addresses-to-ecs-instances.md): 通过 RAM 条件关键字 ecs:AssociatePublicIpAddress 禁止创建实例或变配时分配固定公网 IP，同时 Deny vpc:AllocateEipAddress 禁止购买 EIP，统一由网络管理员规划公网访问
+- [避免使用弱口令登录实例](https://help.aliyun.com/zh/ecs/user-guide/avoid-using-a-weak-password-to-log-in-to-an-instance.md): Linux 实例推荐密钥对认证（创建时指定 KeyPairName），Windows 设置高强度密码，通过 ECS 成熟度评估和云安全中心检查未使用密钥的实例，可用 RAM Policy 拦截密码认证
+- [避免 root 账号登录实例](https://help.aliyun.com/zh/ecs/user-guide/avoid-logging-in-to-the-instance-as-root.md): 推荐使用 ecs-user 登录 Linux 实例替代 root，API 通过 ImageOptions.LoginAsNonRoot=true 设置，含 RAM Policy 拦截新购实例使用 root 的策略 JSON
+- [避免使用镜像预设登录凭证](https://help.aliyun.com/zh/ecs/user-guide/avoid-using-default-login-credentials-in-images.md): 创建实例时设置 PasswordInherit=false 避免继承镜像预设密码，制作镜像时清除 authorized_keys 和用户密码，可用 RAM Policy 拦截 PasswordInherit=true
+- [限制指定镜像创建实例](https://help.aliyun.com/zh/ecs/user-guide/only-new-instances-are-allowed-to-be-mirrored-using-a-specified-range.md): 通过标签标记黄金镜像（如 status:approved），配合 RAM Policy 的 acs:ResourceTag 条件限制 RunInstances/ReplaceSystemDisk 只能使用指定标签的镜像
+- [运维端口限制 IP 访问](https://help.aliyun.com/zh/ecs/user-guide/the-instance-operation-and-maintenance-port-should-restrict-the-ip-access-source.md): 安全组中 SSH 22 端口和 RDP 3389 端口禁止 0.0.0.0/0 全开放，通过 AuthorizeSecurityGroup 的 SourceCidrIp 参数限制来源 IP，含 RAM Policy 拦截和云安全中心检查方法
+- [修复高危安全漏洞](https://help.aliyun.com/zh/ecs/user-guide/fix-high-risk-security-vulnerabilities.md): 通过云安全中心发现和修复 ECS 高危漏洞（ModifyOperateVul/OperateVuls API），或用 OOS 补丁基线定时自动修复操作系统漏洞，支持周期性执行和修复前自动创建快照
+- [启用主机安全防护](https://help.aliyun.com/zh/ecs/user-guide/enable-host-security.md): 创建实例时勾选免费安全加固（SecurityEnhancementStrategy=Active），启用云安全中心基础版提供漏洞扫描、AK 泄露检测和异地登录检查，含 RAM Policy 拦截未开启加固的实例创建
+- [启用异常登录检查](https://help.aliyun.com/zh/ecs/user-guide/enable-abnormal-login-check.md): 通过云安全中心配置常用登录地、登录 IP、时间和账号，检测异常远程登录行为。API 使用 ModifyLoginBaseConfig 接口，Type 参数支持 login_common_location/login_common_ip 等类型
+- [开启云盘自动快照策略](https://help.aliyun.com/zh/ecs/user-guide/enable-automatic-snapshot-policy-for-cloud-disks.md): 创建实例时为系统盘和数据盘绑定自动快照策略，通过 CreateAutoSnapshotPolicy 设置备份时间/周期/保留天数，支持 RAM Policy 强制创盘时必须绑定快照策略
+- [镜像快照权限管控与数据防泄露](https://help.aliyun.com/zh/ecs/user-guide/avoid-images-and-snapshots-from-accidentally-revealing-sensitive-information-1.md): 创建镜像前清理 SSH 密钥、密码、Shell 历史等敏感信息，通过 RAM Policy Deny 拦截 ExportImage 和 ModifyImageSharePermission 操作，防止镜像导出和快照共享导致数据泄露
+- [加密云盘安全实践](https://help.aliyun.com/zh/ecs/user-guide/use-encrypted-cloud-disks.md): 创建实例或云盘时通过 Encrypted 和 KMSKeyId 参数启用服务密钥或 CMK 加密，RAM Policy 可拦截未加密的 RunInstances/CreateDisk 请求，支持块存储账号级默认加密
+- [仅允许 HTTPS 访问 ECS OpenAPI](https://help.aliyun.com/zh/ecs/user-guide/allow-only-https-access-to-ecs-openapi.md): 通过 RAM Policy 的 acs:SecureTransport 条件键强制 HTTPS 访问 ECS OpenAPI，SDK 运行时参数 IgnoreSSL=false 开启证书校验，含 Java/Python/Go/.NET/PHP/Node.js 各语言 HTTPS 配置方法
+- [仅加固模式访问实例元数据](https://help.aliyun.com/zh/ecs/user-guide/access-instance-metadata-using-hardened-only-mode.md): 防范 SSRF 攻击，创建实例时指定 HttpTokens=required 和 HttpEndpoint=enabled 启用仅加固模式元数据访问，RAM Policy 可拦截非加固模式的 RunInstances/CreateInstance/ModifyInstanceMetadataOptions 操作
+- [ECS RAM 权限分离实践](https://help.aliyun.com/zh/ecs/user-guide/avoid-using-the-main-account-to-grant-different-permissions-to-members-of-the-sub-account-with-different-responsibilities.md): 避免使用主账号日常操作，按职责创建 RAM 子账号：账号管理员（AliyunRAMFullAccess）、资源管理员（AliyunECSFullAccess）、运维人员（自定义只读+操作权限），启用 MFA 和操作保护
+- [保护云账号防止凭据泄露](https://help.aliyun.com/zh/ecs/user-guide/protect-alibaba-cloud-accounts-and-prevent-credential-leakage.md): 启用 MFA 多因子认证保护口令，使用 ECS RAM 角色（RamRoleName 参数）替代 AccessKey 访问云服务 API，通过 AttachInstanceRamRole 绑定角色，实例内自动获取 STS Token 调用 API
+- [约束 OpenAPI 调用来源 IP 范围](https://help.aliyun.com/zh/ecs/user-guide/constraints-the-valid-range-of-the-source-ip-address-of-openapi-calls.md): 通过 RAM Policy 的 acs:SourceIp 条件键限制 ECS OpenAPI 调用的合法 IP 范围，即使 AccessKey 泄露攻击者也无法从非授权 IP 操控资源。含 CreateUser/CreatePolicy/AttachPolicyToUser 三步配置
+- [资源组横向分权管理](https://help.aliyun.com/zh/ecs/user-guide/horizontal-decentralization-with-resource-groups.md): 为不同部门创建独立资源组，将 ECS 实例及关联资源（云盘、镜像、安全组）分组管理，对资源组授予 AliyunECSFullAccess 策略实现管理员间资源隔离，各管理员仅可见和操作本部门资源
+- [标签细粒度资源权限管理](https://help.aliyun.com/zh/ecs/user-guide/manage-resource-permissions-with-tags.md): 通过 Tag 对 ECS 资源分类，在 RAM Policy 中使用 acs:ResourceTag 条件键按标签约束操作权限。示例：给数据库实例打 function:database 标签后，Deny 其绑定公网 IP 操作
+- [RAM Policy 约束云上操作](https://help.aliyun.com/zh/ecs/user-guide/use-ram-policy-to-constrain-cloud-operations.md): 通过 Allow + Deny with Condition 策略组合设置安全基线，示例含禁止绑定公网 IP、强制密钥对登录、限制高危端口、强制绑定自动快照策略
+- [VPC 网络隔离](https://help.aliyun.com/zh/ecs/user-guide/use-vpc-to-implement-network-isolation.md): 使用独立 VPC 隔离办公/测试/生产等不同安全域，VPC 间通过 PrivateLink 实现跨 VPC 服务访问，或通过 CEN 互联并配合 VPC 边界防火墙做业务层网络访问控制
+- [安全组内网访问控制与微隔离](https://help.aliyun.com/zh/ecs/user-guide/using-security-groups-to-implement-intranet-access-control-and-micro-isolation.md): 通过安全组隔离不同业务集群（如 Web Server 仅允许访问数据库的 5432 端口），企业级安全组强制组内隔离，普通安全组可修改组内连通策略实现微隔离，防止内网横向移动
+- [收敛 ECS 公网暴露风险](https://help.aliyun.com/zh/ecs/user-guide/public-network-exposure-risk-of-converged-ecs-instances-v1.md): 避免直接分配 EIP/公网 IP，出站流量走 NAT 网关，入站流量走负载均衡，远程运维使用 Workbench/会话管理/堡垒机替代开放 SSH 22 和 RDP 3389 端口，含高危端口列表
+- [网络 ACL 加强网络访问控制](https://help.aliyun.com/zh/ecs/user-guide/use-network-acl-to-strengthen-network-access-control.md): 在交换机层面配置无状态网络 ACL 规则，对跨子网流量做前置过滤，弥补安全组遗漏或误配置。跨 VPC 场景下先默认拒绝所有流量，再精确放通目标子网和端口
+- [内网或专线访问云上服务](https://help.aliyun.com/zh/ecs/user-guide/access-the-cloud-through-the-private-network.md): ECS 实例用 VPC Endpoint（如 ecs-vpc.cn-hangzhou.aliyuncs.com）替代公网访问云服务 API，企业通过 CEN 物理专线/VPN 连接内网与 VPC，个人设备用 SSL-VPN 接入
+- [PrivateLink 减少公网通信](https://help.aliyun.com/zh/ecs/user-guide/use-privatelink-to-reduce-unnecessary-public-network-traffic.md): 通过 PrivateLink 终端节点实现跨 VPC 私网访问替代公网通信，开启 Proxy Protocol v2 可识别请求来源 VPC ID 和终端节点 ID 做访问控制，终端节点和服务需在同一可用区
+- [DDoS 清洗服务抵御公网攻击](https://help.aliyun.com/zh/ecs/user-guide/use-ddos-cleaning-service-to-resist-public-network-attacks.md): 免费版每公网 IP 提供 500Mbps-5Gbps 基础 DDoS 清洗（UDP 反射/SYN Flood），超阈值触发黑洞。付费版 DDoS 原生防护原生集成无需改 IP，DDoS 高防通过 DNS 引流支持隐藏源站
+- [云防火墙抵御公网攻击](https://help.aliyun.com/zh/ecs/user-guide/use-cloud-firewall-to-defend-against-public-network-attacks.md): 在公网出口部署云防火墙，通过 DPI 深度包检测、IPS 入侵防御、威胁情报和虚拟补丁防御漏洞利用、暴力破解、挖矿木马等攻击，含访问控制策略配置
+- [WAF 防御 Web 攻击](https://help.aliyun.com/zh/ecs/user-guide/using-the-web-application-firewall-to-defend-against-web-attacks.md): WAF + RASP 双层防护：WAF 通过 CNAME/云产品/混合云三种方式接入，拦截 SQL 注入/XSS/WebShell；RASP 嵌入应用运行时防御 0day 和内存马
+- [ActionTrail 操作审计](https://help.aliyun.com/zh/ecs/user-guide/audit-cloud-operations-with-actiontrail.md): 默认保留 90 天云操作事件，创建跟踪可投递到 OSS 或 SLS 长期存储。支持模板和自定义告警规则（登录失败、非授权 IP 登录），Insights 智能分析异常 API 调用
+- [维护安全联系人与消息订阅](https://help.aliyun.com/zh/ecs/user-guide/maintain-correct-security-contacts-receive-and-handle-security-events-in-a-timely-manner.md): 在账号中心添加安全联系人，在消息中心订阅云盾安全信息通知、账号安全告警等消息类型，支持站内信/邮箱/短信/语音/机器人多渠道接收，避免安全事件告警失联
+- [堡垒机运维满足等保 2.0](https://help.aliyun.com/zh/ecs/user-guide/use-the-bastion-machine-for-operation-and-maintenance-to-meet-the-requirements-of-equal-protection-2-0.md): 部署堡垒机统一纳管 ECS 运维入口，安全组仅放行堡垒机 IP 访问 SSH/RDP 端口，配合身份鉴别、最小权限授权和操作审计满足等保 2.0 三级要求
+- [VPC 流日志审计网络流量](https://help.aliyun.com/zh/ecs/user-guide/log-and-analyze-vpc-traffic.md): 从 VPC/交换机/弹性网卡采集五元组流量日志投递到 SLS，支持 1/5/10 分钟采样间隔，可按 IPv4 或双栈采集。采集路径支持按网元（NAT 网关、VPN 网关、转发路由器等）过滤
+- [ECS 应用安全防护概览](https://help.aliyun.com/zh/ecs/user-guide/application-security.md): 涵盖四类防护：云安全中心免费版主机安全（SecurityEnhancementStrategy=Active 开启），漏洞扫描与 OOS 补丁自动修复，云防火墙网络隔离，WAF 和 DDoS 防护 Web 流量安全
+- [ECS 监控与日志概览](https://help.aliyun.com/zh/ecs/user-guide/monitoring-and-logging.md): ECS 实例和云盘监控、健康看板、基础云监控报警、配置审计（等保 2.0 预检）、操作审计 ActionTrail、日志服务 SLS 投递、VPC 流日志与流量镜像等监控与审计能力汇总
+- [ECS 安全能力概述](https://help.aliyun.com/zh/ecs/user-guide/overview-of-security-capability.md): 三级安全能力：默认内存加密（g8i/c8i/r8i 等）、可信计算 vTPM（启动校验防篡改）、机密计算（SGX Enclave/TDX/CSV 机密虚拟机），底层配备 Ali-PRoT 硬件安全芯片
+- [可信计算能力概述](https://help.aliyun.com/zh/ecs/user-guide/overview-of-trusted-computing-capabilities.md): 基于 vTPM 可信根构建信任链，实现系统启动完整性校验和远程证明，支持 g9i/g8i/c8i/r8i/g7t/c7t 等 30 余个规格族
+- [创建可信实例](https://help.aliyun.com/zh/ecs/user-guide/create-a-security-enhanced-instance.md): 选择支持 vTPM 的实例规格并开启可信系统创建安全增强实例，需开通 KMS 并授权 AliyunECSInstanceForYundunSysTrustRole RAM 角色，启动时自动向云安全中心上报可信校验信息
+- [使用和运维可信实例](https://help.aliyun.com/zh/ecs/user-guide/use-the-trusted-feature-of-security-enhanced-instances.md): 通过 acs:ecs:supportVtpm 标签筛选可信实例，在云安全中心查看 PCR 度量状态，处理可信异常（忽略/加白名单）和未度量状态（排查 RAM 角色、网络、t-trustclient 服务）
+- [机密计算解决方案概览](https://help.aliyun.com/zh/ecs/user-guide/confidential-computing-solutions.md): 基于 TEE 硬件可信执行环境的机密计算架构，支持 Intel SGX/TDX、神龙 Enclave 和 GPU 机密计算，覆盖 AI 推理安全、高敏数据加密计算、钱包私钥保护三大场景
+- [构建 SGX 机密计算环境](https://help.aliyun.com/zh/ecs/user-guide/build-an-sgx-encrypted-computing-environment.md): 在 g7t/c7t/r7t 实例上构建 Intel SGX 机密计算环境，含 cpuid 检查 SGX 启用状态、SGX 驱动安装、Intel SGX SDK 配置和 Enclave 示例代码验证
+- [构建 TDX 机密计算环境](https://help.aliyun.com/zh/ecs/user-guide/build-a-tdx-confidential-computing-environment.md): 在 Intel TDX 实例（g8i 系列）中构建机密计算环境，含 SecurityOptions.ConfidentialComputingMode=TDX 参数创建实例、TDX Report 生成与远程证明验证的 CLI 命令和示例代码
+- [构建异构机密计算环境](https://help.aliyun.com/zh/ecs/user-guide/build-a-heterogeneous-confidential-computing-environment.md): 在 gn8v-tee 实例中构建 GPU 机密计算环境，CPU TDX + GPU TEE 双重保护，含 NVIDIA 驱动安装、SPDM 加密通道验证和 GPU 远程证明功能验证步骤
+- [构建 CSV 机密计算环境（g7h）](https://help.aliyun.com/zh/ecs/user-guide/build-csv-encrypted-computing-environment.md): 在海光 g7h 实例上构建 CSV 加密计算环境，含控制台/RunInstances API 创建 CSV 实例、MSR 和内核日志检查 CSV 启用状态、csv-guest 驱动加载、Attestation Report 生成与验证
+- [构建 Enclave 机密计算环境](https://help.aliyun.com/zh/ecs/user-guide/build-a-confidential-computing-environment-by-using-enclave.md): 在 ECS 实例内通过虚拟化 Enclave 切分 vCPU 和内存创建隔离 EVM，支持 hfg9i/g8i/c8i/r8i 等规格族（4 vCPU 以上），含 enclave-cli 安装和 vsock 本地安全信道通信
+- [远程证明服务](https://help.aliyun.com/zh/ecs/user-guide/remote-attestation-service.md): 基于 RATS 架构验证 vTPM 可信实例和 SGX/TDX/Enclave 机密计算实例的安全状态，支持 OIDC 标准 Token 颁发，可配置为 RAM 或 AWS IAM 的外部 IdP，含 OpenAPI 调用示例
+- [远程证明 EAT Profile](https://help.aliyun.com/zh/ecs/user-guide/eat-profile.md): 远程证明服务签发的 JWT/EAT 令牌声明字段说明，含 TDX（tdx.quote.body.mr_td 等度量值）、SGX、CSV 和 vTPM 四类 TEE 平台的 tcb-status 声明定义
+- [gn8v-tee 部署 OpenClaw 机密 AI Agent](https://help.aliyun.com/zh/ecs/user-guide/build-openclaw-confidential-ai-agent-on-heterogeneous-confidential-computing-instances.md): 在 gn8v-tee GPU 机密计算实例上部署 OpenClaw AI Agent 和 Qwen3.6-35B-A3B 模型，基于 Intel TDX + NVIDIA GPU TEE 实现全链路加密，含可信镜像构建、Trustee 远程证明、RATS-TLS 通道配置
+- [机密计算 LLM 推理（CAI 方案）](https://help.aliyun.com/zh/ecs/user-guide/build-a-secure-llm-inference-environment-on-gn8v-tee-related-instances.md): 基于 gn8v-tee 实例和 Confidential AI 方案构建安全 LLM 推理环境，结合 ACK 集群部署 Trustee 远程证明服务和 KMS 密钥托管，支持 Gocryptfs 加密模型部署
+- [异构机密计算部署机密 RAG](https://help.aliyun.com/zh/ecs/user-guide/deploy-confidential-rag-applications-on-heterogeneous-confidential-computing-instances.md): 基于 gn8v-tee 规格族（Intel TDX + NVIDIA 机密 GPU）部署 Confidential RAG，通过 TEE 和 Trustee 远程证明保护私有数据向量化和模型推理全过程
+- [机密计算 LLM 推理（安全度量方案）](https://help.aliyun.com/zh/ecs/user-guide/build-a-secure-deepseek-inference-environment-on-gn8v-tee-related-instances.md): 基于 gn8v-tee 实例集成 TDX 可信度量（MRTD/RTMR）和远程认证，部署 Ollama + DeepSeek-R1-70B + Open WebUI 推理服务，含 CCZoo 开源项目和 TD Quote 验证流程
+- [TDX 实例 BigDL PPML Spark 大数据分析](https://help.aliyun.com/zh/ecs/user-guide/build-a-distributed-end-to-end-secure-apache-spark-big-data-analytics-application-based-on-bigdl-ppml-on-tdx-instances.md): 在 g8i TDX 实例上基于 BigDL PPML 运行分布式 Spark 大数据分析，含 Kubernetes 集群部署、KMS 密钥管理和端到端 AES/TLS 加密数据传输配置
+- [TDX 实例部署端到端 RAG](https://help.aliyun.com/zh/ecs/user-guide/deploy-an-end-to-end-retention-augment-generation-rag-solution-on-a-tdx-instance.md): 在 g8i 通用型 TDX 实例上基于 Haystack 软件栈部署安全 RAG 问答系统，通过 RA-TLS 远程证明保护文档处理、向量检索和大模型推理全流程数据隐私
+- [裸金属实例部署 Confidential Containers](https://help.aliyun.com/zh/ecs/user-guide/deploy-confidential-containers-on-bare-metal-instances.md): 基于 ecs.ebmg8i.48xlarge 裸金属实例和 Intel TDX 部署 CoCo v0.17.0，通过 Kubeadm 搭建单节点集群，Pod 运行在 TDX 机密虚拟机中实现运行时数据加密保护
+- [机密云盘加密](https://help.aliyun.com/zh/ecs/user-guide/encrypt-cloud-disks-in-confidential-instances.md): 在 TDX 或异构机密实例上用 LUKS2 加密数据盘（Cryptpilot 工具），支持 OTP 临时密钥和 KMS 持久密钥两种方式，AES-256 加密，可选 AEAD 完整性保护防篡改
+- [机密实例系统盘度量与加密](https://help.aliyun.com/zh/ecs/user-guide/system-disk-measurement-and-encryption-protection-for-confidential-computing-instances.md): 用 CryptPilot 对机密实例系统盘进行 dm-verity 完整性度量和 LUKS2 全盘加密，rootfs 卷只读度量防篡改、data 卷 AES-256 加密读写，需部署 Trustee 密钥管理服务下发解密密钥
+- [Enclave CLI 快速入门](https://help.aliyun.com/zh/ecs/user-guide/quickstart.md): 使用 enclave-cli build-enclave 从 Docker 镜像构建 .eif Enclave 镜像，run-enclave 指定 CPU/内存启动 Enclave，describe-enclaves 查看状态，terminate-enclave 停止
+- [Enclave CLI 子命令参考](https://help.aliyun.com/zh/ecs/user-guide/enclave-cli-reference.md): enclave-cli 全部子命令详细用法：build-enclave（Docker 转 .eif 镜像）、run-enclave、describe-enclaves、terminate-enclave、console，含参数说明和 PCR 度量值输出
+- [Enclave CLI 错误码](https://help.aliyun.com/zh/ecs/user-guide/error-code.md): Enclave CLI 错误码 E01 至 E56 的完整列表，涵盖参数错误、资源不足、镜像构建失败等场景，每个错误码含原因说明和解决方法
+- [Windows 可信实例 BitLocker 加密系统盘](https://help.aliyun.com/zh/ecs/user-guide/use-bitlocker-s-tpm-key-protector-to-encrypt-system-disks-in-windows-trusted-instances.md): 在 g9i/c9i/r9i 等可信实例上用 BitLocker + vTPM 密钥保护程序加密 Windows 系统盘，三层密钥体系（FVEK/VMK/Sealing Key）绑定 PCR 度量值，含 CLI 创建可信实例命令
+- [服务器迁移指引](https://help.aliyun.com/zh/ecs/user-guide/migrate-servers.md): 本地物理机/虚拟机上云、AWS/Azure/腾讯云跨云迁移、同/跨账号和地域的 ECS 间迁移、经典网络转 VPC、轻量应用服务器转 ECS 等场景的迁移方式对比，支持 SMC 和镜像导入两种路径
+- [操作系统迁移及升级（服务器迁移）](https://help.aliyun.com/zh/ecs/user-guide/migrate-the-operating-system-of-an-ecs-instance-1.md): EOL 操作系统原地迁移升级，保留系统盘数据。Windows 支持 2008R2→2022 逐级升级，Linux 支持 CentOS 7/8 迁移至 Alibaba Cloud Linux，不支持 i686 架构软件包和跨语言迁移
+- [自定义镜像跨地域复制实例](https://help.aliyun.com/zh/ecs/user-guide/use-the-snapshot-and-image-features-to-migrate-instance-data.md): 从源实例创建自定义镜像，跨地域复制镜像到目标地域，再用复制的镜像创建新实例，新实例的 IP/实例 ID 等元数据会重新生成，需更新资源关联关系
+- [已备案域名接入阿里云](https://help.aliyun.com/zh/ecs/user-guide/how-to-connect-a-registered-domain-name-to-alibaba-cloud.md): 将其他服务商已备案域名接入阿里云备案系统的操作流程，含账号准备、ECS 服务器要求（中国内地包月3个月以上）、ICP 接入备案提交和域名解析配置
+- [DTS 迁移 ECS 自建数据库（实例间）](https://help.aliyun.com/zh/ecs/user-guide/migrate-data-between-self-managed-databases-on-ecs-instances.md): 通过 DTS 在两台 ECS 实例的自建 MySQL 数据库间做零停机数据迁移，含安全组 3306 端口放行、非 root 迁移账号创建和 DTS 任务配置步骤
+- [DTS 迁移本地数据库到 ECS](https://help.aliyun.com/zh/ecs/user-guide/migrate-an-on-premises-self-managed-database-to-ecs.md): 通过 DTS 将本地自建 MySQL 数据库零停机迁移到 ECS 实例上的自建 MySQL，含源端公网 IP 接入、DTS IP 白名单配置和迁移任务创建步骤
+- [x86 应用迁移到倚天云服务器概述](https://help.aliyun.com/zh/ecs/user-guide/summary-of-the-migration.md): 倚天 710 ARM 架构（g8y/c8y/r8y）迁移总览：编译型语言（C/C++/Go）需重新编译，解释型语言（Java/Python）需检查 JNI 本地库兼容性，可用 EasyYitian 工具平台辅助迁移
+- [倚天迁移 Make/CMake 构建文件](https://help.aliyun.com/zh/ecs/user-guide/make-or-cmake-build-files.md): x86 到倚天 ARM 的 Makefile/CMakeLists.txt 编译选项修改：-m64 改 -mabi=lp64、加 -fsigned-char、march 改 armv8-a+sve2 -mcpu=neoverse-n1
+- [倚天迁移 C/C++ 代码](https://help.aliyun.com/zh/ecs/user-guide/c-or-c-language-migration.md): x86 到倚天 ARM 的 C/C++ 迁移：平台宏替换（__x86_64__ 改 __aarch64__）、builtin 函数转换（ia32_crc32 改 aarch64_crc32cb）、SSE/AVX intrinsic 转 NEON（sse2neon）、内联汇编指令改写
+- [倚天迁移 Java 应用](https://help.aliyun.com/zh/ecs/user-guide/the-java-language-migration.md): x86 到倚天 ARM 的 Java 应用迁移：推荐 Alibaba Dragonwell 或 Eclipse Temurin JDK，含 JNI 本地库兼容性扫描脚本、不兼容依赖包升级和 Java 工程重新构建步骤
+- [Python 迁移到倚天实例](https://help.aliyun.com/zh/ecs/user-guide/python-language-migration.md): Python 为解释型语言，在 ARM 平台可直接运行无需编译，以 Alibaba Cloud Linux 3 为例用 yum install python38 安装，建议 3.7 以上版本
+- [倚天实例部署开源软件](https://help.aliyun.com/zh/ecs/user-guide/open-source-software-migration.md): 倚天 ARM 实例上用 yum/apt/zypper 安装 Nginx、MySQL、Redis，TensorFlow 和 PyTorch 通过 ARM Docker 镜像部署，含各发行版安装命令
+- [EasyYitian 迁移工具](https://help.aliyun.com/zh/ecs/user-guide/easyyitian-migration-tools.md): x86 应用迁移到倚天 ARM 实例的官方工具，通过 Docker 部署，提供软件兼容性扫描、跨架构编译构建和性能对比调优功能
+- [ECS 实例跨账号过户](https://help.aliyun.com/zh/ecs/user-guide/how-to-cross-account-transfer-migration-ecs-instance.md): 将 ECS 实例所有权从一个阿里云账号转移到另一个账号，支持包年包月和按量付费（不支持抢占式），过户约半小时且免费，过户后 VPC/私网 IP/安全组会变更
+- [ECS 标签分类管理](https://help.aliyun.com/zh/ecs/user-guide/label-overview.md): 通过键值对标签对 ECS 实例、云盘、镜像、安全组等资源分类，支持按标签批量运维、分账管理和 RAM 分组授权
+- [ECS 资源概述](https://help.aliyun.com/zh/ecs/user-guide/overview-47.md): ECS 资源（实例、镜像、云盘、安全组、弹性网卡等）的 ID 格式、地域/可用区位置限制和跨地域使用规则
+- [ECS 资源组管理](https://help.aliyun.com/zh/ecs/user-guide/resource-groups.md): 按用途或项目将 ECS 实例、云盘、镜像等资源分组，每个资源仅属一个资源组，支持跨地域分组和 RAM 用户分级授权，通过 JoinResourceGroup API 操作
+- [ECS 配额管理](https://help.aliyun.com/zh/ecs/user-guide/quota-management.md): 在配额中心查看和申请提升 ECS 规格 vCPU/GPU 配额、安全组数量等通用配额，以及 RunInstances 等 API 速率配额，支持配额用量告警
+- [GPU 实例部署 Qwen3.5-397B-A17B-FP8](https://help.aliyun.com/zh/ecs/user-guide/deploy-qwen3-5-397b-a17b-fp8-on-gpu-accelerated-instances.md): 在 ecs.ebmgn9ge.32xlarge（8 卡 72GB 显存）上通过 SGLang + Docker 部署 Qwen3.5-397B FP8 量化模型推理服务，系统盘需 500GB 以上，含 ModelScope 下载和 NVIDIA 容器工具包配置
+- [GPU 实例部署 Qwen3-235B-A22B](https://help.aliyun.com/zh/ecs/user-guide/deploy-qwen3-235b-a22b-on-gpu-accelerated-instances.md): 在 ecs.ebmgn8v（8 卡 96GB 显存，总 768GB）上通过 VLLM 或 SGLang 部署 Qwen3-235B-A22B（475GB）推理服务，含 ossutil 下载模型和 Chatbox 对话调用
+- [GPU 实例部署 DeepSeek-R1 蒸馏模型](https://help.aliyun.com/zh/ecs/user-guide/deploy-the-deepseek-r1-distill-model-on-a-gpu-accelerated-instance.md): 在 GPU 实例上通过 vLLM + Open WebUI 部署 DeepSeek-R1 蒸馏模型（1.5B-70B），含各型号所需 GPU 显存和推荐规格（gn7i 系列）、Docker + NVIDIA Container Toolkit 环境配置
+- [单机部署 DeepSeek-V3/R1 满血版](https://help.aliyun.com/zh/ecs/user-guide/deploy-a-full-spec-deepseek-model-on-a-gpu-accelerated-instance.md): 在 ecs.ebmgn8v.48xlarge（8*96GB GPU 显存）单机上用 SGLang 框架部署 671B 参数 DeepSeek-V3/R1 模型，含 Docker + NVIDIA 容器工具包环境配置和推理服务启动命令
+- [双机分布式部署 DeepSeek-V3/R1](https://help.aliyun.com/zh/ecs/user-guide/deploy-a-full-spec-deepseek-model-on-two-gpu-accelerated-instances.md): 在两台 ecs.ebmgn8v.48xlarge 上用 vLLM 框架双机分布式部署 671B 参数 DeepSeek-V3/R1 模型，需同一 VPC 和交换机下，含 Docker 环境和 NVIDIA 容器工具包配置
+- [ECS 部署 Open WebUI 调用 DeepSeek-R1](https://help.aliyun.com/zh/ecs/user-guide/deploy-open-webui-on-ecs-to-experience-deepseek-r1.md): 通过 Docker 在 Linux ECS 实例上部署 Open WebUI，调用百炼平台 DeepSeek-R1 API 搭建对话应用，需放行 8080 端口
+- [GPU 实例部署 QwQ-32B 推理模型](https://help.aliyun.com/zh/ecs/user-guide/deploy-qwen-qwq-32b-inference-model-on-gpu-accelerated-instances.md): 在 gn7i-4x.16xlarge GPU 实例上通过 vLLM v0.7.2 + Open WebUI 部署 QwQ-32B（320 亿参数），需 4x24GB GPU 显存和 200GB 系统盘，含 Docker 和 NVIDIA 容器工具包配置
+- [GPU 实例部署 Alpaca 对话模型](https://help.aliyun.com/zh/ecs/user-guide/from-0-fleetly-personal-edition-dialogue-model.md): 在 ecs.gn7i-c16g1.4xlarge GPU 实例上部署 Chinese-LLaMA-Alpaca 模型，需 Ubuntu 22.04 + CUDA 12.1，含 Python 环境配置和 WebUI 启动命令
+- [GPU 实例部署 ChatGLM-6B](https://help.aliyun.com/zh/ecs/user-guide/rapid-build-ai-robots-dialogue.md): 在 ecs.gn7i GPU 实例上用 ai-inference-solution 预置镜像部署 ChatGLM-6B 对话模型，从 ModelScope 下载模型权重，通过 WebUI 交互
+- [Deepytorch 加速 AIGC 绘画](https://help.aliyun.com/zh/ecs/user-guide/quickly-implement-aigc-painting-using-deepytorch-accelerator.md): 用 Deepytorch 推理加速器加速 Stable Diffusion WebUI 文生图，含 v1.5 和太乙中文/动漫模型，在 ecs.gn7i GPU 实例上部署
+- [Megatron-DeepSpeed 训练 GPT-2](https://help.aliyun.com/zh/ecs/user-guide/use-the-megatron-deepspeed-training-gpt-2-and-generate-text.md): 在 ecs.gn7i-c8g1.2xlarge（A10 GPU）上用 Docker 部署 Megatron-DeepSpeed 框架，完成 OSCAR 数据集预处理、GPT-2 MEDIUM 单机单卡预训练和文本生成的全流程
+- [Deepytorch 加速 Stable Diffusion 图片生成](https://help.aliyun.com/zh/ecs/user-guide/based-on-the-deepytorch-accelerator-quickly-realize-stable-coursing-together-generate-specific-object-images.md): 在 gn7i GPU 实例上用 DreamBooth + Deepytorch 加速器 Finetune Stable Diffusion 模型，结合 ControlNet 生成特定物体图片，含 WebUI 7860 端口配置和训练代码
+- [Deepytorch 加速 LLaMA-7B 微调](https://help.aliyun.com/zh/ecs/user-guide/implement-llama-7b-instruction-fine-tuning-with-the-deepytorch-accelerator.md): 基于 Alpaca 在 ecs.gn7i-c32g1.32xlarge（4卡 A10）上用 Deepytorch Training 加速 LLaMA-7B 指令微调训练，含 aiacc-train-solution 镜像部署
+- [DeepGPU 加速 Qwen1.5-7B 微调](https://help.aliyun.com/zh/ecs/user-guide/fine-tune-qwen1-5-7b-instructions-based-on-deepgpu.md): 基于 LLaMA-Factory 和 DeepSpeed 在 ecs.ebmgn7ex.32xlarge（8卡 GPU）上微调 Qwen1.5-7B，使用 DeepNCCL + Deepytorch Training 双加速器
+- [AMD 实例部署 ChatGLM-6B](https://help.aliyun.com/zh/ecs/user-guide/deploy-chatglm-6b-on-an-amd-based-instance.md): 在 g8a（AMD CPU）实例上无 GPU 部署 ChatGLM-6B 对话模型，至少需要 ecs.g8a.4xlarge（64 GiB），含手动和一键脚本两种部署方式
+- [AMD 实例部署 Qwen-7B-Chat](https://help.aliyun.com/zh/ecs/user-guide/use-an-amd-instance-to-deploy-qwen-7b-chat.md): 在 g8a 实例（ecs.g8a.4xlarge 64GiB）上部署 Qwen-7B-Chat 对话模型，使用 ZenDNN 加速 AMD CPU 推理，通过 Gradio WebUI 7860 端口提供服务，支持手动和一键脚本部署
+- [AMD 实例部署 Qwen-VL-Chat](https://help.aliyun.com/zh/ecs/user-guide/use-an-amd-instance-to-deploy-qwen-vl-chat.md): 在 g8a 实例上通过龙蜥 PyTorch AMD Docker 容器部署 Qwen-VL-Chat 视觉理解模型，支持图片问答和检测框标注。最低规格 ecs.g8a.4xlarge，WebUI 端口 7860
+- [AMD 实例部署 Qwen-Audio-Chat](https://help.aliyun.com/zh/ecs/user-guide/use-an-amd-instance-to-deploy-qwen-audio-chat.md): 在 g8a 实例上通过龙蜥 PyTorch AMD Docker 容器部署 Qwen-Audio-Chat 语音理解模型，支持多语言语音问答和音乐分析。需额外安装 ffmpeg 处理音频，WebUI 端口 7860
+- [AMD 实例部署 Stable Diffusion](https://help.aliyun.com/zh/ecs/user-guide/use-an-amd-instance-to-deploy-stable-diffusion.md): 在 g8a 实例（最低 ecs.g8a.16xlarge 256GiB）上通过龙蜥 Docker 容器部署 Stable Diffusion v1.5 文生图服务。使用 ZenDNN 加速，仅支持英文 Prompt，WebUI 端口 7860
+- [Intel c8i 实例部署 ChatGLM2-6B](https://help.aliyun.com/zh/ecs/user-guide/use-an-intel-based-c8i-instance-to-deploy-chatglm2-6b.md): 在 c8i 实例（最低 ecs.c8i.4xlarge 32GiB）上使用 xFasterTransformer 框架部署 ChatGLM2-6B 中英对话模型，利用 Intel AMX 指令加速推理，支持 BF16/INT8/INT4 等多种量化精度
+- [g8i 实例加速 Stable Diffusion 推理](https://help.aliyun.com/zh/ecs/user-guide/use-intel-cpu-based-g8i-instances-to-accelerate-stable-diffusion-inference.md): 在 Intel CPU g8i 实例上用 IPEX 加速 Stable Diffusion 文生图推理，以 DreamShaper8_LCM 模型为例，含 Anaconda 环境搭建、模型下载和推理代码配置
+- [Intel c8i 实例部署 Qwen-72B-Chat](https://help.aliyun.com/zh/ecs/user-guide/deploy-qwen-72b-chat-on-an-8th-generation-intel-instance.md): 使用 c8i.24xlarge（192GB 内存）通过 IPEX-LLM 加速库单机部署 Qwen-72B-Chat，利用 Intel AMX 指令加速推理，含 Docker 镜像拉取、模型下载和 WebUI 7860 端口访问配置
+- [Intel c8i 实例部署 Qwen-7B-Chat](https://help.aliyun.com/zh/ecs/user-guide/deploy-qwen-7b-chat-on-an-8th-generation-intel-instance.md): 使用 c8i.4xlarge（32GB 内存）通过 xFasterTransformer 框架部署 Qwen-7B-Chat，支持 INT4/BF16 等混合精度加速，含 Docker 容器配置和 WebUI 7860 端口启动
+- [Intel CPU 实例部署 Qwen-1.8B-Chat](https://help.aliyun.com/zh/ecs/user-guide/use-intel-cpu-based-instances-to-deploy-the-qwen-1-8b-chat-recommendation-system-and-perform-a-query-rewriting-demonstration.md): 在 c8i 实例上用 xFasterTransformer 部署 Qwen-1.8B-Chat 模型，含 Docker 容器环境搭建、AMX 指令加速推理和 Query 改写演示
+- [Intel c8i 实例部署 Llama-2-7B](https://help.aliyun.com/zh/ecs/user-guide/deploy-the-llama-2-7b-model-with-eighth-generation-intel-instances.md): 使用第八代 Intel c8i 实例（AMX 加速）通过 xFasterTransformer 框架部署 Llama-2-7B，支持 INT4/INT8/BF16 等多种精度，含 Docker 容器环境配置和 WebUI 服务启动
+- [Vim 编辑器](https://help.aliyun.com/zh/ecs/user-guide/use-the-vim-editor.md): Vim 五种模式切换（普通/插入/替换/可视/命令），常用命令速查：移动光标、复制粘贴(yy/p)、删除(dd/x)、查找替换(:%s)、多窗口编辑、文档加密及常见错误处理
+- [Linux 系统常用命令](https://help.aliyun.com/zh/ecs/user-guide/common-linux-commands.md): ps/top/kill 进程管理、systemctl 服务管理、df/du 磁盘查询、who/id 用户信息等 Linux 运维常用命令的参数说明和使用示例
+- [Linux 添加阿里云软件源](https://help.aliyun.com/zh/ecs/user-guide/manage-and-use-linux-software-repositories.md): 为 Alibaba Cloud Linux、CentOS、Ubuntu、Debian 等发行版配置阿里云镜像站软件源，ECS 内网地址 mirrors.cloud.aliyuncs.com 可免公网访问
+- [Nginx 配置多站点（Linux）](https://help.aliyun.com/zh/ecs/user-guide/build-multiple-websites-on-a-linux-instance.md): 在 Linux ECS 上用 Nginx 配置多个 Web 站点，通过修改 nginx.conf 的 server 块实现同 IP 不同域名访问不同站点，前提需已部署 LNMP 环境
+- [Cron 定时任务](https://help.aliyun.com/zh/ecs/user-guide/cron-scheduled-tasks.md): crontab 表达式语法（分/时/日/月/周）、用户级与系统级配置、常用调度示例，以及 Linux/macOS/BSD/Windows 的 Cron 差异对比
+- [Linux 安装图形化桌面](https://help.aliyun.com/zh/ecs/user-guide/installing-a-graphical-desktop-environment-for-a-linux-instance.md): 为 Ubuntu/Anolis/CentOS 安装 XFCE/MATE/GNOME 桌面环境，XFCE 最低需 2C2G，GNOME 需 4C8G，Alibaba Cloud Linux 不支持安装 GUI
+- [Linux 内核升级](https://help.aliyun.com/zh/ecs/user-guide/upgrade-the-linux-instance-kernel.md): Alibaba Cloud Linux/CentOS 用 yum install kernel、Ubuntu/Debian 用 apt install linux-image 升级内核，升级前需确认 virtio-blk 和 xen-blkfront 驱动
+- [Linux Kdump 预留内存设置](https://help.aliyun.com/zh/ecs/user-guide/view-and-change-the-size-of-reserved-memory-on-a-linux-instance.md): 查看和调整 Linux 实例的 crashkernel 预留内存大小，含释放预留内存并关闭 Kdump 服务的步骤，区分 Alibaba Cloud Linux/CentOS 和 Ubuntu 的 grub 配置路径
+- [Linux TCP/UDP 端口测试](https://help.aliyun.com/zh/ecs/user-guide/test-methods-of-tcp-or-udp-port-in-linux.md): 用 telnet 测试已有 TCP 端口连通性，用 Python http.server 临时创建监听端口测试，以及 nc 命令测试 UDP 端口连通性
+- [Linux/FreeBSD 单用户模式](https://help.aliyun.com/zh/ecs/user-guide/boot-a-linux-or-freebsd-like-ecs-instance-into-single-user-mode.md): 实例无法远程连接时通过 VNC 进入单用户维护模式，修改内核启动参数添加 single 或 rw init=/bin/sh，支持 Alibaba Cloud Linux/CentOS/Ubuntu/FreeBSD
+- [Windows 实例设置首选语言](https://help.aliyun.com/zh/ecs/user-guide/change-the-preferred-language-of-a-windows-instance.md): 为 Windows Server 下载语言资源包并设置首选显示语言，需先临时禁用 WSUS 再安装语言包，适用于 Server 2012 及以上版本
+- [配置 Windows 多用户远程桌面](https://help.aliyun.com/zh/ecs/user-guide/configure-windows-multi-user-remote-desktop-connection.md): Windows Server 默认仅支持 2 个 RDP 会话，通过安装远程桌面服务（RDS）角色突破限制，含创建用户并加入 Remote Desktop Users 组的步骤，免费试用 120 天后需激活 RDS CAL 许可证
+- [激活 Windows RDS 许可证](https://help.aliyun.com/zh/ecs/user-guide/apply-for-multi-user-session-license-and-activate-windows-ecs-instance.md): 远程桌面服务 120 天宽限期内安装并激活 RDS CAL 许可证，到期未激活将禁止普通用户远程连接，仅允许默认管理员登录
+- [远程桌面"没有授权服务器可提供许可证"](https://help.aliyun.com/zh/ecs/user-guide/the-error-message-no-remote-desktop-authorization-server-can-provide-a-license-is-prompted-for-remote-login-to-a-windows-instance.md): RDS 免费试用 120 天到期后未配置 RDS CAL 导致的连接错误，方案一删除远程桌面服务角色恢复默认双会话，方案二购买并配置 RDS CAL 授权
+- [远程桌面"许可证问题 60 分钟断开"](https://help.aliyun.com/zh/ecs/user-guide/what-about-the-error-there-is-a-problem-with-your-remote-desktop-license-and-your-session-will-be-disconnected-after-60-minutes-when-connecting-to-a-windows-instance-via-remote-desktop.md): 安装 RDS 服务后许可证授权异常导致的 60 分钟断连错误，需正确配置 RDS CAL 许可证解决
+- [Windows 实例日志查看](https://help.aliyun.com/zh/ecs/user-guide/use-logs-in-windows-instances.md): 通过 eventvwr 事件查看器查看系统日志、应用程序日志、安全日志和服务日志，含日志路径修改和备份方法，以 Windows Server 2022 为例
+- [IIS 配置多站点（Windows）](https://help.aliyun.com/zh/ecs/user-guide/build-multiple-websites-on-a-windows-instance.md): 在 Windows Server 2012 R2 上用 IIS 配置多个 Web 站点，通过相同端口不同域名（主机名绑定）实现多站点访问，含 hosts 本地测试配置
+- [IIS Web 网站访问故障](https://help.aliyun.com/zh/ecs/user-guide/how-do-i-resolve-the-issues-that-occur-when-i-access-iis-websites.md): 排查 IIS 网站 500 内部错误、403 禁止访问、端口被占用、Bad Request-Invalid Hostname、绝对物理路径报错、FTP over TLS 534 错误等问题的解决方案
+- [Windows 开启 telnet 功能](https://help.aliyun.com/zh/ecs/user-guide/enable-telnet-on-a-windows-instance.md): Windows 10 和 Windows Server 上启用 telnet 客户端功能，用于 telnet <ip> <port> 测试网络服务连通性，通过控制面板或添加角色向导勾选 Telnet 客户端
+- [云助手安装 Windows OpenSSH](https://help.aliyun.com/zh/ecs/user-guide/use-the-cloud-assistant-agent-to-install-openssh-on-a-windows-ecs-instance.md): 通过云助手执行 PowerShell 脚本在 Windows 实例上一键安装 OpenSSH，脚本自动下载、解压、安装并配置 sshd 服务开机自启，安装后实例监听 22 端口支持 SSH 连接
+- [OOS 扩展程序安装 AI 编码助手](https://help.aliyun.com/zh/ecs/user-guide/install-an-ai-coding-assistant-on-ecs-instances-using-the-oos-extension.md): 通过 OOS 扩展程序一键安装 OpenCode、Qwen Code 或 QoderCLI 三款 AI 编码助手，需实例已安装云助手，安装后通过 opencode/qwen/qodercli 命令验证
+- [扩展程序部署 LNMP 环境](https://help.aliyun.com/zh/ecs/user-guide/use-ros-to-deploy-an-lnmp-stack.md): 通过 OOS 扩展程序一键安装 Linux+Nginx+MySQL+PHP 环境，安全组需放行 80 端口，MySQL root 密码在扩展程序任务详情中查看
+- [手动部署 LNMP 环境](https://help.aliyun.com/zh/ecs/user-guide/deploy-the-lnmp-environment.md): 通过 yum/dnf/apt 手动安装 Nginx + MySQL + PHP 构建 LNMP 环境，支持 Alibaba Cloud Linux 3、CentOS 7/8 和 Ubuntu，含 Nginx 官方源配置、PHP-FPM 连接和安全组 80 端口放行
+- [扩展程序一键部署 LAMP](https://help.aliyun.com/zh/ecs/user-guide/deploy-a-lamp-environment-using-extensions.md): 通过 ECS 控制台的「LAMP 一键安装」扩展程序部署 Linux+Apache+MySQL+PHP 环境，基于云助手自动执行，安全组需放行 80 端口
+- [手动部署 LAMP 环境](https://help.aliyun.com/zh/ecs/user-guide/build-a-lamp-stack-on-a-centos-7-instance.md): 在 Alibaba Cloud Linux 3/CentOS 8 上手动安装 Apache + MySQL 8.0 + PHP 8.4 环境，含 httpd/mysqld/php-fpm 服务配置命令和 Terraform 一键部署方式
+- [扩展程序安装 OpenJDK](https://help.aliyun.com/zh/ecs/user-guide/install-openjdk-through-extensions.md): 通过 OOS 扩展程序在 ECS 实例上一键安装 OpenJDK，支持选择 Java 版本，实例需基于公共镜像且已安装云助手，安装后用 java -version 验证
+- [手动部署 OpenJDK](https://help.aliyun.com/zh/ecs/user-guide/manually-deploy-openjdk.md): 在 Linux 上通过 dnf/yum/apt 安装 OpenJDK 或从官网手动编译安装，覆盖 Alibaba Cloud Linux、CentOS、Ubuntu、Debian 系统，含卸载旧版和版本切换步骤
+- [部署 Alibaba Dragonwell JDK](https://help.aliyun.com/zh/ecs/user-guide/deploy-alibaba-dragonwell-jdk.md): 安装阿里巴巴优化版 OpenJDK，提供标准版和扩展版，支持 Dragonwell 8/11/17/21，Alibaba Cloud Linux 3 可直接 yum install java-*-alibaba-dragonwell-devel
+- [云市场镜像部署 Java Web 环境](https://help.aliyun.com/zh/ecs/user-guide/cloud-market-image-deployment-of-java-web-environment.md): 用云市场镜像（CentOS 7.3 JavaWeb 运行环境）一键部署 Java Web 服务器，含 Java 版本验证、Tomcat 启动（8080 端口）和 MySQL 连接测试步骤
+- [Tomcat 部署 Java Web 环境](https://help.aliyun.com/zh/ecs/user-guide/manually-deploy-a-java-web-environment-using-tomcat.md): 在 Linux/Windows ECS 上部署 Tomcat 9 作为 Java Web 容器，支持 Terraform 一键部署或手动安装，含 systemd 服务配置和 8080 端口安全组放行
+- [Jetty 部署 Java Web 环境](https://help.aliyun.com/zh/ecs/user-guide/manually-deploy-a-java-web-environment-using-jetty.md): 在 Linux/Windows ECS 上部署 Jetty 12 作为轻量级 Java Web 容器，比 Tomcat 更适合高并发和分布式场景，含 jetty-base 目录初始化和 8080 端口安全组配置
+- [部署 Python 环境](https://help.aliyun.com/zh/ecs/user-guide/deploy-a-python-environment.md): 在 ECS 上通过 yum/apt 包管理器安装或从源码手动编译安装 Python，覆盖 Alibaba Cloud Linux、CentOS、Ubuntu 系统，含版本选择和环境变量配置
+- [扩展程序安装 Node.js](https://help.aliyun.com/zh/ecs/user-guide/quick-deployment-of-node-js-environment.md): 通过 OOS 扩展程序或 Terraform 一键部署 Node.js 环境，支持 Alibaba Cloud Linux 3、Ubuntu 20.04+、CentOS 7.x，实例需已安装云助手
+- [部署 Node.js 环境](https://help.aliyun.com/zh/ecs/user-guide/manually-deploy-a-node-js-environment.md): 通过 NVM（Node Version Manager）在 Linux 上安装和管理多版本 Node.js，Windows 上通过官方安装包部署，Alibaba Cloud Linux 2/CentOS 7 仅支持 Node.js 17.x 及以下
+- [安装 Docker 和 Docker Compose](https://help.aliyun.com/zh/ecs/user-guide/install-and-use-docker.md): Alibaba Cloud Linux 4/3/2、CentOS、Ubuntu 上安装 Docker 和 Docker Compose，支持 Terraform 一键部署或 yum/apt 命令行安装，含 systemctl enable 开机自启配置
+- [部署宝塔面板](https://help.aliyun.com/zh/ecs/user-guide/installation-of-pagoda-panel.md): 通过扩展程序或购买时预装宝塔面板，安全组需放行 8888 端口，支持新建实例预装或已有实例安装，面板初始账号密码在扩展程序配置信息中查看
+- [部署 AMH 面板](https://help.aliyun.com/zh/ecs/user-guide/using-amh-site.md): 基于 LNMP 架构的 Web 图形化管理面板，支持极速安装和定制安装（可指定 Nginx/MySQL/PHP 版本），安装后需放行 36150/36151 端口
+- [搭建 Hadoop 环境](https://help.aliyun.com/zh/ecs/user-guide/build-a-hadoop-environment.md): 在 Linux ECS 实例上搭建 Hadoop 3.2.4 伪分布式或完全分布式集群，含 JDK 安装、HDFS NameNode/DataNode 和 YARN ResourceManager 配置，支持 Terraform 一键部署
+- [Hermes Agent 与 Claude Code AI 开发团队](https://help.aliyun.com/zh/ecs/user-guide/use-hermes-agent-and-claude-code-to-build-an-ai-development-team.md): 通过云开发机 DevBox 一键创建预装 Hermes Agent 和 Claude Code 的 ECS 实例，Hermes 负责任务协调和经验沉淀，Claude Code 负责代码生成，仅支持新建实例
+- [搭建微信/支付宝小程序后端](https://help.aliyun.com/zh/ecs/user-guide/develop-your-wechat-mini-program-in-10-minutes.md): 通过 ECS + RDS MySQL + 云解析 DNS + SSL 证书搭建小程序后端服务，需域名 ICP 备案和 HTTPS，含微信和支付宝两种小程序的开发者工具集成步骤
+- [快速搭建 WordPress](https://help.aliyun.com/zh/ecs/user-guide/quickly-build-a-wordpress-website.md): 三种方式搭建 WordPress：ROS 一键部署（推荐）、云市场镜像、Terraform 自动化，支持 Ubuntu 20.04/22.04、CentOS 7.x、Alibaba Cloud Linux 3
+- [Linux 手动搭建 WordPress](https://help.aliyun.com/zh/ecs/user-guide/manually-build-a-wordpress-website-on-a-centos-7-ecs-instance.md): 在 Alibaba Cloud Linux 3 上部署 LNMP + WordPress 6.4.4，含 Nginx 配置、MySQL 建库授权、wp-config.php 配置和安全组 80 端口放行
+- [Windows 手动搭建 WordPress](https://help.aliyun.com/zh/ecs/user-guide/build-a-wordpress-website-on-a-windows-instance.md): 在 Windows Server 实例上通过宝塔面板搭建 WIMP（Windows + IIS + MySQL + PHP）环境并部署 WordPress，含安全组 80/3389/8888 端口放行配置
+- [搭建 Ghost 博客](https://help.aliyun.com/zh/ecs/user-guide/build-a-ghost-blogging-website-on-an-instance-that-runs-ubuntu.md): 在 Ubuntu 22.04 及以上实例部署 Ghost 博客，需安装 Nginx 1.9.5+、MySQL 8.0 和 Node.js 22.x，含用户创建、Ghost-CLI 安装和安全组 2368 端口放行
+- [手动搭建 Discuz! 论坛](https://help.aliyun.com/zh/ecs/user-guide/manual-build-discuz-bbs.md): 在 LAMP 环境上手动部署 Discuz! X3.5 论坛，需先部署 Apache+MySQL+PHP，安全组放行 22/80/3306 端口，含 wget 下载和目录权限设置命令
+- [云市场镜像搭建 Drupal 网站](https://help.aliyun.com/zh/ecs/user-guide/build-a-drupal-website-based-on-an-alibaba-cloud-marketplace-image.md): 通过云市场镜像一键部署 Drupal 11 网站（Alibaba Cloud Linux 3 + Nginx 1.26 + MySQL 8.0 + PHP 8.3），含 phpMyAdmin 管理和安全组 80/3306 端口配置
+- [手动搭建 Drupal 网站](https://help.aliyun.com/zh/ecs/user-guide/manually-build-a-drupal-website.md): 在 Alibaba Cloud Linux/CentOS 上部署 LAMP + Drupal 11.1.0，通过 Composer 安装，含 PHP 8.3/8.4 扩展配置和中文翻译包下载
+- [云市场镜像搭建 Magento 电商网站](https://help.aliyun.com/zh/ecs/user-guide/using-the-cloud-market-image-structures-magento-e-commerce-sites.md): 使用云市场镜像（CentOS 7.2 + Apache 2.4 + PHP 7.0 + MySQL 5.6 + Magento 2.1.1）一键部署英文版 Magento 电商站点，安全组需放行 22/80/443/3306 端口
+- [Ubuntu 搭建 Magento2 电商网站](https://help.aliyun.com/zh/ecs/user-guide/manually-build-a-magento-e-commerce-website-on-a-ubuntu-instance.md): 在 Ubuntu 22.04 上部署 LNMP + Magento2，依赖 Nginx 1.24、MySQL 8.0、PHP 8.3、OpenSearch 2.12 和 Composer 2.7，需 Adobe Commerce 密钥
+- [搭建 PHPWind 论坛](https://help.aliyun.com/zh/ecs/user-guide/build-phpwind-bbs-system.md): 通过云市场镜像一键部署 PHPWind 8.7 论坛，仅支持部分地域（华北/华东/华南），安全组需放行 22/80/3306 端口，默认管理员账号 admin 密码 10@idccom
+- [搭建 Joomla 管理平台](https://help.aliyun.com/zh/ecs/user-guide/build-joomla-based-management-platform.md): 通过云市场镜像（预装 Apache/MySQL/PHP）快速部署 Joomla CMS，含安全组 80/3306 端口放行和后台管理配置
+- [搭建 Moodle 课程管理系统](https://help.aliyun.com/zh/ecs/user-guide/build-moodle-course-management-system.md): 通过云市场镜像在 CentOS 7 上部署 Moodle 在线教学平台，含 MySQL 数据库配置和管理员账号设置
+- [搭建 ThinkPHP 框架](https://help.aliyun.com/zh/ecs/user-guide/building-thinkphp-framework.md): 在 Alibaba Cloud Linux/CentOS 7 上搭建 ThinkPHP 8.0，含 PHP 8.0 安装、Composer 配置和 Nginx/Apache 部署命令
+- [Nginx + uWSGI 部署 Django 项目](https://help.aliyun.com/zh/ecs/user-guide/use-nginx-and-uwsgi-to-deploy-a-django-project.md): Alibaba Cloud Linux 3 上通过 Nginx 反向代理 + uWSGI 部署 Django，含 pip 安装、collectstatic 静态文件配置和 socket 通信设置
+- [Windows 实例搭建 FTP 站点](https://help.aliyun.com/zh/ecs/user-guide/manually-build-an-ftp-site-on-a-windows-instance.md): 在 Windows Server 2012 R2 及以上系统通过 IIS 添加 FTP 服务角色，配置用户认证和目录权限，支持匿名和基本身份验证
+- [Linux 实例搭建 FTP 服务器](https://help.aliyun.com/zh/ecs/user-guide/manually-build-an-ftp-site-on-a-linux-instance.md): 在 Alibaba Cloud Linux/CentOS/Ubuntu/Debian 上安装 vsftpd，配置被动模式和本地用户认证，含 Terraform 一键部署
+- [搭建 FTP 站点 FAQ](https://help.aliyun.com/zh/ecs/user-guide/faq-about-building-ftp-sites.md): FTP 文件下载失败、vsftpd 连接报错、FileZilla 匿名模式连接、被动模式端口配置等搭建阶段常见问题排查
+- [Linux 部署 MySQL 数据库](https://help.aliyun.com/zh/ecs/user-guide/manually-deploy-mysql-on-an-ecs-instance-that-runs-centos.md): 在 Alibaba Cloud Linux 3/2、CentOS 7 上通过 yum/dnf 安装 MySQL 8.0，含 mysql_secure_installation 安全配置向导和 root 密码初始化步骤
+- [Windows 部署 MySQL 数据库](https://help.aliyun.com/zh/ecs/user-guide/manually-deploy-a-mysql-database-on-an-ecs-windows-instance.md): 在 Windows Server 2025 上通过 MySQL 官方安装包部署 MySQL 8.0 数据库，选择 Server only 模式安装，含 root 密码设置和命令行客户端验证
+- [云市场/扩展程序部署 MySQL（Linux）](https://help.aliyun.com/zh/ecs/user-guide/deploy-mysql-on-linux-instances-using-cloud-market-images-or-extensions.md): 通过云市场镜像或 OOS 扩展程序在 Linux 上自动部署 MySQL，免手动安装，支持 Ubuntu/CentOS/Alibaba Cloud Linux
+- [MySQL 部署常见问题](https://help.aliyun.com/zh/ecs/user-guide/mysql-deployment-faq.md): 忘记 root 密码重置（skip-grant-tables）、远程连接授权、服务启动失败等 MySQL 部署阶段常见问题排查
+- [Linux 部署 SQL Server 数据库](https://help.aliyun.com/zh/ecs/user-guide/deploy-sql-server-on-a-linux-instance.md): 在 Alibaba Cloud Linux/CentOS/Ubuntu 上通过 yum/apt 安装 mssql-server，含 mssql-conf 初始化和 sa 账号安全配置
+- [云市场镜像部署 SQL Server（Windows）](https://help.aliyun.com/zh/ecs/user-guide/cloud-market-image-deployment-of-sql-server-database.md): 用云市场镜像在 Windows ECS 上部署 SQL Server 2019，需放行 1433（TCP）和 1434（UDP）端口，含 SSMS 连接验证步骤
+- [部署 Oracle 数据库](https://help.aliyun.com/zh/ecs/user-guide/deploy-oracle-database.md): 通过 Docker 在 ECS 上部署 Oracle Database Free，含镜像拉取、1521 端口映射、密码设置和远程连接步骤
+- [DMS 管理 ECS 自建数据库](https://help.aliyun.com/zh/ecs/user-guide/manage-self-managed-databases-on-ecs-instances.md): 通过数据管理 DMS 添加和管理 ECS 上自建的 MySQL 数据库，含非 root 账号创建、3306 端口放行和 DMS 实例录入配置
+- [搭建 PostgreSQL 主从架构](https://help.aliyun.com/zh/ecs/user-guide/build-a-primary-or-secondary-postgresql-architecture.md): 在两台 ECS 实例上搭建 PostgreSQL 18 主从流复制架构实现读写分离，含 wal_level=replica 参数配置、复制槽创建和从节点 WAL 恢复步骤
+- [CentOS 7 搭建 PPTP VPN](https://help.aliyun.com/zh/ecs/user-guide/how-do-i-configure-a-connection-between-a-pptp-vpn-server-and-a-pptp-vpn-client-on-a-centos-7-instance.md): 在 CentOS 7 上用 yum 安装 pptpd，配置 localip/remoteip 地址池、chap-secrets 用户认证和 iptables 转发规则，需安全组放行 1723 端口和 GRE 协议
+- [Ubuntu 搭建 PPTP VPN](https://help.aliyun.com/zh/ecs/user-guide/how-to-configure-vpn-in-the-ubuntu-system-of-an-ecs-instance.md): 在 Ubuntu 18.04/20.04/22.04 上安装 pptpd 搭建 PPTP VPN，含 DNS 配置、chap-secrets 用户创建、IP 转发和 iptables-persistent 防火墙规则配置
+- [Windows Server 搭建 VPN](https://help.aliyun.com/zh/ecs/user-guide/in-windows-server-2008-system-of-ecs-server-how-to-set-up-the-vpn.md): 在 Windows Server 2016/2019/2022 上通过 RRAS 角色搭建 PPTP VPN，含 1723 端口和 GRE 协议安全组配置
+- [部署 GitLab 代码托管平台](https://help.aliyun.com/zh/ecs/user-guide/deploy-and-use-gitlab.md): 在 Linux ECS 上部署 GitLab CE/EE/极狐版，支持安装包和 Docker 两种方式，最低 4vCPU 8GiB，含 Terraform 一键部署
+- [部署 SVN 版本控制](https://help.aliyun.com/zh/ecs/user-guide/deploying-and-using-svn.md): 在 Alibaba Cloud Linux/CentOS 上部署 SVN，支持 HTTP（Apache + mod_dav_svn）和 svnserve（3690 端口）两种访问模式
+- [部署 RabbitMQ 消息队列](https://help.aliyun.com/zh/ecs/user-guide/deploy-rabbitmq.md): 在 Ubuntu/Debian 上手动安装 RabbitMQ 或通过云市场镜像快速部署，含 15672 管理端口和 5672 AMQP 端口配置
+- [Windows 搭建 AD 域服务](https://help.aliyun.com/zh/ecs/user-guide/ecs-instance-building-windows-active-directory-domain.md): 在 Windows Server 2016 ECS 上部署 Active Directory 域控制器和 DNS，并将客户端加入域实现集中身份验证和策略管控
+- [云市场镜像部署 WDCP](https://help.aliyun.com/zh/ecs/user-guide/the-deployment-of-linux-host-wdcp-management-system.md): 通过云市场镜像部署 WDCP Linux 服务器管理面板，预装 PHP/MySQL/Apache，8080 端口访问管理界面，支持网站和数据库管理
+- [安装 SharePoint Server 2016](https://help.aliyun.com/zh/ecs/user-guide/install-sharepoint-2016.md): 在 Windows Server ECS 上安装 SharePoint Server 2016，需先配置 AD/DNS/DHCP/IIS 角色和 SQL Server，最低 4vCPU 8GiB
+- [批量部署应用到 ECS 实例组](https://help.aliyun.com/zh/ecs/user-guide/deploy-an-application-to-a-group-of-ecs-instances.md): 通过应用管理服务将 Java 应用部署到多台 ECS，流程为创建应用分组并导入实例、上传 JAR 包到 OSS 创建部署物、执行发布，支持按环境或地域分组管理
+- [手动部署基础（多语言）](https://help.aliyun.com/zh/ecs/user-guide/manual-deployment-base.md): Java/Go/Python/C++/Node.js 五种语言的代码产物在 ECS 上手动构建和部署，含 Maven/Gradle 构建和进程管理
+- [构建部署业务代码至 ECS](https://help.aliyun.com/zh/ecs/user-guide/deploy-applications.md): 通过 ECS 构建部署功能从 Git 仓库或本地代码包自动构建和部署到单台实例，支持 Gitee/GitHub 代码源和自定义构建脚本
+- [云助手服务保活插件](https://help.aliyun.com/zh/ecs/user-guide/use-the-cloud-assistant-plugin-for-service-keepalive.md): ecs-tool-servicekeepalive 插件基于 systemd 自动生成服务配置，实现服务崩溃自动重启和开机自启动，通过 acs-plugin-manager 的 start/status/stop 命令管理保活服务
+- [数据盘承接系统盘业务数据](https://help.aliyun.com/zh/ecs/user-guide/how-to-use-data-disks-to-store-business-data-in-linux-system-directories.md): 将 Linux 系统盘特定目录的业务数据迁移到数据盘并通过 mount 挂载接管后续写入，含 cp/rsync 复制、目录改名切换和 fstab 持久挂载步骤
+- [离线扩容 Linux 数据盘分区和文件系统](https://help.aliyun.com/zh/ecs/user-guide/offline-extend-partitions-and-file-systems-on-a-data-disk-of-a-linux-instance.md): 云盘 umount 后用 fdisk（MBR）或 parted（GPT）扩容分区，再用 resize2fs/xfs_growfs 扩展文件系统，适用于不支持在线扩容的旧版 Linux
+- [Windows 实例磁盘空间满处理](https://help.aliyun.com/zh/ecs/user-guide/handle-low-disk-space-on-windows-instances.md): 清理磁盘文件、扩容云盘或新购数据盘解决 Windows 磁盘空间不足，含磁盘清理工具、WinRAR 定时压缩、OOS 定期清理和云监控报警设置
+- [Linux 实例磁盘空间满处理](https://help.aliyun.com/zh/ecs/user-guide/resolve-the-issue-of-insufficient-disk-space-on-a-linux-instance.md): 四种场景排查：磁盘空间耗尽(df -h)、Inode 耗尽(df -i)、已删除未释放文件(lsof | grep delete)、挂载点被覆盖(lsblk)，含 du 定位大文件和扩容云盘
+- [OOS 定期清理磁盘空间](https://help.aliyun.com/zh/ecs/user-guide/use-oos-to-clear-disks-on-a-regular-basis.md): 通过 OOS 设置清理规则批量、定时删除多台实例上的过期日志文件，支持按文件保留时间和路径模式匹配，依赖云助手 Agent
+- [LVM 创建逻辑卷](https://help.aliyun.com/zh/ecs/user-guide/use-lvm-to-create-a-logical-volume.md): 将多块云盘合并为可动态扩容的存储池，含 pvcreate 创建物理卷、vgcreate 创建卷组、lvcreate 划分逻辑卷、mkfs 格式化并挂载的完整步骤
+- [LVM 扩容逻辑卷](https://help.aliyun.com/zh/ecs/user-guide/extend-an-lv-by-using-lvm.md): 先扩容卷组（扩展云盘 + pvresize 或新增物理卷），再用 lvextend 扩展逻辑卷并通过 resize2fs/xfs_growfs 调整文件系统
+- [创建 RAID 阵列（Linux）](https://help.aliyun.com/zh/ecs/user-guide/create-a-raid-array-for-a-linux-instance.md): 使用 mdadm 命令将多块云盘组建 RAID 0/1/10 阵列提升容量或可靠性，以 Ubuntu 22.04 为例。条带大小建议通用 64-128 KB，快照备份建议使用一致性组保证数据一致
+- [修改云盘 UUID](https://help.aliyun.com/zh/ecs/user-guide/modify-the-uuid-of-a-disk.md): 快照创建的云盘挂载到原实例时 UUID 冲突导致挂载失败，ext4 用 tune2fs -U 修改，xfs 用 xfs_admin -U 修改，操作前通过 blkid 查看文件系统类型
+- [fstab UUID 自动挂载数据盘](https://help.aliyun.com/zh/ecs/user-guide/configure-uuids-in-the-fstab-file-to-automatically-attach-data-disks.md): 在 /etc/fstab 中用 blkid 获取的 UUID 配置数据盘开机自动挂载，避免分区名变更导致挂载失效，含 mount -a 验证和 fstab 配置错误恢复方法
+- [云盘缩容](https://help.aliyun.com/zh/ecs/user-guide/shrink-a-disk.md): 云盘不支持直接缩容，通过 SMC 迁移（Linux 可调分区大小、Windows 需先压缩卷）或新购小容量云盘拷贝数据两种方式实现，需停机并提前创建快照
+- [ECS 数据加密实践](https://help.aliyun.com/zh/ecs/user-guide/encrypt-data-stored-on-ecs-resources.md): 系统盘/数据盘/快照/镜像加密操作与限制，仅支持 ESSD 系列云盘，密钥类型为 Service Key 或 BYOK(Aliyun_AES_256/SM4)，含加密镜像的跨地域复制和共享
+- [本地盘最佳实践](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-local-disks.md): 本地盘选型（i4/d3c/d3s）、数据备份（Cloud Backup/OSS）、部署集分散部署、SMC 迁移到云盘方案，含本地盘损坏后的系统事件处理流程
+- [备份本地盘文件](https://help.aliyun.com/zh/ecs/user-guide/backup-local-disk-data.md): 三种方式备份本地盘数据：云备份 Cloud Backup 定期备份（SAAS 化）、ossutil + crontab 定时备份至 OSS、手动备份至云盘或 NAS，不适用于自建数据库
+- [ext4 挂载参数说明](https://help.aliyun.com/zh/ecs/user-guide/to-mount-an-ext4-file-system-using-the-mount-command.md): 三种 mount 挂载策略：默认 defaults（均衡）、sync+data=journal（高安全但性能低）、noatime+nobarrier+data=writeback（高性能但安全性低），按数据安全与性能需求选择
+- [Windows 压缩卷重新分区](https://help.aliyun.com/zh/ecs/user-guide/create-new-partitions-on-disks-of-a-windows-instance-by-shrinking-volumes.md): 用磁盘管理的压缩卷功能从已有分区末尾释放未分配空间并新建分区，压缩后原分区无法再扩容，操作前需创建快照备份
+- [系统盘快照恢复数据](https://help.aliyun.com/zh/ecs/user-guide/use-a-snapshot-of-the-original-system-disk-to-restore-data-after-the-operating-system-of-an-ecs-instance-is-replaced.md): 更换系统盘后旧盘被释放无法回滚，需通过旧系统盘快照创建新云盘挂载到实例，再用 mount 和 cp/rsync 命令将数据复制到新系统盘对应目录
+- [初始化 EBS 实验室环境](https://help.aliyun.com/zh/ecs/initialize-ebs-lab-environment.md): 创建 AliyunEbsLabRole 角色和 AliyunEbsLabDefaultPolicy 权限策略，授权 EBS 实验室调用 ECS/VPC/OSS 等 API 执行实验任务
+- [EBS 部署高性能 MySQL](https://help.aliyun.com/zh/ecs/user-guide/database-solution.md): 利用 ESSD 云盘 16K 原子写关闭 DoubleWrite 提升 MySQL 性能，含 innodb_buffer_pool_size 等关键参数调优，支持实验室一键部署或手动部署
+- [无代理备份克隆 MySQL 环境](https://help.aliyun.com/zh/ecs/user-guide/agentlessly-back-up-and-efficiently-clone-a-mysql-environment.md): 基于 EBS 快照和自定义镜像实现 MySQL 环境的无代理备份与克隆，支持跨地域复制、快照加密和共享，适用于快速搭建开发测试环境
+- [NVMe 共享盘部署集群文件系统](https://help.aliyun.com/zh/ecs/user-guide/deploy-a-cluster-file-system-based-on-nvme-disks.md): 利用 NVMe 共享 ESSD 云盘的多重挂载能力（最多 16 台实例），以 Ubuntu 22.04 + OCFS2 为例部署集群文件系统，实现多实例并发读写同一块盘
+- [ESSD 同城冗余云盘容灾实践](https://help.aliyun.com/zh/ecs/user-guide/disaster-recovery-practice-using-regional-essds.md): 通过 ESSD 同城冗余云盘实现跨可用区容灾（RPO=0），支持手动部署和 EBS 实验室一键部署两种方式验证可用区故障下的数据零丢失和业务快速恢复
+- [EBS 云盘异步复制容灾实践](https://help.aliyun.com/zh/ecs/user-guide/ebs-disaster-recovery-solution-in-practice-with-asynchronous-replication.md): 跨可用区 ESSD 云盘异步复制容灾方案，在两个可用区各部署实例和数据盘，验证可用区故障时数据恢复和业务切换，支持实验室一键部署
+- [EBS 云盘自建向量数据库实验](https://help.aliyun.com/zh/ecs/user-guide/use-the-ebs-cloud-disk-to-build-a-self-built-vector-database.md): EBS 实验室场景：在两台 ECS 上分别挂载开启/关闭性能突发的 ESSD AutoPL 云盘，自建 LanceDB 向量库并对比并发查询性能，通过一键部署模板快速搭建测试环境
+- [Windows NVMe I/O 超时调整](https://help.aliyun.com/zh/ecs/user-guide/adjust-the-i-o-timeout-for-nvme-drives-in-a-windows-instance.md): 高负载下 NVMe 云盘延迟可能超出 Windows 默认 I/O 超时值导致系统出错，通过 PowerShell 脚本或注册表将 IoTimeoutValue 设为 65535 增强容错
+- [ECS 内网互通方案](https://help.aliyun.com/zh/ecs/user-guide/internal-network.md): 按网络类型（VPC/经典网络）、账号、地域、安全组等维度列出 ECS 实例间内网互通方案，含同 VPC 默认互通、跨 VPC 互连、ClassicLink 连通经典网络与 VPC
+- [ECS 网络性能测试方法](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-testing-network-performance.md): 用 Netperf 测 PPS 和带宽、sockperf 测时延（含 Linux/Windows），按 PPS 量级（<600万/600万-2000万/>2000万）分档测试，含 sar 监控和中断绑核命令
+- [MTR 网络链路分析](https://help.aliyun.com/zh/ecs/user-guide/use-mtr-tool-for-network-analysis.md): ping 丢包或网络不通时用 MTR(Linux mtr 命令/Windows WinMTR)做持续链路跟踪诊断，含 -r 报告模式、-n 不反解等常用参数和结果分析思路
+- [网络抓包排查](https://help.aliyun.com/zh/ecs/user-guide/how-to-grab-data-packets-when-the-network-is-abnormal.md): Linux 使用 tcpdump、Windows 使用 Wireshark 进行网络数据包捕获，含按端口/IP/协议过滤、保存 pcap 文件和 TCP 握手/重传分析方法
+- [eRDMA 部署 SMC-R 加速 Redis](https://help.aliyun.com/zh/ecs/user-guide/based-on-erdma-enhanced-redis-instance-deployment.md): 在 g8i 实例上通过 eRDMA 部署 SMC-R（共享内存通信）加速 Redis，需两台实例分别作为 Server/Client，含 modprobe smc 模块部署和 redis-benchmark 性能测试步骤
+- [eRDMA 部署高性能 Spark 集群](https://help.aliyun.com/zh/ecs/user-guide/based-on-the-spark-cluster-erdma-enhanced-instance-deployment.md): 以 eRDMA 增强型实例为节点搭建 Hadoop 3.2.1 + Spark 3.2.1 集群（1 主节点 + 3 Worker），含 eRDMA 驱动安装、网络配置和 Benchmark 性能测试流程
+- [eRDMA 部署 Kafka 集群](https://help.aliyun.com/zh/ecs/user-guide/deploy-a-kafka-cluster-based-on-erdma.md): 在 ecs.g8a 系列实例上启用 eRDMA 部署 Kafka 集群（3 Broker + 1 ZooKeeper），通过 SMC-R 协议栈利用 RDMA 低延迟特性优化节点间数据传输，含性能压测方法
+- [eRDMA 部署 bRPC 应用](https://help.aliyun.com/zh/ecs/user-guide/deploy-brpc-applications-with-high-network-performance-based-on-erdma.md): 在 eRDMA 实例(如 g8a)上部署 bRPC 高性能 RPC 框架，需修改 erdma compat_mode 建链模式兼容 bRPC OOB 模式，含编译部署和性能对比测试
+- [ECS 实例部署 3FS 分布式存储集群](https://help.aliyun.com/zh/ecs/user-guide/deploy-3fs-distributed-storage-cluster-with-erdma.md): 在 g8i + i4 实例上基于 eRDMA 网络部署 DeepSeek 3FS 集群，使用 AC2 容器镜像，含 Meta/Storage/Mgmtd 各节点配置和 FUSE/USRBIO 客户端挂载
+- [ACK 集群部署 3FS 分布式存储集群](https://help.aliyun.com/zh/ecs/user-guide/deploy-3fs-on-an-ecs-instance-based-on-an-ack-cluster.md): 在 ACK 托管集群上基于 eRDMA 和弹性临时盘部署 DeepSeek 3FS，通过阿里云 CLI 创建集群并用 Helm Chart 一键部署 Meta/Storage/Mgmtd 各组件
+- [eRDMA 双机部署 Qwen3-235B-A22B](https://help.aliyun.com/zh/ecs/user-guide/qwen3-235b-a22b-model-of-dual-machine-deployment-based-on-erdma.md): 两台 ebmgn8v GPU 裸金属实例通过 eRDMA 加速部署 Qwen3-235B-A22B，使用 vllm/sglang 推理框架，支持 PD 分离(Mooncake)和 PD 不分离两种架构
+- [经典网络实例内网互通](https://help.aliyun.com/zh/ecs/user-guide/configure-interconnection-of-instances-in-the-classic-network.md): 四种方案实现不同安全组的经典网络实例内网互通：单 IP 授权、加入同一安全组、绑定互通安全组、安全组互信授权，各方案适用规模和优缺点对比
+- [修改默认远程端口](https://help.aliyun.com/zh/ecs/user-guide/modify-the-default-port-used-by-an-instance-to-accept-connections.md): Windows 修改 RDP 默认端口 3389（修改注册表 PortNumber 值），Linux 修改 SSH 默认端口 22（编辑 sshd_config），修改后需重启实例并在安全组放行新端口
+- [Windows 系统防火墙管理](https://help.aliyun.com/zh/ecs/user-guide/manage-windows-system-firewall.md): 查看/开启/关闭 Windows Defender 防火墙，配置入站规则放行远程桌面 3389 端口或启用预定义远程桌面规则，解决防火墙导致远程连接失败问题
+- [Windows 防火墙策略配置](https://help.aliyun.com/zh/ecs/user-guide/windows-system-firewall-policy-configuration-guide.md): Windows Defender 防火墙三类入站规则配置：允许程序通过防火墙、允许/禁止特定端口（TCP/UDP）、按 IP 地址限制访问作用域
+- [Linux 系统防火墙管理](https://help.aliyun.com/zh/ecs/user-guide/enable-or-disable-the-system-firewall-in-a-linux-instance.md): firewalld（CentOS/RHEL）和 ufw（Ubuntu/Debian）的状态查看、安全启用、端口放行和临时禁用操作，遵循先放行 SSH 再启用防火墙原则
+- [ECS 跨账号 KMS 密钥共享](https://help.aliyun.com/zh/ecs/user-guide/cross-account-key-sharing-in-ecs.md): 将 KMS 用户主密钥共享至其他主账号用于 ECS 云盘加密、快照/镜像共享，需配置密钥策略和 RAM 角色（AliyunECSDiskEncryptDefaultRole），通过 CreateDisk 的 KMSKeyId 参数使用共享密钥
+- [开启或关闭 SELinux](https://help.aliyun.com/zh/ecs/user-guide/enable-or-disable-selinux.md): 通过修改 /etc/selinux/config 永久开启 SELinux（enforcing/permissive 模式），需创建 /.autorelabel 文件后重启；临时关闭用 setenforce 0 命令
+- [Rocky/AlmaLinux 9.0 开启 SELinux](https://help.aliyun.com/zh/ecs/user-guide/how-to-enable-selinux-in-rockylinux-almalinux-9-0-series.md): 在 Rocky Linux 9.0 和 AlmaLinux 9.0 上开启 SELinux enforcing 模式，含修改 /etc/selinux/config、grubby --remove-args selinux 移除内核参数和 autorelabel 重打标步骤
+- [安全组规则自动审计修复](https://help.aliyun.com/zh/ecs/user-guide/automatically-audit-the-compliance-of-security-group-rules.md): 通过配置审计检测安全组 22/3389/3306 等高危端口是否对 0.0.0.0/0 开放，联动函数计算自动调用 RevokeSecurityGroup 删除风险规则，含完整 Terraform 和 Python 代码
+- [WordPress 安全部署实践](https://help.aliyun.com/zh/ecs/user-guide/quickly-deploy-wordpress-security-protection-on-an-ecs-instance.md): Terraform 自动化部署 WordPress 的安全架构：最小权限安全组、实例 RAM 角色获取临时凭证、KMS 云盘加密、OOS 补丁管理、RDS 凭据定期轮转，含完整 Terraform 配置文件
+- [挖矿病毒防护和处理](https://help.aliyun.com/zh/ecs/user-guide/mining-virus-protection-and-handling-guide.md): ECS 挖矿病毒应急响应：安全组隔离受感染实例、云安全中心病毒查杀（告警处理+深度查杀）、手动清除恶意进程和定时任务，首次被关停可在安全管控事件页面自行解封
+- [实例防勒索能力提升](https://help.aliyun.com/zh/ecs/user-guide/enhance-anti-ransomware-capabilities-for-instances.md): 三种防勒索方案：云安全中心防勒索服务（自动备份+策略配置）、自动快照策略定期备份云盘数据、安全组和防火墙策略加固，可并行实施
+- [DDoS 基础防护](https://help.aliyun.com/zh/ecs/user-guide/anti-ddos-origin-basic.md): 免费 DDoS 防护，默认最大 5 Gbps 流量清洗，超过黑洞阈值则屏蔽所有公网访问。清洗阈值由购买带宽和实例规格决定（BPS/PPS），可在流量安全控制台调整
+- [部署 SSL 证书实现 HTTPS](https://help.aliyun.com/zh/ecs/user-guide/ssl.md): 在 Nginx、Tomcat、Spring Boot 等 Web 服务器部署 SSL 证书启用 HTTPS，支持从零搭建和在现有服务上部署两种场景，每个阿里云用户每年可申请 20 张免费个人测试证书
+- [ECS 灾备解决方案](https://help.aliyun.com/zh/ecs/user-guide/disaster-recovery-solutions.md): 五种灾备方式：快照备份恢复、镜像全量备份、云盘异步复制跨地域容灾、数据盘分区丢失恢复（fdisk）、云备份服务（文件/数据库/整机级别），含高可用架构部署
+- [Linux 实例数据恢复工具](https://help.aliyun.com/zh/ecs/user-guide/introduction-to-tools-for-restoring-data-in-linux-instances.md): Linux 数据盘分区丢失或数据丢失时的恢复方法：fdisk 重建分区、testdisk 恢复分区表和数据、partprobe 重读分区信息，修复前需先创建快照
+- [Windows 实例数据恢复](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-restoring-data-on-windows-instances.md): Windows 实例误删文件后的恢复流程：创建快照备份、卸载系统盘挂载到新实例、用 DiskGenius 扫描并恢复丢失文件，含三副本机制说明和自动快照策略建议
+- [Linux 实例数据恢复](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-linux-instance-data-recovery.md): Linux 实例误删文件后的恢复流程：创建快照备份、卸载系统盘挂载到新实例、用 testdisk 扫描分区并恢复文件，适用于 rm -rf 误操作导致系统无法启动的场景
+- [云监控构建网站监控告警](https://help.aliyun.com/zh/ecs/user-guide/monitor-and-alert-on-websites.md): 以 ECS+RDS+SLB 网站架构为例，构建云监控告警体系：ECS CPU 使用率报警、RDS 连接数/IOPS 监控、SLB 带宽告警、站点可用性拨测和自定义监控大盘
+- [atop 监控 Linux 系统指标](https://help.aliyun.com/zh/ecs/user-guide/use-the-atop-tool-to-monitor-linux-system-metrics.md): 安装和使用 atop 实时/历史监控 CPU、内存、磁盘 I/O、网络指标，支持按进程排序（C/M/D/N 快捷键），通过 atopsar 生成性能报告，日志保存在 /var/log/atop/ 目录
+- [内核崩溃转储（Kdump）服务](https://help.aliyun.com/zh/ecs/user-guide/enable-or-disable-the-kernel-crash-dump-service-for-an-instance.md): 通过云助手插件 ecs_dump_config 开启/关闭 Kdump 服务，命令 acs-plugin-manager --exec --plugin ecs_dump_config --params --enable，重启生效
+- [节省停机模式定时开关机降本](https://help.aliyun.com/zh/ecs/user-guide/use-the-scheduled-startup-or-shutdown-feature-to-reduce-costs.md): 按量付费实例通过节省停机模式停机释放 vCPU/内存/固定公网 IP 停止计费，结合 OOS 系统运维管理创建定时开关机任务（如每天 21:00 关机 8:00 开机），适用于波峰波谷业务
+- [稳定性运维工具实践](https://help.aliyun.com/zh/ecs/user-guide/stability-tools-practice.md): 7 个云助手插件一键运维：ecs_dump_config 配置 kdump、multi-nic-util 配置辅助网卡、ecs-utils-ipv6 配置 IPv6、ecs_tools_multiqueue 网卡多队列、patch_manager 安全补丁扫描安装
+- [ECS 启动配置固化](https://help.aliyun.com/zh/ecs/start-configuration-cure.md): 实例非预期重启后自动恢复服务：/etc/fstab 用 UUID 持久化挂载云盘（nofail 选项防启动卡住）、systemd 配置业务进程自启动和异常自拉起、云监控告警挂载点和进程状态
+- [ECS 容灾恢复方案](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-disaster-recovery-in-ecs.md): 三种容灾策略：快照回滚恢复云盘数据、自定义镜像重建系统环境、SMC 跨可用区迁移实例，含故障演练验证步骤和 OOS 批量快照方案
+- [ECS 系统事件模拟演练](https://help.aliyun.com/zh/ecs/alibaba-cloud-best-practices-for-simulating-ecs-operations-and-maintenance-events.md): 通过 CreateSimulatedSystemEvents API 或 CLI 创建模拟系统事件，验证告警链路、自愈脚本和应急预案，模拟事件仅触发通知不执行实际操作
+- [GPU 稳定性最佳实践](https://help.aliyun.com/zh/ecs/user-guide/gpu-stability-best-practices.md): GPU 实例诊断与运维：控制台 GPU 设备健康检查（显卡/驱动/Xid/显存/Fabricmanager）、云助手 ACS-ECS-GpuCheck 插件一键诊断、异常自动触发运维事件通知，通过 ReportInstancesStatus 反馈异常
+- [ECS 补丁管理更新](https://help.aliyun.com/zh/ecs/user-guide/update-patches-to-improve-ecs-system-security.md): 通过 OOS 系统运维管理扫描和安装系统补丁，支持立即修复（高危漏洞紧急修补）和定时修复（维护窗口批量更新），可基于默认补丁基线或自定义基线，安装前自动创建系统盘快照
+- [调整 C-state 降低 vCPU 延迟](https://help.aliyun.com/zh/ecs/user-guide/change-c-state-status-to-reduce-vcpu-response.md): 通过 GRUB 参数 intel_idle.max_cstate=1 和 processor.max_cstate=1 将 CPU 空闲状态限制为 C1，降低 vCPU 唤醒延迟，适用于实时性要求高的负载场景，需修改 /etc/default/grub 并重启生效
+- [ECS 容灾故障演练](https://help.aliyun.com/zh/ecs/user-guide/ecs-disaster-tolerance-fault-drill.md): 三种容灾演练场景：快照备份+数据误删恢复演练、镜像备份+新实例重建演练、SMC 跨可用区迁移演练（含 ecs-fault-oscrash 模拟宕机），验证数据恢复和业务连续性能力
+- [宕机演练](https://help.aliyun.com/zh/ecs/user-guide/downtime-drill.md): 使用云助手插件 ecs-fault-oscrash 通过 sysrq 触发内核 panic 模拟宕机，系统自动重启恢复。演练前需开启 Kdump 并确保业务具备高可用能力
+- [CPU 高利用率演练](https://help.aliyun.com/zh/ecs/user-guide/drills-on-cpu-resources-drills-on-cpu-resources.md): 使用云助手插件 ecs-fault-highcpu 注入 CPU 负载，支持指定 cpu-percent 目标利用率和 cpu-list 绑定特定 vCPU，恢复命令 --params recover 释放负载
+- [内存溢出 OOM 演练](https://help.aliyun.com/zh/ecs/user-guide/memory-consumption-and-oom-drils.md): 使用云助手插件 ACS-ECS-HighMemory 注入内存消耗，支持设置目标内存占用百分比（percent）、消耗速率（rate MB/s）、持续时间（duration），通过 oom_score_adj 参数控制 OOM 时终止注入进程还是业务进程
+- [网络丢包演练](https://help.aliyun.com/zh/ecs/user-guide/network-packet-loss-drill.md): 使用云助手插件 ACS-ECS-NetLoss 基于 tc/netem 注入网络丢包，支持指定网卡（dev）、丢包比例（rate 默认 10%）、目标 IP 和持续时间，云助手网段 100.100.0.0/16 不受影响
+- [网络中断演练](https://help.aliyun.com/zh/ecs/user-guide/network-outage-drill.md): 通过云助手插件 ACS-ECS-NetLoss 模拟网络 100% 丢包，验证业务在网络中断时的监控和恢复能力，支持指定目标 IP 和超时自动恢复
+- [网络延迟演练](https://help.aliyun.com/zh/ecs/user-guide/network-delay-drils.md): 通过云助手插件 ACS-ECS-NetDelay 使用 tc/netem 注入网络延迟，支持指定延迟时间、抖动范围和目标 IP，含超时自动恢复
+- [磁盘容量利用率高演练](https://help.aliyun.com/zh/ecs/user-guide/high-disk-capacity-untilization-drills.md): 通过云助手插件 ACS-ECS-FillDisk 用 fallocate 生成临时文件填充磁盘至目标利用率，支持指定路径和百分比，恢复时删除临时文件
+- [磁盘 IO Hang 演练](https://help.aliyun.com/zh/ecs/user-guide/io-hang-drills.md): 通过云助手插件 ACS-ECS-IoHang 使用 Cgroups 对磁盘限速模拟 IO Hang，支持指定磁盘和持续时间，仅兼容 Cgroup v1 的 Linux 发行版
+- [磁盘 IO 高负载演练](https://help.aliyun.com/zh/ecs/user-guide/high-io-load-drills.md): 通过云助手插件 ACS-ECS-HighIo 使用 dd 工具循环读写模拟磁盘 IO 高负载，支持 read/write 模式、指定路径和块大小参数
+- [系统负载高演练](https://help.aliyun.com/zh/ecs/user-guide/high-system-load-drills.md): 通过云助手插件 ACS-ECS-HighLoad 使用 vfork 创建大量进程提升系统 load 值，进程仅执行 sleep 对业务影响小，支持指定进程数和持续时间
+- [PID 资源不足演练](https://help.aliyun.com/zh/ecs/user-guide/pid-resource-insufficiency-drills.md): 通过云助手插件 ACS-ECS-TaskLimit 用 fork() 耗尽 pid_max 或 threads-max 阻塞新进程创建，不影响已有进程，恢复建议重启实例
+- [系统时间跳变演练](https://help.aliyun.com/zh/ecs/user-guide/system-time-jump-drills.md): 通过云助手插件 ACS-ECS-TimeJump 设置时间偏移量模拟系统时钟跳变，通过 Chrony 服务与 NTP 同步恢复，需提前安装 Chronyc
+- [ecs-tool-event 自动监控系统事件](https://help.aliyun.com/zh/ecs/user-guide/use-cloud-assistant-plug-ins-to-automatically-monitor-and-respond-to-ecs-system-events.md): 云助手插件 ecs-tool-event 每分钟从 metaserver 获取系统事件写入 /var/log/host_event.log，结合 K8s NPD/Draino/Autoscaler 实现节点故障自动驱逐和弹性伸缩
+- [ECS 状态变化事件自动化运维](https://help.aliyun.com/zh/ecs/user-guide/automate-o-and-m-based-on-status-change-events-of-ecs-instances.md): 通过云监控将 ECS 状态变化事件投递到轻量消息队列 MNS，用 Python SDK 消费消息实现自动化运维，含生命周期记录、SLB 移除和自动重启三个实践场景
+- [规避系统维护重启业务风险](https://help.aliyun.com/zh/ecs/user-guide/mitigate-business-risks-from-ecs-instance-restart-during-system-maintenance.md): 针对 SystemMaintenance.Reboot 事件的规避方案：计划维护窗口、修改实例维护属性、ecs-tool-event 自动监控、OOS 编排等多种手段的时效性与成本对比
+- [ECS 操作系统稳定性实践](https://help.aliyun.com/zh/ecs/user-guide/ecs-operating-system-stability-practice.md): 操作系统选型（Alibaba Cloud Linux/Windows Server）、EOL 生命周期规避、补丁管理、Kdump 崩溃转储配置和灾备恢复策略
+- [规避 Split Lock 性能争抢](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-avoiding-split-lock-performance-scramble.md): 跨缓存行原子操作（Split Lock）导致系统卡顿的原理、perf stat 检测方法（g9i/c9i/r9i/g8i/c8i/r8i 支持）、alignas 对齐和避免 packed 结构体等 C 代码级规避方案
+- [ECS 数据备份与高可用架构](https://help.aliyun.com/zh/ecs/user-guide/ecs-data-backup-mechanism-and-high-availability-architecture.md): 分层容灾方案：快照/文件备份/ESSD 同城冗余/云盘异步复制实现数据恢复，ALB 跨可用区部署和 GTM 跨地域部署实现业务连续性，含 RPO/RTO 规划
+- [云上高可用架构](https://help.aliyun.com/zh/ecs/user-guide/hablog.md): 通过 ALB 负载均衡 + 多可用区 ECS + RDS MySQL 高可用系列构建跨可用区容灾架构，消除单点故障，支持 ROS 一键部署
+- [高可用及共享存储 Web 服务](https://help.aliyun.com/zh/ecs/user-guide/deploy-highly-available-and-shared-storage-web-services.md): 跨可用区双 ECS + CLB 负载均衡 + 双 NAS 主备自动切换架构，通过 inotify-tools 和 sync 实现增量备份，支持 ROS 一键部署
+- [MySQL InnoDB Cluster 高可用实践](https://help.aliyun.com/zh/ecs/user-guide/mysql-innodb-cluster-high-availability-practices.md): 在多台 ECS 上搭建 MySQL 8.4 InnoDB Cluster（1 主 2 从 + MySQL Router 代理），支持自动故障选举和读写分离，含 mysqlsh 集群创建命令
+- [GPU 服务器最佳实践](https://help.aliyun.com/zh/ecs/user-guide/best-practices-for-heterogeneous-computing-services.md): GPU 实例上部署 DeepSeek-R1/V3（单机和双机分布式）、vLLM/TensorRT-LLM 推理环境、SD-WebUI 文生图、NGC 深度学习环境、eRDMA 配置和机密计算 LLM 推理
+
+## 开发参考
+- [ECS API 概览](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-overview.md): ECS OpenAPI 完整分类索引，按地域、实例、云盘、镜像、安全组等资源分组列出全部 API 名称和简介，采用 RPC 签名机制，提供 Java/Python/Go/PHP 等多语言 SDK
+- [ECS API 服务接入点](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-endpoint.md): 各地域的 ECS API 公网和 VPC 接入地址(Endpoint)，覆盖亚太、欧美、中东及金融云/政务云专用地域，格式为 ecs.{regionId}.aliyuncs.com
+- [ECS RAM 授权信息](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-ram.md): ECS 全部 API 的 RAM 权限策略定义，含 Action(操作)、Resource(资源 ARN) 和 Condition(条件关键字) 三类元素，RamCode 为 ecs,vpc，授权粒度为资源级
+- [ECS API 流控配额](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-quota.md): 各 ECS API 的速率限制(QPS)表，按地域维度列出每个 API 的每分钟调用配额，可前往配额中心申请提升
+- [DescribeRegions 查询地域列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeregions.md): 按 InstanceChargeType(PrePaid/PostPaid/Spot) 和 ResourceType(instance/disk/reservedinstance/scu) 过滤可用地域，返回 RegionId、Endpoint 和售罄状态
+- [DescribeZones 查询可用区列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describezones.md): 查询指定地域下的可用区及其支持的实例规格族、云盘类型、网络类型，仅返回少量库存信息，详细库存请用 DescribeAvailableResource
+- [DescribeAvailableResource 查询资源库存](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeavailableresource.md): 创建实例或变配前查询可用区库存，DestinationResource 按 Zone>IoOptimized>InstanceType>SystemDisk>DataDisk 层级过滤，返回 WithStock/SoldOut 库存状态
+- [DescribeAccountAttributes 查询资源配额](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeaccountattributes.md): 查询指定地域下的账号级配额：安全组数量、弹性网卡数量、按量/抢占式 vCPU 核数上限、专有宿主机数量、云助手命令配额和实名认证状态
+- [DescribeResourcesModification 变配库存查询](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeresourcesmodification.md): 变更实例规格或系统盘前查询可变配的目标规格及库存状态，支持升配/降配/续费降配，OperationType 控制方向，Conditions=DiskCategory 可查变盘后可选规格
+- [DescribeRecommendInstanceType 查找备选规格](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describerecommendinstancetype.md): (Beta) 根据指定规格或 vCPU/内存查找备选实例规格，PriorityStrategy 支持按库存/价格/新品优先排序，适用于规格售罄或停售时选替代方案
+- [DescribePrice 查询价格](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeprice.md): 查询 ECS 实例/云盘/专有宿主机/弹性保障/容量预定的最新价格，ResourceType 区分资源类型，支持抢占式实例(SpotStrategy)询价，返回原价/折扣/成交价
+- [DescribeRenewalPrice 查询续费价格](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describerenewalprice.md): 查询包年包月实例的续费价格，支持按 Period/PriceUnit 指定续费时长或按 ExpectedRenewDay 统一到期日询价，两种模式不能同时使用
+- [DescribeInstanceModificationPrice 升配询价](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstancemodificationprice.md): 查询包年包月实例升配到目标规格的价格或新增数据盘的价格，不支持降配和按量付费实例，按量变配价格请用 DescribePrice 查询
+- [RunInstances 批量创建实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-runinstances.md): 批量创建最多 100 台 ECS 实例并自动启动，关键参数：InstanceType、ImageId、SecurityGroupId、VSwitchId，支持抢占式(SpotStrategy)、启动模板(LaunchTemplateId)和自动释放(AutoReleaseTime)
+- [CreateInstance 创建单台实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createinstance.md): 创建单台 ECS 实例(已停止迭代，建议用 RunInstances)，创建后需手动调用 StartInstance 启动，公网 IP 需额外调用 AllocatePublicIpAddress 分配
+- [StartInstance 启动实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-startinstance.md): 启动单台已停止的 ECS 实例，InitLocalDisk=true 可恢复本地盘实例到初始状态(数据会丢失)，节省停机模式下可能因库存不足启动失败
+- [StartInstances 批量启动实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-startinstances.md): 批量启动最多 100 台已停止的 ECS 实例，BatchOptimization 控制模式：AllTogether(全部成功才算成功) 或 SuccessFirst(逐个独立执行)
+- [StopInstance 停止实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-stopinstance.md): 停止单台 ECS 实例，ForceStop=true 强制断电(缓存数据丢失)，StoppedMode=StopCharging 进入节省停机释放 vCPU/内存停止计费，KeepCharging 保留资源继续计费
+- [StopInstances 批量停止实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-stopinstances.md): 批量停止最多 100 台 ECS 实例，支持 ForceStop 强制关机和 StoppedMode 节省停机，BatchOptimization 控制 AllTogether 或 SuccessFirst 模式
+- [RebootInstance 重启实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-rebootinstance.md): 重启单台运行中的 ECS 实例，ForceStop=true 强制关机后重启(缓存数据可能丢失)，实例状态必须为 Running
+- [RebootInstances 批量重启实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-rebootinstances.md): 批量重启 1-100 台实例，ForceReboot 控制是否强制重启（缓存数据会丢失），BatchOptimization 设置 AllTogether 或 SuccessFirst 批量模式
+- [DeleteInstance 释放单台实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteinstance.md): 释放指定实例，Force 参数控制是否强制释放运行中实例，TerminateSubscription 释放到期包年包月实例，云盘可通过 DeleteWithInstance 参数保留
+- [DeleteInstances 批量释放实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteinstances.md): 批量释放 1-100 台按量或到期包年包月实例，Force 控制强制释放，ForceStop 控制关机策略，云盘可设置随实例释放或转为按量保留
+- [DescribeInstanceStatus 查询实例状态](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstancestatus.md): 按地域、可用区或实例 ID 查询实例状态（Pending/Running/Starting/Stopping/Stopped），轻量接口仅返回 InstanceId 和 Status
+- [DescribeInstances 查询实例详细信息](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstances.md): 按地域、VPC、安全组、标签、IP 等条件过滤查询实例列表，返回规格/网络/磁盘/计费等完整属性，支持 NextToken 分页
+- [DescribeInstanceTypeFamilies 查询规格族列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstancetypefamilies.md): 查询指定地域的实例规格族，Generation 参数过滤系列（ecs-1 到 ecs-6），返回 InstanceTypeFamilyId（如 ecs.g6）和所属代数
+- [DescribeInstanceTypes 查询实例规格详情](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstancetypes.md): 按 vCPU/内存/GPU/架构等条件过滤查询实例规格配置，返回 CPU 核数、内存、网络带宽、本地盘、弹性网卡等详细参数，支持 NextToken 分页
+- [DescribeInstanceAttribute 查询实例属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstanceattribute.md): 查询单台实例的规格、状态、网络、VPC、EIP、计费、安全组、专有宿主机等属性，返回 StoppedMode 节省停机状态和 CreditSpecification 突发模式
+- [ModifyInstanceAttribute 修改实例属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstanceattribute.md): 修改实例密码、名称、主机名、安全组、UserData、释放保护、网卡队列数、MTU（Jumbo Frame）、CPU 拓扑和突发性能模式（CreditSpecification），部分属性需重启生效
+- [ModifyInstanceClockOptions 修改实例时钟选项](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstanceclockoptions.md): 开启或关闭实例的 PTP 精确时钟同步（PtpStatus=enabled/disabled），异步接口返回 TaskId，需规格支持
+- [ModifyInstanceNetworkOptions 修改实例网络选项](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstancenetworkoptions.md): 修改实例的网络带宽权重（BandwidthWeighting），支持 Vpc-L1/Vpc-L2/Ebs-L1/Ebs-L2/Default 等权重值，异步接口返回 TaskId
+- [ModifyInstanceChargeType 切换实例计费方式](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstancechargetype.md): 按量转包年包月或包年包月转按量，支持批量（最多 20 台），IncludeDataDisks 同步转换数据盘，包转按有月度退款额度限制
+- [ModifyInstanceSpec 变配按量实例规格或带宽](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstancespec.md): 修改按量付费实例的规格（需停机）或公网带宽（运行中即可），每次只能改一项，AllowMigrateAcrossZone 控制是否允许跨可用区迁移
+- [ModifyPrepayInstanceSpec 变配包年包月实例规格](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyprepayinstancespec.md): 升级或降低包年包月实例规格，OperatorType 指定 upgrade/downgrade，降配需停机且退差价，升配支持运行中操作，AutoPay 控制自动付款
+- [ModifyInstanceAutoReleaseTime 设置自动释放时间](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstanceautoreleasetime.md): 设置或取消按量/抢占式实例的自动释放时间（ISO 8601 格式），最短当前时间后 30 分钟，最长不超过 3 年，不传 AutoReleaseTime 即取消
+- [AttachInstanceRamRole 绑定实例 RAM 角色](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-attachinstanceramrole.md): 为 1-100 台 VPC 实例授予 RAM 角色（需 ram:PassRole 权限），每台实例只能绑定一个角色，可附加 Policy 进一步限制权限范围
+- [DescribeInstanceRamRole 查询实例 RAM 角色](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstanceramrole.md): 按实例 ID（最多 50 台）或 RAM 角色名称查询实例与角色的绑定关系，InstanceIds 和 RamRoleName 至少传一个
+- [DetachInstanceRamRole 解绑实例 RAM 角色](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-detachinstanceramrole.md): 批量收回 1-100 台 VPC 实例的 RAM 角色绑定，返回每台实例的解绑结果（Code/Message/Success）
+- [DescribeInstanceVncUrl 获取 VNC 登录地址](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstancevncurl.md): 获取实例的 WebSocket VNC 登录 URL（有效期 15 秒），拼接到 Web 管理终端页面使用，KeepAlive 超时 300 秒，每分钟最多重连 30 次
+- [ModifyInstanceVncPasswd 修改 VNC 登录密码](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstancevncpasswd.md): 修改实例的 VNC 控制台登录密码（6 位，必须含大小写字母和数字），I/O 优化实例立即生效，非 I/O 优化实例需重启
+- [ModifyInstanceMetadataOptions 修改元数据访问设置](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstancemetadataoptions.md): 修改实例元数据访问通道开关和加固模式，HttpEndpoint 控制是否启用元数据通道，HttpTokens 设为 required 可强制使用 IMDSv2 加固模式
+- [DescribeUserData 查询实例自定义数据](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeuserdata.md): 查询指定实例的自定义数据（UserData），返回 Base64 编码的内容，实例不存在自定义数据时返回空字符串
+- [RenewInstance 续费包年包月实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-renewinstance.md): 续费包年包月实例，Period 设置续费时长（1周~60月），ExpectedRenewDay 续费至统一到期日，两者二选一
+- [DescribeInstanceAutoRenewAttribute 查询自动续费属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstanceautorenewattribute.md): 查询包年包月实例的自动续费状态（AutoRenewal/Normal/NotRenewal）和续费周期，支持最多 100 台实例批量查询
+- [ModifyInstanceAutoRenewAttribute 修改自动续费属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstanceautorenewattribute.md): 设置包年包月实例的自动续费开关和续费周期，扣款日为到期前第 9 天，支持按周/月/年设置 Duration，最多 100 台批量操作
+- [ReActivateInstances 重新激活欠费回收实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-reactivateinstances.md): 重启已过期或欠费回收的按量付费实例，要求账户余额不低于 100 元，实例须处于已过期或欠费回收中状态
+- [DescribeSpotPriceHistory 查询抢占式实例历史价格](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describespotpricehistory.md): 查询指定规格抢占式实例近 30 天的历史价格，返回 SpotPrice 和 OriginPrice 用于对比折扣，需指定 InstanceType 和 NetworkType
+- [DescribeSpotAdvice 查询抢占式实例释放率与折扣](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describespotadvice.md): 查询各规格族抢占式实例近 30 天的平均释放率（InterruptionRate）和折扣率（AverageSpotDiscount），支持按 vCPU/内存/GPU 筛选
+- [CreateImage 创建自定义镜像](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createimage.md): 通过实例（InstanceId）、系统盘快照（SnapshotId）或磁盘映射（DiskDeviceMapping）三种方式创建自定义镜像，异步操作，支持 DetectionStrategy 镜像检测
+- [DescribeImages 查询镜像列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeimages.md): 查询自定义/公共/共享/云市场/社区镜像列表，支持按 ImageOwnerAlias、OSType、Architecture、ImageFamily 和标签过滤，支持分页
+- [ModifyImageAttribute 修改自定义镜像属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyimageattribute.md): 修改自定义镜像的名称、描述、ImageFamily、BootMode（BIOS/UEFI）、Status（Available/Deprecated）和 NVMe 支持等属性
+- [DeleteImage 删除自定义镜像](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteimage.md): 删除指定自定义镜像，Force=true 可强制删除已被实例使用的镜像，不存在的 ImageId 请求会被忽略
+- [DescribeImageFromFamily 查询镜像族系最新可用镜像](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeimagefromfamily.md): 返回指定 ImageFamily 中最新创建的 Available 状态镜像，族系内无可用镜像时返回空，支持自定义/公共/社区/共享镜像
+- [DescribeImageSupportInstanceTypes 查询镜像支持的实例规格](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeimagesupportinstancetypes.md): 返回指定镜像兼容的实例规格列表（InstanceTypeId/规格族/vCPU/内存），用于创建实例或更换系统盘前的兼容性检查
+- [DescribeImageSharePermission 查询镜像共享用户](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeimagesharepermission.md): 查询自定义镜像已共享的账号列表（AliyunId）和共享时间（SharedTime），支持分页查询，每页默认 10 条
+- [ModifyImageSharePermission 管理镜像共享权限](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyimagesharepermission.md): 通过 AddAccount/RemoveAccount 共享或取消共享镜像给其他账号（每镜像最多共享 50 个账号），IsPublic=true 可发布为社区镜像
+- [Deprecated ModifyImageShareGroupPermission](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyimagesharegrouppermission.md): 替代接口：Ecs(2014-05-26) - ModifyImageSharePermission
+- [ImportImage 导入本地镜像](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-importimage.md): 从 OSS 导入本地镜像文件为自定义镜像，首次需创建 AliyunECSImageImportDefaultRole 角色授权 OSS 访问，支持最多 1 个系统盘 + 16 个数据盘
+- [ExportImage 导出自定义镜像到 OSS](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-exportimage.md): 导出自定义镜像到同地域 OSS Bucket，支持 raw/vhd/qcow2/vmdk/vdi 格式，需创建 AliyunECSImageExportDefaultRole 角色，返回 TaskId 异步执行
+- [CopyImage 跨地域复制自定义镜像](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-copyimage.md): 将自定义镜像复制到其他地域，同一地域最多 5 个并发复制任务，共享镜像只能同地域复制，支持 Encrypted 和 KMSKeyId 加密复制
+- [CancelCopyImage 取消复制镜像](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-cancelcopyimage.md): 取消进行中的 CopyImage 任务，取消后目标地域新建镜像自动删除、源镜像不变，已完成的复制操作无法取消
+- [CreateImageComponent 创建镜像组件](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createimagecomponent.md): 创建自定义镜像组件，存储构建镜像时常用的模板命令，内容上限 16 KB，支持 Build 和 Test 两种组件类型，通过名称+版本号引用
+- [DescribeImageComponents 查询镜像组件](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeimagecomponents.md): 查询镜像组件列表，支持按名称、版本号、组件类型(Build/Test)和系统类型(Linux/Windows)过滤，通过 NextToken 分页
+- [DeleteImageComponent 删除镜像组件](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteimagecomponent.md): 删除自定义镜像组件，必填参数 RegionId 和 ImageComponentId，组件在模板中使用时无法删除
+- [CreateImagePipeline 创建镜像构建模板](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createimagepipeline.md): 创建镜像构建模板(Pipeline)，支持跨地域跨账号构建，源镜像可选 IMAGE/IMAGE_FAMILY/OSS，构建内容上限 16 KB，含中转实例规格和网络配置
+- [DescribeImagePipelines 查询镜像构建模板](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeimagepipelines.md): 查询镜像构建模板列表，返回模板名称、源镜像、构建内容、目标分发地域和共享账号，支持按模板 ID 和标签过滤，NextToken 分页
+- [DeleteImagePipeline 删除镜像构建模板](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteimagepipeline.md): 删除镜像构建模板，存在运行中的构建任务时不可删除，需等待任务达到 SUCCESS/FAILED/CANCELLED 等终态
+- [StartImagePipelineExecution 执行镜像构建任务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-startimagepipelineexecution.md): 触发镜像构建模板执行构建任务，同一模板同时只能运行一个构建任务，构建过程创建按量计费中转实例，返回 ExecutionId
+- [DescribeImagePipelineExecutions 查询镜像构建任务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeimagepipelineexecutions.md): 查询镜像构建任务状态和详情，可按模板 ID 或任务 ID 过滤，已删除模板的构建任务会同步删除，NextToken 分页
+- [CancelImagePipelineExecution 取消镜像构建任务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-cancelimagepipelineexecution.md): 取消处于 PREPARING/REPAIRING/BUILDING 状态的镜像构建任务，必填参数 RegionId 和 ExecutionId
+- [CreateDisk 创建数据盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createdisk.md): 创建按量或包年包月数据盘，支持 cloud/cloud_efficiency/cloud_ssd/cloud_essd/cloud_auto 等类型，可从快照创建，支持加密和多重挂载(MultiAttach)，ESSD 默认 PL1
+- [DescribeDisks 查询块存储](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describedisks.md): 查询云盘、本地盘和弹性临时盘信息，支持按地域、可用区、实例 ID、磁盘 ID 过滤，多重挂载云盘返回 Attachment 列表，NextToken 分页
+- [AttachDisk 挂载磁盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-attachdisk.md): 为 ECS 实例挂载数据盘或系统盘，磁盘须为 Available 状态，挂载系统盘需实例已停止且为原实例，多重挂载云盘仅支持 NVMe 实例
+- [DetachDisk 卸载磁盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-detachdisk.md): 从 ECS 实例卸载按量付费数据盘或系统盘，异步操作约一分钟完成，弹性临时盘卸载后只能重新挂载至原实例
+- [ResizeDisk 扩容磁盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-resizedisk.md): 扩容系统盘或数据盘容量，MBR 分区不支持扩容到 2 TiB 以上，扩容后需自行分配分区和文件系统，支持在线扩容(Running)和离线扩容(Stopped)
+- [ModifyDiskAttribute 修改块存储属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydiskattribute.md): 修改磁盘名称、描述、DeleteWithInstance、DeleteAutoSnapshot、BurstingEnabled 等属性，支持 DiskId 单盘或 DiskIds 批量修改
+- [ModifyDiskChargeType 修改云盘计费方式](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydiskchargetype.md): 包年包月实例上数据盘在按量付费和包年包月间转换，不支持按量实例和多重挂载云盘，每块盘成功修改后五分钟内不能再次修改
+- [ModifyDiskSpec 变更云盘类型或性能级别](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydiskspec.md): 变更云盘类型或修改 ESSD 性能级别(PL0-PL3)，包年包月 ESSD 仅支持升级，按量 ESSD 可升降但不能降到 PL0，容量不足可先 ResizeDisk 扩容
+- [ReplaceSystemDisk 更换系统盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-replacesystemdisk.md): 更换 ECS 实例的操作系统，更换后系统盘 ID 变化且原盘释放，实例须为 Stopped 状态，可通过 SystemDisk.Size 指定新容量(不低于原容量)
+- [ResetDisk 快照回滚云盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-resetdisk.md): 使用历史快照将云盘回滚到指定状态，云盘须为 In_use 或 Available，挂载的实例须为 Stopped，SnapshotId 必须是该 DiskId 创建的快照
+- [ResetDisks 批量回滚云盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-resetdisks.md): 通过实例快照批量回滚一个或多个云盘，即将废弃，建议使用 ResetDisk 替代。必填参数 Disk 数组含 DiskId 和 SnapshotId，支持 DryRun 预检
+- [ReInitDisk 重新初始化云盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-reinitdisk.md): 将云盘恢复到创建时状态，系统盘初始化到镜像状态、数据盘到空盘或源快照状态。实例须处于 Stopped 状态，支持 Password/KeyPairName 重置登录凭证
+- [ModifyDiskDeployment 迁移云盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydiskdeployment.md): 在公共云与专属块存储集群间迁移云盘，或在不同专属集群间迁移。仅支持按量付费云盘，可变更 ESSD 类型和性能级别，同地域同可用区内最多 5 个并发迁移任务
+- [DeleteDisk 释放按量付费数据盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletedisk.md): 释放一块按量付费数据盘，云盘须处于 Available 状态。手动快照会保留，可通过 ModifyDiskAttribute 控制自动快照是否同步释放
+- [CloneDisks 云盘克隆](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-clonedisks.md): 同可用区内从 ESSD 全系云盘克隆新盘，支持自定义容量、类型、加密和性能级别。异步接口，通过 DescribeTasks 查询 TaskGroupId 获取结果
+- [EnableDiskEncryptionByDefault 开启默认加密](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-enablediskencryptionbydefault.md): 开启指定地域块存储账号级默认加密，开启后新购云盘必须为加密盘。首次启用默认使用服务密钥，需先开通 KMS 服务
+- [DescribeDiskEncryptionByDefaultStatus 查询默认加密状态](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describediskencryptionbydefaultstatus.md): 查询指定地域是否已开启块存储账号级默认加密，返回 Encrypted 布尔值
+- [DescribeDiskDefaultKMSKeyId 查询默认加密密钥](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describediskdefaultkmskeyid.md): 查询指定地域块存储账号级默认加密使用的 KMS 密钥 ID，返回 KMSKeyId
+- [ModifyDiskDefaultKMSKeyId 修改默认加密密钥](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydiskdefaultkmskeyid.md): 修改指定地域块存储账号级默认加密使用的 KMS 密钥 ID，需先为 ECS 授权 AliyunECSDiskEncryptDefaultRole 角色
+- [ResetDiskDefaultKMSKeyId 重置默认加密密钥](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-resetdiskdefaultkmskeyid.md): 将指定地域块存储默认加密的 KMS 密钥重置为服务密钥，需 AliyunECSFullAccess 权限且地域已开启默认加密
+- [DisableDiskEncryptionByDefault 关闭默认加密](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-disablediskencryptionbydefault.md): 关闭指定地域块存储账号级默认加密，已创建的加密云盘状态不受影响，关闭后仍可手动选择创建加密云盘
+- [OpenSnapshotService 开通快照服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-opensnapshotservice.md): 开通 ECS 快照服务，创建快��前的必需前置步骤。必填参数 RegionId
+- [CreateSnapshot 创建快照](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createsnapshot.md): 为指定云盘创建手动快照，云盘须处于 In_use 或 Available 状态。创建期间 I/O 性能降低 10% 以内，ESSD 云盘快照默认极速可用
+- [DescribeSnapshots 查询快照列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesnapshots.md): 查询快照列表，支持按 InstanceId、DiskId、SnapshotIds 过滤，返回快照状态、创建进度和保留天数。支持 CreationStartTime 按时间范围筛选
+- [DescribeSnapshotsUsage 查询快照用量](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesnapshotsusage.md): 查询指定地域的快照总数和总容量(Byte)，返回 SnapshotCount 和 SnapshotSize。如需每块磁盘维度的快照用量，请用 DescribeSnapshotLinks
+- [ModifySnapshotAttribute 修改快照属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifysnapshotattribute.md): 修改快照名称、描述或保留天数(RetentionDays)，保留时间仅支持延长不支持缩短
+- [ModifySnapshotCategory 快照转归档](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifysnapshotcategory.md): 将标准快照转换为归档快照，标准快照须已保留至少 14 天，归档后不可还原为标准快照，归档快照至少保留 60 天
+- [CopySnapshot 跨地域复制快照](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-copysnapshot.md): 将标准或加密快照跨地域复制，需指定 DestinationRegionId 和 DestinationSnapshotName，支持复制时加密和设置保留天数。复制后的新快照不能回滚源快照对应的云盘
+- [DeleteSnapshot 删除快照](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletesnapshot.md): 删除指定快照或取消正在创建的快照。已用于创建镜像的快照需先删除镜像，Force=true 可强制删除已创建云盘的快照但该盘将无法重新初始化
+- [DescribeSnapshotLinks 查询快照链](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesnapshotlinks.md): 查询云盘快照链信息，一块云盘对应一条快照链。支持按 DiskIds、InstanceId、SnapshotLinkIds 过滤，返回每条链的快照数量和总大小
+- [CreateSnapshotGroup 创建快照一致性组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createsnapshotgroup.md): 为指定实例或同可用区跨实例的多块 ESSD 云盘创建快照一致性组，单组最多 16 块盘且总容量不超过 32 TiB，通过 InstanceId 或 DiskId.N 指定目标云盘
+- [DescribeSnapshotGroups 查询快照一致性组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesnapshotgroups.md): 按 InstanceId、SnapshotGroupId.N 或 Status.N 过滤查询快照一致性组，返回状态、创建时间、组内各快照进度和来源云盘信息，支持分页
+- [ModifySnapshotGroup 修改快照一致性组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifysnapshotgroup.md): 修改指定快照一致性组的 Name 和 Description 属性，需传入 RegionId 和 SnapshotGroupId
+- [DeleteSnapshotGroup 删除快照一致性组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletesnapshotgroup.md): 删除指定快照一致性组，若组内快照已用于创建自定义镜像则该快照不会被删除，需先调用 DeleteImage 再调用 DeleteSnapshot
+- [CreateAutoSnapshotPolicy 创建自动快照策略](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createautosnapshotpolicy.md): 创建自动快照策略，通过 timePoints/repeatWeekdays/retentionDays 设置执行时间、重复日期和保留天数，支持 EnableCrossRegionCopy 跨地域备份，每地域最多 100 条策略
+- [DescribeAutoSnapshotPolicyEx 查询自动快照策略](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeautosnapshotpolicyex.md): 查询指定地域下自动快照策略列表，返回策略名称、时间点、重复日期、保留天数、关联云盘数等详情，支持按 AutoSnapshotPolicyId 和标签过滤
+- [DescribeAutoSnapshotPolicyAssociations 查询快照策略关联](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeautosnapshotpolicyassociations.md): 查询自动快照策略与云盘的关联关系，通过 AutoSnapshotPolicyId 或 DiskId 二选一过滤，返回策略 ID 和对应云盘 ID 的映射列表
+- [ModifyAutoSnapshotPolicyEx 修改自动快照策略](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyautosnapshotpolicyex.md): 修改自动快照策略的 timePoints、repeatWeekdays、retentionDays 和跨地域复制配置，不支持修改系统策略，修改后已应用该策略的云盘立即执行新策略
+- [ApplyAutoSnapshotPolicy 应用自动快照策略](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-applyautosnapshotpolicy.md): 为一块或多块云盘绑定自动快照策略，已有策略时可更换为新策略，升级后单盘最多支持同时应用 10 条策略
+- [CancelAutoSnapshotPolicy 取消自动快照策略](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-cancelautosnapshotpolicy.md): 取消一块或多块云盘的自动快照策略绑定，通过 diskIds 指定目标云盘，多策略场景需用 autoSnapshotPolicyId 明确指定要取消的策略
+- [DeleteAutoSnapshotPolicy 删除自动快照策略](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteautosnapshotpolicy.md): 删除指定的自动快照策略，已应用该策略的云盘将自动解除绑定不再执行该策略
+- [DescribeSnapshotPackage 查询快照存储包](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesnapshotpackage.md): 查询指定地域已购买的 OSS 存储包列表，返回存储包名称、容量、起止时间，存储包可抵扣标准快照容量但不支持抵扣本地快照
+- [LockSnapshot 锁定快照](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-locksnapshot.md): 以合规模式锁定快照防止删除，LockDuration 设置锁定天数（1-36500），CoolOffPeriod 设置冷静期（0-72小时），冷静期内可解锁或调整参数，冷静期过后仅可延长锁定
+- [DescribeLockedSnapshots 查询快照锁定信息](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describelockedsnapshots.md): 按 SnapshotIds 或 LockStatus 过滤查询快照锁定详情，返回锁定模式、状态（compliance-cooloff/compliance/expired）、冷静期和锁定过期时间
+- [UnlockSnapshot 解锁快照](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-unlocksnapshot.md): 解锁处于合规模式冷静期内的快照，冷静期结束后无法解锁只能等待锁定到期，需传入 RegionId 和 SnapshotId
+- [DescribeBandwidthLimitation 查询带宽上限](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describebandwidthlimitation.md): 查询指定实例规格在创建、升级或降配场景下的公网带宽上限，通过 OperationType 区分 Create/Upgrade/Downgrade，返回按流量和按带宽两种计费方式的最大最小值
+- [ModifyInstanceNetworkSpec 调整带宽或分配公网 IP](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstancenetworkspec.md): 修改实例带宽配置（升降配）、分配公网 IP（AllocatePublicIp 参数）、切换按流量/按带宽计费，包年包月实例出带宽从 0 升级时自动分配公网 IP，支持临时带宽升级
+- [AllocatePublicIpAddress 分配公网 IP](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-allocatepublicipaddress.md): 为 ECS 实例分配公网 IP，实例须处于 Running 或 Stopped 状态且带宽大于 0，一台实例仅限一个公网 IP，推荐改用 ModifyInstanceNetworkSpec
+- [ConvertNatPublicIpToEip 公网 IP 转 EIP](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-convertnatpubliciptoeip.md): 将 VPC 实例的 PublicIP 转为 EIP，转换后 EIP 单独计费，实例须为 Running/Stopped 状态且未绑定 EIP，包年包月实例需使用按流量计费的公网带宽
+- [ModifyInstanceVpcAttribute 修改实例 VPC 属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstancevpcattribute.md): 修改已停止实例的 VPC、交换机（VSwitchId）、私网 IP（PrivateIpAddress）或安全组，支持跨 VPC 迁移，新建实例须先重启才能调用
+- [DescribeClassicLinkInstances 查询 ClassicLink 实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeclassiclinkinstances.md): 查询与 VPC 建立 ClassicLink 连接的经典网络实例列表，支持按 VpcId 或 InstanceId 过滤，单次最多查 100 台
+- [AttachClassicLinkVpc 建立 ClassicLink 连接](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-attachclassiclinkvpc.md): 将经典网络实例连接到 VPC 实现私网互通，实例须为 Running 或 Stopped 状态，目标 VPC 须已开启 ClassicLink
+- [DetachClassicLinkVpc 断开 ClassicLink 连接](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-detachclassiclinkvpc.md): 取消经典网络实例与 VPC 的 ClassicLink 连接，断开后实例无法与 VPC 内资源私网互通，需指定 InstanceId 和 VpcId
+- [CreateNetworkInterface 创建弹性网卡](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createnetworkinterface.md): 创建 ENI 并指定交换机、安全组和主私网 IP，支持分配最多 49 个辅助私网 IP，可选 RDMA 通讯模式和 IPv6 地址
+- [DescribeNetworkInterfaces 查询弹性网卡列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describenetworkinterfaces.md): 分页查询 ENI 列表，支持按 VpcId、实例 ID、安全组、状态、私网 IP 等条件过滤，通过 MaxResults/NextToken 翻页
+- [DescribeNetworkInterfaceAttribute 查询单个网卡属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describenetworkinterfaceattribute.md): 指定 NetworkInterfaceId 查询单张 ENI 的详细属性，返回 IP 地址、安全组、队列数、通讯模式等完整信息
+- [ModifyNetworkInterfaceAttribute 修改弹性网卡属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifynetworkinterfaceattribute.md): 修改 ENI 的队列数、安全组、队列深度、RDMA 通讯模式、DeleteOnRelease 等属性，仅支持辅助网卡安全组变更
+- [DeleteNetworkInterface 删除弹性网卡](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletenetworkinterface.md): 异步删除处于 Available 状态的 ENI，已附加到实例的须先调用 DetachNetworkInterface 分离，删除后私有地址自动释放
+- [AttachNetworkInterface 附加弹性网卡到实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-attachnetworkinterface.md): 将 ENI 附加到 VPC 实例，需指定 NetworkInterfaceId 和 InstanceId，网卡与实例须在同一可用区和 VPC，异步接口
+- [DetachNetworkInterface 分离弹性网卡](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-detachnetworkinterface.md): 从 ECS 实例分离辅助 ENI，不允许分离主网卡，异步接口，网卡分离后变为 Available 状态可重新附加到其他实例
+- [AssignPrivateIpAddresses 分配辅助私网 IP](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-assignprivateipaddresses.md): 为 ENI 分配辅助私网 IP，可指定具体 IP 或通过数量自动分配，Available 状态最多分配 49 个，挂载后受实例规格限制
+- [UnassignPrivateIpAddresses 回收辅助私网 IP](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-unassignprivateipaddresses.md): 从 ENI 删除一个或多个辅助私网 IP，网卡须为 Available 或 InUse 状态，操作主网卡时实例须为 Running 或 Stopped
+- [AssignIpv6Addresses 分配 IPv6 地址](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-assignipv6addresses.md): 为 ENI 分配 IPv6 地址，可指定具体地址或按数量自动分配，Available 状态最多分配 10 个，交换机须已开通 IPv6
+- [UnassignIpv6Addresses 回收 IPv6 地址](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-unassignipv6addresses.md): 回收 ENI 的一个或多个 IPv6 地址，网卡须为 Available 或 InUse 状态，操作主网卡时实例须处于运行中或已停止
+- [CreateNetworkInterfacePermission 授权弹性网卡权限](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createnetworkinterfacepermission.md): 为认证 ISV 或个人用户授予指定 ENI 的 InstanceAttach 权限，需指定 NetworkInterfaceId 和 AccountId
+- [DescribeNetworkInterfacePermissions 查询弹性网卡权限](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describenetworkinterfacepermissions.md): 查询已授权给 ISV 或个人用户的 ENI 权限列表，支持按 NetworkInterfaceId 或权限 ID 过滤，分页返回
+- [CreatePrefixList 创建前缀列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createprefixlist.md): 创建 CIDR 地址块集合的前缀列表，须指定地址族(IPv4/IPv6)和最大条目容量，创建后地址族和容量不可修改
+- [DescribePrefixLists 查询前缀列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeprefixlists.md): 查询前缀列表，支持按 AddressFamily、PrefixListId 和名称过滤，多个条件为 AND 关系，支持分页
+- [DescribePrefixListAttributes 查询前缀列表详情](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeprefixlistattributes.md): 查询指定前缀列表的名称、地址族、最大条目容量及各条目的 CIDR 和描述，与 DescribePrefixLists 的区别是返回条目明细
+- [DescribePrefixListAssociations 查询前缀列表关联资源](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeprefixlistassociations.md): 查询指定前缀列表已关联的资源 ID 和资源类型(如安全组规则、路由表)，支持 NextToken 分页
+- [ModifyPrefixList 修改前缀列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyprefixlist.md): 修改前缀列表的名称和描述，通过 AddEntry/RemoveEntry 增删 CIDR 条目，CIDR 地址块不允许重复
+- [DeletePrefixList 删除前缀列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteprefixlist.md): 删除指定前缀列表及其所有条目，已关联安全组等资源时需先解除关联才能删除
+- [CreatePortRangeList 创建端口列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createportrangelist.md): 创建端口列表并关联安全组使用，MaxEntries 设置最大条目容量（创建后不可更改），Entry.N.PortRange 指定端口范围
+- [DescribePortRangeLists 查询端口列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeportrangelists.md): 分页查询端口列表，支持按名称、ID、标签和资源组过滤，返回 MaxEntries 和 AssociationCount
+- [DescribePortRangeListEntries 查询端口列表条目](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeportrangelistentries.md): 查询指定端口列表下的所有条目，返回每条 PortRange 和 Description
+- [DescribePortRangeListAssociations 查询端口列表关联资源](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeportrangelistassociations.md): 查询端口列表已关联的资源（如安全组），返回 ResourceId 和 ResourceType，删除端口列表前需先确认无关联
+- [ModifyPortRangeList 修改端口列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyportrangelist.md): 修改端口列表名称和条目，通过 AddEntry/RemoveEntry 增删端口范围，PortRange 不允许重复
+- [DeletePortRangeList 删除端口列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteportrangelist.md): 删除指定端口列表及其所有条目，已关联安全组等资源时需先解除关联才能删除
+- [CreateSecurityGroup 创建安全组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createsecuritygroup.md): 创建普通或企业安全组，普通组默认组内互通，企业组默认组内隔离，VPC 类型必须指定 VpcId
+- [DescribeSecurityGroups 查询安全组列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesecuritygroups.md): 分页查询安全组列表，支持按地域、VpcId、SecurityGroupType（normal/enterprise）、标签过滤，推荐 MaxResults+NextToken 分页
+- [DescribeSecurityGroupAttribute 查询安全组规则](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesecuritygroupattribute.md): 查询指定安全组的详细信息和规则列表，可按 Direction（ingress/egress/all）过滤，返回每条规则的 IP 协议、端口范围、授权对象
+- [ModifySecurityGroupPolicy 修改组内连通策略](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifysecuritygrouppolicy.md): 将普通安全组的组内策略在 Accept（互通）和 Drop（隔离）之间切换，企业安全组不支持修改
+- [ModifySecurityGroupAttribute 修改安全组属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifysecuritygroupattribute.md): 修改安全组的 SecurityGroupName 和 Description，不传入的字段保持不变
+- [DeleteSecurityGroup 删除安全组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletesecuritygroup.md): 删除安全组及其所有规则，组内不能存在实例或弹性网卡，ACK 集群关联的安全组受删除保护限制
+- [AuthorizeSecurityGroup 添加入方向规则](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-authorizesecuritygroup.md): 添加一条或多条入方向安全组规则，源端支持 CIDR/IPv6/前缀列表/安全组四种类型，Priority 1-100 控制优先级
+- [ModifySecurityGroupRule 修改入方向规则](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifysecuritygrouprule.md): 修改入方向安全组规则，通过 SecurityGroupRuleId 指定规则，不能修改授权对象类型（如 IPv4 不能改为 IPv6）
+- [RevokeSecurityGroup 删除入方向规则](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-revokesecuritygroup.md): 删除一条或多条入方向规则，支持按 SecurityGroupRuleId 或按 Permissions 匹配删除，两种方式不能混用
+- [AuthorizeSecurityGroupEgress 添加出方向规则](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-authorizesecuritygroupegress.md): 添加一条或多条出方向安全组规则，目的端支持 CIDR/IPv6/前缀列表/安全组四种类型，Priority 1-100 控制优先级
+- [ModifySecurityGroupEgressRule 修改出方向规则](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifysecuritygroupegressrule.md): 修改出方向安全组规则，通过 SecurityGroupRuleId 指定规则，不能修改授权对象类型（如 IPv4 不能改为 IPv6）
+- [RevokeSecurityGroupEgress 删除出方向规则](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-revokesecuritygroupegress.md): 删除一条或多条出方向规则，支持按 SecurityGroupRuleId 或按 Permissions 匹配删除，两种方式不能混用
+- [DescribeSecurityGroupReferences 查询安全组授权引用](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesecuritygroupreferences.md): 查询指定安全组被哪些其他安全组的规则引用（授权），用于在删除安全组前排查依赖关系，参数 SecurityGroupId 数组最多 10 个
+- [JoinSecurityGroup 加入安全组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-joinsecuritygroup.md): 将实例或弹性网卡加入指定安全组，已不推荐使用，建议改用 ModifyInstanceAttribute 或 ModifyNetworkInterfaceAttribute。实例最多加入 5 个安全组
+- [LeaveSecurityGroup 移出安全组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-leavesecuritygroup.md): 将实例或弹性网卡从指定安全组移出，已不推荐使用，建议改用 ModifyInstanceAttribute。实例至少保留一个安全组，最后一个不可移出
+- [CreateKeyPair 创建密钥对](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createkeypair.md): 创建 SSH 密钥对并返回 PEM 编码的 PKCS#8 私钥，每个地域最多 500 对。也可用 ImportKeyPair 导入已有公钥
+- [ImportKeyPair 导入密钥对公钥](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-importkeypair.md): 导入第三方工具生成的密钥对公钥，支持 rsa/dsa/ecdsa 等加密方式，每个地域最多 500 对
+- [DescribeKeyPairs 查询密钥对列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describekeypairs.md): 查询密钥对列表，支持按名称模糊搜索（通配符 *）、指纹精确匹配和标签过滤，IncludePublicKey 参数可返回公钥内容
+- [AttachKeyPair 绑定密钥对](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-attachkeypair.md): 将 SSH 密钥对绑定到一台或多台 Linux 实例（最多 50 台），绑定后禁用密码登录，运行中的实例需重启生效
+- [DetachKeyPair 解绑密钥对](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-detachkeypair.md): 从一台或多台 Linux 实例解绑 SSH 密钥对，解绑后恢复密码登录，需重启实例生效
+- [DeleteKeyPairs 批量删除密钥对](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletekeypairs.md): 批量删除 SSH 密钥对（最多 100 个），已绑定实例的密钥对不可删除，删除后无法通过 DescribeKeyPairs 查询
+- [CreateLaunchTemplate 创建启动模板](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createlaunchtemplate.md): 创建实例启动模板，预设镜像/规格/网络/存储等配置供 RunInstances 复用。每个地域最多 30 个模板，每模板最多 30 个版本
+- [DescribeLaunchTemplates 查询启动模板](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describelaunchtemplates.md): 查询启动模板列表，支持按 LaunchTemplateId/Name（最多 100 个）、标签和资源组过滤，返回模板 ID、默认版本号和最新版本号
+- [DeleteLaunchTemplate 删除启动模板](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletelaunchtemplate.md): 删除指定启动模板及其所有版本（不可恢复），已创建的实例不受影响。如需仅删除某个版本请用 DeleteLaunchTemplateVersion
+- [CreateLaunchTemplateVersion 创建模板版本](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createlaunchtemplateversion.md): 在指定启动模板下新建版本，可修改镜像/规格/网络等配置参数。每个模板最多 30 个版本，版本号顺序递增
+- [DescribeLaunchTemplateVersions 查询模板版本](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describelaunchtemplateversions.md): 查询启动模板的版本详情，支持按版本号范围（MinVersion/MaxVersion）过滤，DetailFlag 控制是否返回镜像/规格/网络等配置
+- [ModifyLaunchTemplateDefaultVersion 切换模板默认版本](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifylaunchtemplatedefaultversion.md): 通过 DefaultVersionNumber 参数切换启动模板的默认版本，RunInstances 未指定版本号时使用默认版本
+- [DeleteLaunchTemplateVersion 删除模板版本](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletelaunchtemplateversion.md): 删除启动模板的一个或多个版本，默认版本不可直接删除，需先用 ModifyLaunchTemplateDefaultVersion 切换后再删
+- [CreateAutoProvisioningGroup 创建弹性供应组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createautoprovisioninggroup.md): 创建弹性供应组，跨可用区/规格族混合部署按量和抢占式实例集群。支持 request（一次性）和 maintain（持续供应）两种交付类型
+- [DescribeAutoProvisioningGroups 查询弹性供应组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeautoprovisioninggroups.md): 查询弹性供应组列表（最多 20 个 ID），支持按状态/名称/标签/资源组过滤，返回目标容量、调度状态和启动模板配置
+- [DescribeAutoProvisioningGroupInstances 查询供应组实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeautoprovisioninggroupinstances.md): 查询弹性供应组内的实例列表，返回每台实例的规格、可用区、是否抢占式（IsSpot）、运行状态和 vCPU/内存
+- [ModifyAutoProvisioningGroup 修改弹性供应组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyautoprovisioninggroup.md): 修改弹性供应组的目标容量（TotalTargetCapacity/按量/抢占式）、最高价格和缩容策略，修改容量后会触发一次调度
+- [DescribeAutoProvisioningGroupHistory 查询弹性供应组调度历史](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeautoprovisioninggrouphistory.md): 按时间范围分页查询弹性供应组的调度任务历史，返回每次调度的状态(prepare/success/failed)、创建和销毁的实例 ID 列表及错误信息
+- [DeleteAutoProvisioningGroup 删除弹性供应组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteautoprovisioninggroup.md): 删除指定弹性供应组，TerminateInstances 参数控制是否同时释放组内实例，需关联 ram:CreateServiceLinkedRole 权限
+- [CreateDeploymentSet 创建部署集](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createdeploymentset.md): 在指定地域创建部署集，Strategy 参数指定策略：Availability(高可用)、AvailabilityGroup(组高可用，GroupCount 设分组数)、LowLatency(网络低时延)
+- [DescribeDeploymentSetSupportedInstanceTypeFamily 查询部署集支持规格族](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describedeploymentsetsupportedinstancetypefamily.md): 按 RegionId 和 Strategy 查询支持指定部署集策略的实例规格族列表，返回逗号分隔的规格族字符串如 ecs.i2g,ecs.i1
+- [DescribeDeploymentSets 查询部署集](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describedeploymentsets.md): 分页查询部署集详情，返回策略、实例数量、可用区维度容量(UsedAmount/AvailableAmount)，支持按 DeploymentSetIds 批量查询(最多100个)
+- [ModifyInstanceDeployment 修改实例部署集](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstancedeployment.md): 修改实例所属部署集或迁移实例至专有宿主机，支持同时变更实例规格。实例须处于 Stopped 状态，仅支持 VPC 网络，MigrationType=live 可热迁移
+- [ModifyDeploymentSetAttribute 修改部署集属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydeploymentsetattribute.md): 修改部署集的 DeploymentSetName 和 Description，名称长度 2-128 字符
+- [DeleteDeploymentSet 删除部署集](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletedeploymentset.md): 删除指定部署集，部署集内不能有实例，需先移出或释放实例后才能删除
+- [CreateElasticityAssurance 创建弹性保障服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createelasticityassurance.md): 为按量付费实例预留指定规格资源的私有池，指定可用区/规格/时长创建，支持 Open/Target 两种匹配模式，PeriodUnit=Day 时创建分时弹性保障
+- [DescribeElasticityAssurances 查询弹性保障服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeelasticityassurances.md): 分页查询弹性保障服务详情，返回状态、匹配模式(Open/Target)、生效失效时间、已用实例数，支持按 InstanceType/ZoneId/Status 过滤
+- [DescribeElasticityAssuranceInstances 查询弹性保障已匹配实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeelasticityassuranceinstances.md): 查询指定弹性保障服务私有池中已匹配的运行中实例 ID 列表，服务失效后匹配数据也会失效返回为空
+- [ModifyElasticityAssurance 修改弹性保障服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyelasticityassurance.md): 修改弹性保障服务的名称、描述或预留实例容量(仅支持缩容)，InstanceAmount 不能与其他属性同时修改，分时保障可修改 RecurrenceRules
+- [RenewElasticityAssurances 续费弹性保障服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-renewelasticityassurances.md): 批量续费弹性保障服务(单次最多20个)，支持按月/年续费，AutoPay 控制是否自动支付
+- [ModifyElasticityAssuranceAutoRenewAttribute 修改弹性保障自动续费](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyelasticityassuranceautorenewattribute.md): 批量修改弹性保障服务的自动续费属性(单次最多50个)，RenewalStatus 可设为 AutoRenewal/Normal/NotRenewal
+- [DescribeElasticityAssuranceAutoRenewAttribute 查询弹性保障自动续费](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeelasticityassuranceautorenewattribute.md): 批量查询弹性保障服务的自动续费状态(单次最多50个)，返回 RenewalStatus(AutoRenewal/Normal/NotRenewal)、续费周期和时长
+- [PurchaseElasticityAssurance 购买弹性保障服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-purchaseelasticityassurance.md): 购买处于未激活(Deactived)状态、资源已准备完毕的弹性保障服务，支持指定 Period/PeriodUnit 和 Open/Target 匹配模式
+- [CreateCapacityReservation 创建容量预定服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createcapacityreservation.md): 创建私有池预留指定规格实例容量，立即生效后按量计费(不论是否创建实例)，支持 Open/Target 模式，可用节省计划或地域级预留实例券抵扣
+- [DescribeCapacityReservations 查询容量预定服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describecapacityreservations.md): 分页查询容量预定服务详情，返回状态、私有池模式、生效失效时间、已用/可用实例数，支持按 InstanceType/ZoneId/Status 过滤
+- [DescribeCapacityReservationInstances 查询容量预定已匹配实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describecapacityreservationinstances.md): 查询指定容量预定服务私有池中已匹配的实例 ID 列表，通过 PrivatePoolOptions.Id 指定服务 ID，支持分页
+- [ModifyCapacityReservation 修改容量预定服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifycapacityreservation.md): 修改容量预定服务的名称、描述、失效方式(Limited/Unlimited)和预留实例总数量，扩容可能因库存不足失败
+- [DescribeInstanceAttachmentAttributes 查询实例私有池信息](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstanceattachmentattributes.md): 查询实例匹配的私有池信息，返回 PrivatePoolOptionsMatchCriteria（Open/Target/None）和私有池 ID，支持分页批量查询最多 100 个实例
+- [ModifyInstanceAttachmentAttributes 修改实例私有池匹配模式](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstanceattachmentattributes.md): 修改实例的私有池匹配模式（Open/Target/None），Target 模式需指定 PrivatePoolOptions.Id，修改后无需重启实例
+- [ReleaseCapacityReservation 释放容量预定服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-releasecapacityreservation.md): 释放手动释放方式的立即生效容量预定服务，需传入 PrivatePoolOptions.Id 指定目标容量预定
+- [PurchaseReservedInstancesOffering 购买预留实例券](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-purchasereservedinstancesoffering.md): 购买地域级或可用区级预留实例券，抵扣按量付费实例账单，关键参数 InstanceType/Scope/InstanceAmount/OfferingType（全预付/部分预付/零预付），支持 1-5 年时长
+- [DescribeReservedInstances 查询预留实例券列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describereservedinstances.md): 查询已购买的预留实例券列表，支持按 InstanceType/InstanceTypeFamily/Scope/Status/标签等条件过滤，返回券的规格、范围、状态和到期时间
+- [ModifyReservedInstances 拆分合并预留实例券](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyreservedinstances.md): 对预留实例券进行拆分、合并或范围变更，修改实例规格和数量，需保证前后计算力不变，异步接口通过 DescribeReservedInstances 查询结果
+- [ModifyReservedInstanceAttribute 修改预留实例券属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyreservedinstanceattribute.md): 修改预留实例券的名称（ReservedInstanceName）和描述（Description），不涉及规格或范围变更
+- [RenewReservedInstances 续费预留实例券](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-renewreservedinstances.md): 对一张或多张预留实例券续费，支持设置 Period/PeriodUnit 购买时长和 AutoRenew 自动续费，单次最多续费 10 张
+- [DescribeReservedInstanceAutoRenewAttribute 查询预留实例券自动续费](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describereservedinstanceautorenewattribute.md): 查询预留实例券的自动续费属性，返回 RenewalStatus（AutoRenewal/Normal）、续费时长 Duration 和时长单位 PeriodUnit
+- [ModifyReservedInstanceAutoRenewAttribute 修改预留实例券自动续费](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyreservedinstanceautorenewattribute.md): 修改预留实例券的自动续费属性，通过 RenewalStatus 设置为 AutoRenewal 开启或 Normal 关闭自动续费，单次最多修改 100 张
+- [PurchaseStorageCapacityUnit 购买存储容量单位包](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-purchasestoragecapacityunit.md): 购买 SCU（Storage Capacity Unit）抵扣云盘按量付费账单，Capacity 支持 20-51200 GiB，Period 支持 1-5 年，单次最多购买 20 个
+- [DescribeStorageCapacityUnits 查询存储容量单位包列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describestoragecapacityunits.md): 查询 SCU 列表，支持按名称、容量、状态（Creating/Active/Expired/Pending）和标签过滤，返回容量、生效时间和到期时间
+- [ModifyStorageCapacityUnitAttribute 修改存储容量单位包属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifystoragecapacityunitattribute.md): 修改 SCU 的名称（Name）和描述（Description），不涉及容量或地域变更
+- [RunCommand 创建并执行云助手命令](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-runcommand.md): 一步创建并执行 Shell/PowerShell/Bat 命令，支持定时执行（Cron 表达式）、自定义参数（EnableParameter）和容器内执行，通过 DescribeInvocations 查询执行结果
+- [CreateCommand 创建云助手命令](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createcommand.md): 创建 Shell/PowerShell/Bat 类型的云助手命令模板，支持 Timeout 超时设置、WorkingDir 执行路径和 EnableParameter 自定义参数（{{parameter}} 语法），需通过 InvokeCommand 触发执行
+- [InvokeCommand 执行云助手命令](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-invokecommand.md): 对已有命令（CommandId）在一台或多台实例上触发执行，支持单次和定时（Frequency/Cron）两种模式，可传入自定义参数 Parameters
+- [DescribeInvocations 查询云助手命令执行列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinvocations.md): 查询命令执行列表和多实例聚合状态，返回 CommandContent 命令内容，可查询最近 4 周执行信息，与 DescribeInvocationResults 的区别在于含聚合状态和命令内容
+- [DescribeInvocationResults 查询云助手命令执行结果](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinvocationresults.md): 查询命令在各实例上的实际执行结果和输出，支持 IncludeHistory=true 查询定时任务的历史执行记录，可查询最近 4 周执行信息
+- [ModifyInvocationAttribute 修改云助手定时任务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinvocationattribute.md): 修改定时任务的命令内容、执行频率或添加实例，适用于 Period/NextRebootOnly/EveryReboot 三种 RepeatMode，Agent 版本需 2.2.3.541 以上
+- [StopInvocation 停止云助手命令执行](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-stopinvocation.md): 停止 Running 状态的命令进程，单次命令已开始的实例继续执行、未开始的不再执行，周期命令停止后续执行但当前执行继续完成
+- [DescribeCommands 查询云助手命令](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describecommands.md): 查询已创建的云助手命令或公共命令，支持按 CommandId、Name、Type 过滤，Provider 参数区分私有命令与公共命令
+- [ModifyCommand 修改云助手命令](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifycommand.md): 修改命令的名称、描述、工作目录和超时时间，必填参数 CommandId，CommandContent 参数已废弃
+- [DeleteCommand 删除云助手命令](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletecommand.md): 删除指定的云助手命令，必填参数 RegionId 和 CommandId，无法删除正在执行中的命令
+- [SendFile 下发远程文件到实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-sendfile.md): 通过云助手向一台或多台实例下发文件，Content 经 Base64 编码后不超过 32KB，支持设置 FileOwner/FileMode/Overwrite 参数
+- [DescribeSendFileResults 查询下发文件结果](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesendfileresults.md): 查询云助手下发文件的执行记录和状态，支持按 InvokeId/InstanceId/InvocationStatus 过滤，可查询最近 6 周记录
+- [DescribeCloudAssistantStatus 查询云助手状态](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describecloudassistantstatus.md): 查询实例的云助手 Agent 安装状态、版本号、心跳时间和命令执行统计，建议执行命令前先确认 CloudAssistantStatus 为 true
+- [InstallCloudAssistant 安装云助手 Agent](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-installcloudassistant.md): 为 1-50 台实例安装云助手 Agent，安装后需调用 RebootInstance 重启实例才能生效
+- [StartTerminalSession 创建终端会话](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-startterminalsession.md): 创建 WebSocket 会话远程连接实例，返回 WebSocketUrl 有效 10 分钟，支持 PortNumber 端口转发和 CommandLine 执行命令，单实例最多 20 个并发会话
+- [EndTerminalSession 关闭终端会话](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-endterminalsession.md): 永久关闭指定 Session 的数据连接，关联的 WebSocket URL 同时失效，必填参数 SessionId
+- [DescribeTerminalSessions 查询会话历史](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeterminalsessions.md): 查询 Session Manager 会话历史记录，支持按 InstanceId/SessionId 过滤，可查询 4 周内的会话连接状态和关闭原因
+- [ModifyCloudAssistantSettings 修改云助手配置](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifycloudassistantsettings.md): 修改云助手服务配置，包括会话/任务记录投递到 OSS/SLS、Agent 升级窗口、资源占用限制和 SessionManager 开关
+- [DescribeCloudAssistantSettings 查询云助手配置](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describecloudassistantsettings.md): 查询云助手服务配置，返回 OSS/SLS 投递设置、Agent 升级窗口、资源占用限制和 SessionManager 开关状态
+- [CreateActivation 创建托管实例激活码](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createactivation.md): 创建激活码将非阿里云服务器注册为托管实例，支持 Linux/Windows 多发行版，每地域最多 5000 条激活码，可设置有效时长和 IP 白名单
+- [DescribeActivations 查询激活码使用情况](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeactivations.md): 查询托管实例激活码列表及使用情况，返回已注册数/已注销数/有效时长/IP 限制，支持 ActivationId 和分页查询
+- [DisableActivation 禁用激活码](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-disableactivation.md): 禁用指定激活码防止泄露风险，禁用后无法注册新的托管实例，但不影响已注册的实例
+- [DeleteActivation 删除未使用的激活码](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteactivation.md): 删除未被使用的激活码，激活码对应注册的托管实例数量必须为 0 才可删除
+- [DescribeManagedInstances 查询托管实例列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describemanagedinstances.md): 查询通过激活码注册的非阿里云托管实例，返回连接状态/OS 类型/Agent 版本/IP 地址，支持按 OsType/ActivationId/Connected 过滤
+- [ModifyManagedInstance 修改托管实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifymanagedinstance.md): 修改托管实例的名称，当前仅支持修改 InstanceName 属性，必填参数 InstanceId 和 InstanceName
+- [DeregisterManagedInstance 注销托管实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deregistermanagedinstance.md): 注销一个托管实例，注销后无法再通过云助手向该实例发送命令或文件，返回注销实例的详细信息
+- [ListPluginStatus 查询云助手插件状态](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-listpluginstatus.md): 查询实例中云助手插件的运行状态和版本号，Agent 版本需 Linux>=2.2.3.344/Windows>=2.1.3.344，支持按插件名称过滤
+- [DescribeInstancesFullStatus 查询实例全状态](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstancesfullstatus.md): 查询实例的生命周期状态(Running/Stopped)和待执行系统事件状态，支持按 EventType/HealthStatus 过滤，返回 ScheduledSystemEventSet 包含维护事件详情
+- [DescribeDisksFullStatus 查询块存储全状态](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describedisksfullstatus.md): 查询块存储的生命周期状态、健康状态(Impaired/Warning)和事件类型(Degraded/Stalled/ErrorDetected)，支持按 DiskId/EventTime 过滤，最多查近一周历史事件
+- [DescribeInstanceHistoryEvents 查询系统事件历史](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstancehistoryevents.md): 查询实例/专有宿主机的历史系统事件，默认返回已完结事件(Avoided/Executed/Canceled/Failed)，可通过 InstanceEventCycleStatus 查询 Scheduled/Executing/Inquiring 状态事件，最多查近 30 天
+- [CreateSimulatedSystemEvents 创建模拟系统事件](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createsimulatedsystemevents.md): 为最多 100 台实例预约模拟系统事件进行演习，支持 SystemMaintenance.Reboot/SystemFailure.Reboot 等事件类型，不会真正执行，事件经历 Scheduled/Executed/Canceled 生命周期
+- [CancelSimulatedSystemEvents 取消模拟系统事件](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-cancelsimulatedsystemevents.md): 取消处于 Scheduled 或 Executing 状态的模拟系统事件，取消后事件变为 Canceled 状态，一次最多指定 100 个事件 ID
+- [AcceptInquiredSystemEvent 接受系统事件](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-acceptinquiredsystemevent.md): 对 Inquiring(问询中)状态的系统事件接受默认操作并授权系统执行，需传入 EventId，适用于本地盘隔离/修复等需要用户确认的维护事件
+- [DescribeDiagnosticMetrics 查询诊断指标列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describediagnosticmetrics.md): 查询可用的诊断指标列表，返回 MetricId/MetricCategory/SupportedOperatingSystem，可按 ResourceType 过滤，指标如 Instance.DiskLoadFailure/GuestOS.WinFirewall
+- [CreateDiagnosticMetricSet 创建诊断指标集合](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-creatediagnosticmetricset.md): 自定义组合诊断指标创建指标集合，最多包含 100 个 MetricId，返回 MetricSetId 用于后续 CreateDiagnosticReport 生成诊断报告
+- [DescribeDiagnosticMetricSets 查询诊断指标集合](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describediagnosticmetricsets.md): 查询用户自定义(User)或系统公共(Common)的诊断指标集合列表，返回 MetricSetId/MetricSetName 和包含的 MetricIds 列表
+- [ModifyDiagnosticMetricSet 修改诊断指标集合](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydiagnosticmetricset.md): 修改指定 MetricSetId 的诊断指标集合，可更新名称、描述和包含的 MetricIds 列表
+- [DeleteDiagnosticMetricSets 删除诊断指标集合](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletediagnosticmetricsets.md): 批量删除诊断指标集合，一次最多删除 10 个 MetricSetId
+- [CreateDiagnosticReport 创建诊断报告](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-creatediagnosticreport.md): 基于 MetricSetId 对指定资源生成诊断报告，不传 MetricSetId 则使用默认集合 dms-instancedefault，返回 ReportId 用于 DescribeDiagnosticReportAttributes 查询详情
+- [DescribeDiagnosticReports 查询诊断报告列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describediagnosticreports.md): 查询诊断报告列表，支持按 Status(InProgress/Finished/Failed)和 Severity(Normal/Warn/Critical)过滤，返回报告摘要和问题列表
+- [DescribeDiagnosticReportAttributes 查询诊断报告详情](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describediagnosticreportattributes.md): 根据 ReportId 查询诊断报告详情，返回每个 MetricId 的诊断结果(Severity/Issues)，Issues 包含 IssueId、严重等级和附加数据(Additional)
+- [DeleteDiagnosticReports 删除诊断报告](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletediagnosticreports.md): 批量删除诊断报告，最多一次删除 100 个 ReportId，不支持删除诊断中(InProgress)的报告
+- [GetInstanceScreenshot 获取实例截屏](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-getinstancescreenshot.md): 获取运行中实例的屏幕截图，返回 Base64 编码的 JPG 图像，用于故障排查时查看实例显示状态，同一实例调用间隔至少 10 秒
+- [GetInstanceConsoleOutput 获取实例控制台输出](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-getinstanceconsoleoutput.md): 获取实例最近一次启动/重启/关机时的系统命令行输出(串口日志)，Base64 编码返回，仅支持 Linux 实例，用于排查启动失败等问题
+- [DescribeDiskMonitorData 查询云盘监控数据](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describediskmonitordata.md): 查询云盘的读写 IOPS、读写带宽(B/s)和读写时延，仅限 In_use 状态的云盘，Period 支持 60/600/3600 秒，最多返回 400 条，最多查近 30 天
+- [DescribeInstanceMonitorData 查询实例监控数据](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstancemonitordata.md): 查询实例的 CPU 使用率、突发性能积分(CPUCreditBalance/CPUCreditUsage)、云盘读写 IOPS/BPS、公网和内网流量，Period 支持 60/600/3600 秒，最多查近 30 天
+- [DescribeEniMonitorData 查询辅助网卡监控数据](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeenimonitordata.md): 查询辅助弹性网卡的内网收发包数、内网流量(IntranetRx/IntranetTx)和丢包数(DropPacketRx/DropPacketTx)，Period 支持 60/600/3600 秒，最多查近 30 天
+- [DescribeSnapshotMonitorData 查询快照容量监控](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describesnapshotmonitordata.md): 查询指定地域近 30 天内快照容量变化数据，支持 Standard/Flash/Archive 三种快照类型，Period 参数控制采样间隔（60/600/3600 秒），单次最多返回 400 条数据
+- [DescribeInstanceMaintenanceAttributes 查询实例维护属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeinstancemaintenanceattributes.md): 查询实例的维护时间窗口和宕机处理策略（Stop/AutoRecover/AutoRedeploy），支持按 InstanceId 列表批量查询，最多 100 台
+- [ModifyInstanceMaintenanceAttributes 修改实例维护属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyinstancemaintenanceattributes.md): 设置实例的维护时间窗口（StartTime/EndTime，间隔 1~23 小时）和宕机处理策略（ActionOnMaintenance：Stop/AutoRecover/AutoRedeploy），支持开启维护前事件通知
+- [RedeployInstance 重新部署实例](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-redeployinstance.md): 响应系统维护事件（Reboot/Redeploy/IsolateErrorDisk 等），将实例迁移到其他物理机。异步调用，ForceStop 控制是否强制停机，不支持专有宿主机实例，本地盘数据会被清空
+- [ReportInstancesStatus 反馈实例异常](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-reportinstancesstatus.md): 向阿里云反馈实例异常问题，Reason 支持 instance-hang/abnormal-network/abnormal-local-disk 等类型，裸金属实例可指定 IssueCategory（CPU/主板/内存/磁盘等硬件故障），最多 100 台
+- [TagResources 创建并绑定标签](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-tagresources.md): 批量为 ECS 资源创建并绑定标签，ResourceType 支持 instance/disk/snapshot/image/securitygroup/eni/ddh/keypair 等 19 种资源类型，单次最多 50 个资源、20 个标签
+- [ListTagResources 查询资源标签列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-listtagresources.md): 按 ResourceId 或 Tag 键值对查询 ECS 资源绑定的标签，支持 TagFilter 模糊搜索（前缀匹配和两边匹配），返回资源 ID、类型和标签键值，支持 NextToken 分页
+- [UntagResources 解绑标签](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-untagresources.md): 批量解绑 ECS 资源的标签，All=true 可一次解绑所有标签，TagKey 指定解绑特定标签键，单次最多 50 个资源。标签无其他资源绑定时自动删除
+- [JoinResourceGroup 加入资源组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-joinresourcegroup.md): 将单个 ECS 资源移入指定资源组，ResourceType 支持 instance/disk/snapshot/image/securitygroup/ddh/eni/keypair/launchtemplate 等类型，同一资源不可同时属于多个资源组
+- [AllocateDedicatedHosts 创建专有宿主机](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-allocatededicatedhosts.md): 创建按量或包年包月专有宿主机，单次最多 100 台。DedicatedHostType 指定规格，支持 AutoPlacement 自动部署和 CpuOverCommitRatio CPU 超卖比（1~5）设置
+- [DescribeDedicatedHosts 查询专有宿主机详情](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describededicatedhosts.md): 查询专有宿主机的物理性能（vCPU/内存/本地盘）、使用状态、已部署实例列表和 Socket 维度容量。支持按 DedicatedHostIds、集群 ID、规格类型和状态过滤
+- [DescribeDedicatedHostTypes 查询专有宿主机规格](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describededicatedhosttypes.md): 查询指定地域支持的专有宿主机规格参数（vCPU/内存/本地盘/GPU）及其支持的 ECS 实例规格族列表，可按 DedicatedHostType 或 SupportedInstanceTypeFamily 过滤
+- [ModifyDedicatedHostAttribute 修改专有宿主机属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydedicatedhostattribute.md): 修改专有宿主机名称、描述、故障迁移策略（Migrate/Stop）、自动部署开关和 CPU 超卖比。修改超卖比时宿主机上的实例须为 Stopped 状态
+- [ModifyDedicatedHostsChargeType 修改专有宿主机计费方式](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydedicatedhostschargetype.md): 在按量付费和包年包月之间切换专有宿主机计费方式，最多同时转换 20 台。支持 DryRun 预检和 AutoPay 自动支付
+- [DescribeDedicatedHostAutoRenew 查询专有宿主机自动续费](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describededicatedhostautorenew.md): 查询包年包月专有宿主机的自动续费状态、续费周期和续费时长，返回每台宿主机的 AutoRenewEnabled 和 Duration
+- [ModifyDedicatedHostAutoRenewAttribute 设置专有宿主机自动续费](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydedicatedhostautorenewattribute.md): 为包年包月专有宿主机开启或取消自动续费，到期前九天自动扣费。支持 AutoRenewWithEcs 跟随宿主机内包年包月实例自动续费
+- [RenewDedicatedHosts 续费专有宿主机](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-renewdedicatedhosts.md): 手动续费包年包月专有宿主机，优先使用代金券抵扣。支持按周/月/年续费，需账户余额或信用额度充足
+- [ModifyDedicatedHostAutoReleaseTime 设置专有宿主机自动释放](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydedicatedhostautoreleasetime.md): 为按量付费专有宿主机设定或取消自动释放时间，到达设定时间后宿主机自动释放。请确保宿主机上无运行中的实例且数据已备份
+- [RedeployDedicatedHost 专有宿主机故障迁移](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-redeploydedicatedhost.md): 在专有宿主机状态为 UnderAssessment（故障潜伏期）时执行故障迁移，将宿主机及其实例迁移到其他物理服务器，避免产生永久性故障
+- [ReleaseDedicatedHost 释放专有宿主机](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-releasededicatedhost.md): 释放按量付费或到期的包年包月专有宿主机，释放前宿主机上不能有任何 ECS 实例
+- [CreateDedicatedHostCluster 创建专有宿主机组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-creatededicatedhostcluster.md): 在指定地域和可用区创建专有宿主机组，必填 RegionId 和 ZoneId，支持标签和资源组参数
+- [ModifyDedicatedHostClusterAttribute 修改专有宿主机组属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifydedicatedhostclusterattribute.md): 修改专有宿主机组的名称和描述，必填 RegionId 和 DedicatedHostClusterId
+- [DescribeDedicatedHostClusters 查询专有宿主机组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describededicatedhostclusters.md): 查询一个或多个专有宿主机组的详细信息，返回容量（vCPU/内存）、宿主机列表和可用实例规格，支持按标签和资源组过滤
+- [DeleteDedicatedHostCluster 删除专有宿主机组](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletededicatedhostcluster.md): 删除指定专有宿主机组，前提是组内宿主机已迁移至其他组，否则报 DedicatedHostExists 错误
+- [CreateHpcCluster 创建 HPC 集群](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createhpccluster.md): 在指定地域创建 HPC 集群，必填 RegionId 和 Name，支持 ClientToken 幂等控制
+- [DescribeHpcClusters 查询 HPC 集群](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describehpcclusters.md): 按地域查询可用的 HPC 集群列表，支持通过 HpcClusterIds 批量指定最多 100 个集群 ID，返回集群名称和描述
+- [ModifyHpcClusterAttribute 修改 HPC 集群属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyhpcclusterattribute.md): 修改 HPC 集群的名称和描述，Name 和 Description 至少填写一个，否则报 InvalidModifyInfo 错误
+- [DeleteHpcCluster 删除 HPC 集群](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletehpccluster.md): 删除指定 HPC 集群，集群内不能有实例，否则报 NotEmpty.HpcCluster 错误
+- [DescribeTasks 查询异步任务列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describetasks.md): 查询异步任务的进度和状态，支持按 TaskAction（ImportImage/ExportImage/RedeployInstance/ModifyDiskSpec）和状态过滤，支持分页
+- [DescribeTaskAttribute 查询异步任务详情](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describetaskattribute.md): 查询单个异步任务的进度、成功/失败数和子任务详情，支持 ImportImage、ExportImage、ModifyDiskSpec 三种任务类型
+- [CancelTask 取消异步任务](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-canceltask.md): 取消正在运行的异步任务，仅支持取消 ImportImage 和 ExportImage 两种任务类型
+- [Deprecated DescribeUserBusinessBehavior](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeuserbusinessbehavior.md): 已弃用，获取用户级别默认属性，无直接替代接口
+- [Deprecated ModifyUserBusinessBehavior](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyuserbusinessbehavior.md): 已弃用，设置用户级别默认属性，无直接替代接口
+- [Deprecated DescribeClusters](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeclusters.md): 已弃用，查询集群信息，无直接替代接口
+- [Deprecated DeleteNetworkInterfacePermission](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletenetworkinterfacepermission.md): 替代接口：Ecs(2014-05-26) - DeleteNetworkInterface
+- [Deprecated DescribeLimitation](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describelimitation.md): 查询账号限制的已弃用接口，替代接口：DescribeAccountAttributes，支持查询实例、安全组、弹性网卡等资源配额
+- [Deprecated ModifyBandwidthPackageSpec](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifybandwidthpackagespec.md): 替代接口：Vpc(2016-04-28) - ModifyCommonBandwidthPackageSpec
+- [Deprecated DeleteBandwidthPackage](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletebandwidthpackage.md): 替代接口：Vpc(2016-04-28) - DeleteCommonBandwidthPackage
+- [Deprecated ModifyVSwitchAttribute](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyvswitchattribute.md): 替代接口：Vpc(2016-04-28) - ModifyVSwitchAttribute
+- [Deprecated DescribeVSwitches](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describevswitches.md): 替代接口：Vpc(2016-04-28) - DescribeVSwitches
+- [Deprecated DeleteVSwitch](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletevswitch.md): 替代接口：Vpc(2016-04-28) - DeleteVSwitch
+- [Deprecated ModifyPhysicalConnectionAttribute](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyphysicalconnectionattribute.md): 替代接口：Vpc(2016-04-28) - ModifyPhysicalConnectionAttribute
+- [Deprecated EnablePhysicalConnection](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-enablephysicalconnection.md): 替代接口：Vpc(2016-04-28) - EnablePhysicalConnection
+- [Deprecated CreatePhysicalConnection](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createphysicalconnection.md): 替代接口：Vpc(2016-04-28) - CreatePhysicalConnection
+- [Deprecated TerminatePhysicalConnection](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-terminatephysicalconnection.md): 替代接口：Vpc(2016-04-28) - TerminatePhysicalConnection
+- [Deprecated CreateVpc](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createvpc.md): 替代接口：Vpc(2016-04-28) - CreateVpc
+- [Deprecated DeleteVpc](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletevpc.md): 替代接口：Vpc(2016-04-28) - DeleteVpc
+- [Deprecated CreateVSwitch](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createvswitch.md): 替代接口：Vpc(2016-04-28) - CreateVSwitch
+- [Deprecated RemoveBandwidthPackageIps](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-removebandwidthpackageips.md): 已弃用，页面未标注替代接口
+- [Deprecated DeleteHaVip](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletehavip.md): 替代接口：Vpc(2016-04-28) - DeleteHaVip
+- [Deprecated CreateHaVip](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createhavip.md): 替代接口：Vpc(2016-04-28) - CreateHaVip
+- [Deprecated AssociateHaVip](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-associatehavip.md): 替代接口：Vpc(2016-04-28) - AssociateHaVip
+- [Deprecated DescribeBandwidthPackages](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describebandwidthpackages.md): 已弃用，页面未标注替代接口
+- [Deprecated DeletePhysicalConnection](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletephysicalconnection.md): 替代接口：Vpc(2016-04-28) - DeletePhysicalConnection
+- [Deprecated CreateVirtualBorderRouter](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createvirtualborderrouter.md): 替代接口：Vpc(2016-04-28) - CreateVirtualBorderRouter
+- [Deprecated ModifyVirtualBorderRouterAttribute](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyvirtualborderrouterattributeapi-ecs-2014-05-26-modifyvirtualborderrouterattribute.md): 替代接口：Vpc(2016-04-28) - ModifyVirtualBorderRouterAttribute
+- [Deprecated DescribePhysicalConnections](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describephysicalconnections.md): 替代接口：Vpc(2016-04-28) - DescribePhysicalConnections
+- [Deprecated DescribeVirtualBorderRouters](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describevirtualborderrouters.md): 替代接口：Vpc(2016-04-28) - DescribeVirtualBorderRouters
+- [Deprecated DeleteRouterInterface](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleterouterinterface.md): 替代接口：Vpc(2016-04-28) - DeleteRouterInterface
+- [Deprecated ModifyRouterInterfaceAttribute](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyrouterinterfaceattribute.md): 替代接口：Vpc(2016-04-28) - ModifyRouterInterfaceAttribute
+- [Deprecated TerminateVirtualBorderRouter](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-terminatevirtualborderrouter.md): 替代接口：Vpc(2016-04-28) - TerminateVirtualBorderRouter
+- [Deprecated DeactivateRouterInterface](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deactivaterouterinterface.md): 替代接口：Vpc(2016-04-28) - DeactivateRouterInterface
+- [Deprecated ModifyVpcAttribute](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyvpcattribute.md): 替代接口：Vpc(2016-04-28) - ModifyVpcAttribute
+- [Deprecated CancelPhysicalConnection](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-cancelphysicalconnection.md): 替代接口：Vpc(2016-04-28) - CancelPhysicalConnection
+- [Deprecated AssociateEipAddress](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-associateeipaddress.md): 替代接口：Vpc(2016-04-28) - AssociateEipAddress
+- [Deprecated CreateRouterInterface](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createrouterinterface.md): 替代接口：Vpc(2016-04-28) - CreateRouterInterface
+- [Deprecated UnassociateHaVip](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-unassociatehavip.md): 替代接口：Vpc(2016-04-28) - UnassociateHaVip
+- [Deprecated ModifyVRouterAttribute](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyvrouterattribute.md): 替代接口：Vpc(2016-04-28) - ModifyVRouterAttribute
+- [Deprecated DescribeVirtualBorderRoutersForPhysicalConnection](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describevirtualborderroutersforphysicalconnection.md): 替代接口：Vpc(2016-04-28) - DescribeVirtualBorderRoutersForPhysicalConnection
+- [Deprecated ReleaseEipAddress](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-releaseeipaddress.md): 替代接口：Vpc(2016-04-28) - ReleaseEipAddress
+- [Deprecated DescribeEipMonitorData](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeeipmonitordata.md): 替代接口：Vpc(2016-04-28) - DescribeEipMonitorData
+- [Deprecated DescribeVpcs](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describevpcs.md): 替代接口：Vpc(2016-04-28) - DescribeVpcs
+- [Deprecated ActivateRouterInterface](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-activaterouterinterface.md): 替代接口：Vpc(2016-04-28) - ActivateRouterInterface
+- [Deprecated AddBandwidthPackageIps](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-addbandwidthpackageips.md): 无直接替代，页面未标注替代 API
+- [Deprecated DescribeHaVips](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describehavips.md): 替代接口：Vpc(2016-04-28) - DescribeHaVips
+- [Deprecated DeleteForwardEntry](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteforwardentry.md): 替代接口：Vpc(2016-04-28) - DeleteForwardEntry
+- [Deprecated ModifyHaVipAttribute](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyhavipattribute.md): 替代接口：Vpc(2016-04-28) - ModifyHaVipAttribute
+- [Deprecated DescribeAccessPoints](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeaccesspoints.md): 替代接口：Vpc(2016-04-28) - DescribeAccessPoints
+- [Deprecated ModifyRouterInterfaceSpec](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyrouterinterfacespec.md): 替代接口：Vpc(2016-04-28) - ModifyRouterInterfaceSpec
+- [Deprecated DeleteVirtualBorderRouter](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletevirtualborderrouter.md): 替代接口：Vpc(2016-04-28) - DeleteVirtualBorderRouter
+- [Deprecated DescribeTags](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describetags.md): 替代接口：Tag(2018-08-28) - CountResourcesByTags
+- [Deprecated ConnectRouterInterface](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-connectrouterinterface.md): 替代接口：Vpc(2016-04-28) - ConnectRouterInterface
+- [Deprecated ReleasePublicIpAddress](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-releasepublicipaddress.md): 释放 ECS 实例公网 IP 地址的已弃用接口，需在实例创建后 6 小时内操作，无直接替代接口
+- [Deprecated RecoverVirtualBorderRouter](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-recovervirtualborderrouter.md): 替代接口：Vpc(2016-04-28) - RecoverVirtualBorderRouter
+- [Deprecated DescribeRouterInterfaces](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describerouterinterfaces.md): 替代接口：Vpc(2016-04-28) - DescribeRouterInterfaces
+- [Deprecated DescribeRouteTables](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeroutetables.md): 替代接口：Vpc(2016-04-28) - DescribeRouteTableList
+- [Deprecated AllocateEipAddress](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-allocateeipaddress.md): 替代接口：Vpc(2016-04-28) - AllocateEipAddress
+- [Deprecated CreateRouteEntry](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createrouteentry.md): 替代接口：Vpc(2016-04-28) - CreateRouteEntry
+- [Deprecated ModifyForwardEntry](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyforwardentry.md): 替代接口：Vpc(2016-04-28) - ModifyForwardEntry
+- [Deprecated DescribeForwardTableEntries](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeforwardtableentries.md): 替代接口：Vpc(2016-04-28) - DescribeForwardTableEntries
+- [Deprecated DescribeNewProjectEipMonitorData](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describenewprojecteipmonitordata.md): 替代接口：Vpc(2016-04-28) - DescribeEipMonitorData
+- [Deprecated AddTags](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-addtags.md): 替代接口：Ecs(2014-05-26) - TagResources
+- [Deprecated DeleteNatGateway](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deletenatgateway.md): 替代接口：Vpc(2016-04-28) - DeleteNatGateway
+- [Deprecated ExportSnapshot](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-exportsnapshot.md): 将快照导出到指定 OSS Bucket 的已弃用接口，必填参数 SnapshotId/RegionId/OssBucket，无直接替代接口
+- [Deprecated UnassociateEipAddress](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-unassociateeipaddress.md): 替代接口：Vpc(2016-04-28) - UnassociateEipAddress
+- [Deprecated DescribeNatGateways](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describenatgateways.md): 替代接口：Vpc(2016-04-28) - DescribeNatGateways
+- [Deprecated CreateNatGateway](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createnatgateway.md): 替代接口：Vpc(2016-04-28) - CreateNatGateway
+- [Deprecated CreateForwardEntry](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createforwardentry.md): 替代接口：Vpc(2016-04-28) - CreateForwardEntry
+- [Deprecated DescribeVRouters](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describevrouters.md): 替代接口：Vpc(2016-04-28) - DescribeVRouters
+- [Deprecated DeleteRouteEntry](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleterouteentry.md): 替代接口：Vpc(2016-04-28) - DeleteRouteEntry
+- [Deprecated DescribeResourceByTags](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeresourcebytags.md): 替代接口：Tag(2018-08-28) - ListResourcesByTag
+- [Deprecated RemoveTags](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-removetags.md): 替代接口：Ecs(2014-05-26) - UntagResources
+- [EnableNetworkInterfaceQoS 启用网卡 QoS 限速](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-enablenetworkinterfaceqos.md): 启用或修改弹性网卡的 QoS 限速，可设置内网出入带宽(BandwidthTx/Rx)、收发包能力(PpsTx/Rx)和最大会话数(ConcurrentConnections)
+- [DisableNetworkInterfaceQoS 禁用网卡 QoS 限速](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-disablenetworkinterfaceqos.md): 移除弹性网卡上已配置的 QoS 带宽和收发包限速，必填参数 NetworkInterfaceId
+- [DescribePlanMaintenanceWindows 查询运维窗口](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-describeplanmaintenancewindows.md): 查询已设定的计划运维窗口，返回维护时间段(TimePeriod)、运维动作(Reboot/Redeploy)和生效资源范围(Tag/ResourceGroup)
+- [CreatePlanMaintenanceWindow 创建运维窗口](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-createplanmaintenancewindow.md): 创建计划运维窗口，通过 TimePeriod 设置 Daily/Weekly 维护时段，SupportMaintenanceAction 指定 Reboot 或 Redeploy 动作，TargetResource 按标签或资源组关联实例
+- [ModifyPlanMaintenanceWindow 修改运维窗口](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-modifyplanmaintenancewindow.md): 修改已有运维窗口的名称、启用状态、维护时段(TimePeriod)、运维动作和生效资源范围，必填 PlanWindowId
+- [DeletePlanMaintenanceWindow 删除运维窗口](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-deleteplanmaintenancewindow.md): 按 PlanWindowId 删除指定的计划运维窗口，删除后关联实例的运维事件将不再按该窗口时段执行
+- [ECS API 公共错误码](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-errorcodes.md): ECS API 全局通用错误码列表，含 MissingParameter、InvalidInstanceId.NotFound、InsufficientBalance、Throttling 等 70+ 错误码的 HTTP 状态码和排查链接
+- [ECS API 版本变更记录](https://help.aliyun.com/zh/ecs/developer-reference/api-ecs-2014-05-26-changeset.md): ECS OpenAPI 按时间排列的变更记录，含新增 API、参数变更、错误码变更和返回结构变更的详情链接
+- [EBS 高阶 API 概览](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-overview.md): EBS(ebs/2021-07-30) RPC 风格 API 汇总，覆盖异步复制对、一致性复制组、专属块存储集群、企业级快照策略、数据洞察等功能模块
+- [EBS 高阶 API 服务接入点](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-endpoint.md): EBS(ebs/2021-07-30) 各地域公网和 VPC 接入地址列表，覆盖亚太、欧美、中东及金融云地域，接入格式 ebs.{regionId}.aliyuncs.com
+- [EBS 高阶 RAM 授权信息](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-ram.md): EBS(ebs/2021-07-30) RAM 权限策略的 Action、Resource 和 Condition 定义，含 DiskReplicaPair/DiskReplicaGroup 等资源 ARN 格式
+- [EBS 高阶 API 流控配额](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-quota.md): EBS(ebs/2021-07-30) 各 API 速率限制列表，限速维度为 regionId+API+ParentUid，典型配额 10-40 次/秒
+- [DescribeRegions 查询 EBS 地域信息](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describeregions.md): 查询异步复制(ear)、数据洞察(lens)、专属块存储集群(dbsc)支持的地域和可用区，通过 ResourceType 参数过滤
+- [ListReplicaEdgeSupported 查询异步复制目的地域](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-listreplicaedgesupported.md): 根据源可用区查询支持的异步复制目标地域和可用区列表，返回结果含 SupportRtc 标识是否支持复制时间控制
+- [CreateDiskReplicaPair 创建云盘异步复制关系](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-creatediskreplicapair.md): 在 ESSD 云盘间创建跨地域异步复制关系，关键参数 DiskId/DestinationDiskId/Bandwidth/RPO，支持包年包月和按量计费
+- [AddDiskReplicaPair 添加复制对到复制组](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-adddiskreplicapair.md): 将复制对加入一致性复制组实现批量管理，要求复制对与复制组方向一致且均处于 created/stopped 状态，单组上限 17 个复制对
+- [ModifyDiskReplicaPair 修改云盘异步复制关系](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-modifydiskreplicapair.md): 修改异步复制关系的名称、描述或 RPO，支持开关复制时间控制(EnableRtc)，仅 created/stopped 状态可修改
+- [StartDiskReplicaPair 开始云盘异步复制](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-startdiskreplicapair.md): 激活 created/stopped 状态的异步复制关系，首次启动执行全量同步，OneShot 参数可触发立即同步
+- [StopDiskReplicaPair 停止云盘异步复制](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-stopdiskreplicapair.md): 停止 initial_syncing/syncing/normal 状态的异步复制，停止后从盘数据回滚到最近一次完成的复制点，进行中的增量数据丢失
+- [ReprotectDiskReplicaPair 启用反向异步复制](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-reprotectdiskreplicapair.md): 故障切换(failovered)后启用反向复制，将原从盘数据复制回原主盘，ReverseReplicate=false 可取消故障切换恢复原方向
+- [FailoverDiskReplicaPair 启用复制对故障切换](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-failoverdiskreplicapair.md): 主盘故障时切换到从盘恢复读写，切换后复制对进入 failovered 状态，需在从盘所属地域调用，不支持 invalid/deleted 状态
+- [DescribeDiskReplicaPairProgress 查询复制同步进度](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describediskreplicapairprogress.md): 查询指定复制对当前的数据同步进度百分比，通过 ReplicaPairId 和 RegionId 定位
+- [DeleteDiskReplicaPair 删除云盘异步复制关系](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-deletediskreplicapair.md): 删除 stopped/invalid/failovered 状态的异步复制关系，仅删除关系不删除云盘，必须在主盘所在地域操作，删除后从盘恢复挂载和读写
+- [DescribeDiskReplicaPairs 查询异步复制关系列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describediskreplicapairs.md): 查询指定地域下异步复制关系信息，支持 MaxResults/NextToken 分页和多 ReplicaPairId 过滤，主盘或从盘在该地域均会返回
+- [RemoveDiskReplicaPair 从复制组移除复制对](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-removediskreplicapair.md): 将复制对从一致性复制组中解绑，仅解除绑定关系不删除复制对，复制组须处于 created/stopped/invalid 状态
+- [DescribePairDrills 查询复制对容灾演练](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describepairdrills.md): 查询复制对从端已启动的容灾演练列表，返回演练状态(executing/executed/clear_failed)、演练盘 ID 和恢复点时间戳
+- [StartPairDrill 启动复制对容灾演练](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-startpairdrill.md): 在从盘所在可用区克隆最近恢复点数据创建按量演练盘，用于验证容灾站点应用完整性，不影响正常复制流程
+- [ClearPairDrill 清理复制对容灾演练](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-clearpairdrill.md): 清理已完成的复制对容灾演练并删除自动创建的演练盘，需传入 PairId 和 DrillId
+- [CreateDiskReplicaGroup 创建异步复制组](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-creatediskreplicagroup.md): 创建一致性复制组，统一管理多块云盘的跨地域/跨可用区异步复制。必填参数 RegionId/SourceZoneId/DestinationRegionId/DestinationZoneId，RPO 仅支持 900 秒，可选 EnableRtc 开启复制时间控制
+- [DescribeDiskReplicaGroups 查询异步复制组](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describediskreplicagroups.md): 查询指定地域下一个或多个一致性复制组的信息，返回状态、RPO、复制对列表和最近恢复点时间。支持 NextToken 分页和 GroupIds 批量查询，可通过 Site 参数指定 production/backup 站点
+- [ModifyDiskReplicaGroup 修改异步复制组](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-modifydiskreplicagroup.md): 修改一致性复制组的名称、描述或 RPO 值。复制组须处于 created 或 stopped 状态，支持通过 EnableRtc 参数开启或关闭复制时间控制
+- [StartDiskReplicaGroup 启动异步复制组](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-startdiskreplicagroup.md): 启动一致性复制组的异步复制，首次全量同步后按 RPO 周期增量同步。OneShot=true 立即触发单次同步，false 则按 RPO 周期自动同步。复制组须处于 created/syncing/normal/stopped 状态
+- [StopDiskReplicaGroup 停止异步复制组](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-stopdiskreplicagroup.md): 停止一致性复制组的异步复制，停止后状态变为 stopped。复制组须处于 manual_syncing/syncing/normal/stopping/stop_failed/stopped 状态，停止失败可重试
+- [FailoverDiskReplicaGroup 复制组故障切换](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-failoverdiskreplicagroup.md): 主盘故障时启用故障切换，恢复从盘读写权限。切换后状态变为 failovered，需确保首次数据同步已完成。必填参数 RegionId 需指定灾备站点地域
+- [ReprotectDiskReplicaGroup 复制组反向复制](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-reprotectdiskreplicagroup.md): 故障切换后启用反向复制，将灾备站点数据复制回生产站点。复制组须处于 failovered 状态，主盘须先卸载。ReverseReplicate=false 可取消故障切换状态恢复原方向
+- [DeleteDiskReplicaGroup 删除异步复制组](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-deletediskreplicagroup.md): 删除一致性复制组，需先移除组内所有复制对。复制组须处于 created/create_failed/stopped/failovered/deleting/delete_failed/invalid 状态
+- [DescribeReplicaGroupDrills 查询复制组容灾演练](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describereplicagroupdrills.md): 查询复制组从端启动过的容灾演练记录，返回演练状态（executing/executed/clearing 等）、恢复点时间和演练盘信息。支持 DrillId 精确查询和分页
+- [StartReplicaGroupDrill 启动复制组容灾演练](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-startreplicagroupdrill.md): 在从端启动容灾演练，从恢复点数据克隆演练盘用于验证应用完整性。演练盘按量付费，与从盘类型和大小相同。必须在从端地域下调用
+- [ClearReplicaGroupDrill 清理复制组容灾演练](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-clearreplicagroupdrill.md): 清理复制组从盘的容灾演练并删除自动创建的演练盘。必填参数 GroupId 和 DrillId，DrillId 可通过 DescribeReplicaGroupDrills 获取
+- [CreateDedicatedBlockStorageCluster 创建专属块存储集群](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-creatededicatedblockstoragecluster.md): 创建物理隔离的专属块存储集群。必填 Azone/Capacity/Type，容量范围 61440-2334720 GiB，Type 分 Standard(可建 ESSD PL0)和 Premium(可建 ESSD PL1)，包年包月计费
+- [DescribeDedicatedBlockStorageClusters 查询专属块存储集群](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describededicatedblockstorageclusters.md): 查询专属块存储集群列表，返回集群状态(Preparing/Running/Expired/Offline)、容量信息和性能类型。支持按可用区、状态、标签过滤，支持 NextToken 分页
+- [ModifyDedicatedBlockStorageClusterAttribute 修改专属块存储集群属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-modifydedicatedblockstorageclusterattribute.md): 修改专属块存储集群的名称和描述信息。必填参数 RegionId 和 DbscId
+- [DescribeDedicatedBlockStorageClusterDisks 查询专属集群云盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describededicatedblockstorageclusterdisks.md): 查询专属块存储集群中的云盘列表，返回云盘状态、性能等级和挂载信息。支持 NextToken 分页，多重挂载云盘可通过 Attachment 列表查看全部挂载信息
+- [QueryDedicatedBlockStorageClusterInventoryData 查询集群容量趋势](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-querydedicatedblockstorageclusterinventorydata.md): 查询专属块存储集群的可用容量和总容量趋势数据。Period 支持 60(分钟)/3600(小时)/86400(天)三种间隔，需指定 StartTime/EndTime 时间范围
+- [ApplyLensService 开通数据洞察服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-applylensservice.md): 开通块存储数据洞察(CloudLens for EBS)服务，无需请求参数，调用即开通
+- [DescribeLensServiceStatus 查询数据洞察服务状态](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describelensservicestatus.md): 查询当前账号的 EBS 数据洞察(CloudLens for EBS)服务开通状态，无需请求参数
+- [CancelLensService 取消数据洞察服务](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-cancellensservice.md): 取消块存储数据洞察(CloudLens for EBS)服务，无需请求参数，调用即取消
+- [DescribeLensMonitorDisks 查询数据洞察监控云盘](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describelensmonitordisks.md): 查询数据洞察服务监控的云盘列表，支持按 DiskCategory/LensTags 筛选。LensTags 可过滤 24 小时内的事件类型：IOHang、IOPS到达上限、BPS到达上限、无快照保护、非4K对齐读写
+- [DescribeEvents 查询云盘风险事件](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describeevents.md): 查询云盘风险事件，支持按 EventName 过滤 IOHang、IOPS/BPS 到达上限、成本优化等 12 种事件类型，返回推荐操作（变配/打快照/扩容）
+- [DescribeMetricData 查询云盘监控指标](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describemetricdata.md): 查询云盘监控指标数据，支持 disk_bps_percent/disk_iops_percent/read_bps/write_iops 等 8 种指标，Period 最小 5 秒精度，可按 DiskId、DeviceType、DeviceCategory 维度筛选
+- [DescribeDiskMonitorDataList 批量查询云盘监控（下线中）](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describediskmonitordatalist.md): 批量查询多个 AutoPL 云盘的 Burst IO 监控数据，按小时聚合。API 正在下线中，建议迁移至 DescribeMetricData
+- [DescribeDiskMonitorData 单盘秒级监控（下线中）](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describediskmonitordata.md): 查询单个云盘的秒级监控数据，返回 ReadBPS/WriteBPS/ReadIOPS/WriteIOPS/BurstIOCount 等指标，Period 支持 5s 和 60s，最多查近 3 天
+- [DescribeDiskEvents 查询云盘事件（下线中）](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describediskevents.md): 正在下线，替代接口：DescribeEvents。按 DiskCategory 和 Type(DataNeedProtect) 查询云盘风险事件
+- [UpdateSolutionInstanceAttribute 更新解决方案实例属性](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-updatesolutioninstanceattribute.md): 修改 EBS 解决方案实例的 Name 和 Description 属性，必填参数 SolutionInstanceId
+- [TagResources 绑定 EBS 资源标签](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-tagresources.md): 批量为 EBS 资源（专属块存储集群/异步复制关系/一致性复制组）绑定标签，单次最多 50 个资源、20 个标签
+- [ListTagResources 查询 EBS 资源标签](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-listtagresources.md): 按 ResourceId 或 Tag 键值对查询 EBS 资源（专属块存储集群/复制关系/复制组）已绑定的标签信息，两个条件同时传入时取交集
+- [UntagResources 解绑 EBS 资源标签](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-untagresources.md): 批量解绑 EBS 资源标签，支持按 TagKey 指定解绑或 All=true 全部解绑，标签解绑后若无其他资源关联则自动删除
+- [ChangeResourceGroup 修改 EBS 资源组](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-changeresourcegroup.md): 将 EBS 资源（专属块存储集群/异步复制关系/一致性复制组）迁移到指定的企业资源组，必填 NewResourceGroupId
+- [DescribeSolutionInstanceConfiguration 查询解决方案默认配置](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describesolutioninstanceconfiguration.md): 查询 EBS 解决方案实例的默认配置，通过 SolutionId 和可选 Parameters 键值对获取配置详情
+- [QueryDedicatedBlockStorageClusterDiskThroughputStatus 查询云盘吞吐状态](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-querydedicatedblockstorageclusterdiskthroughputstatus.md): 查询通过 SetDedicatedBlockStorageClusterDiskThroughput 设置的吞吐操作状态，返回 WAIT/RUNNING/SUCCESS/FAIL 四种状态
+- [SetDedicatedBlockStorageClusterDiskThroughput 设置云盘吞吐上限](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-setdedicatedblockstorageclusterdiskthroughput.md): 为专属块存储集群中的 AutoPL 云盘设置吞吐上限（Bps 参数，单位 MB/s），下限 60 MB/s，上限受 AutoPL 规格限制
+- [ListReports 查询使用报告列表](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-listreports.md): 查询指定应用的历史使用报告列表，返回 ReportId、ReportName、ReportTime 和订阅周期（Weekly/Biweekly/Monthly），支持分页
+- [GetReport 获取云盘使用报告](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-getreport.md): 按 ReportId 获取历史报告或按 AppName 获取当前报告，ReportType 区分 history/present 两种模式，返回云盘分类占比等使用数据
+- [DescribeUserTagKeys 查询用户标签键](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describeusertagkeys.md): 查询用户云盘和快照的标签键列表，可通过 TagFilterKey 参数过滤结果，支持分页查询
+- [DescribeUserTagValues 查询用户标签值](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describeusertagvalues.md): 查询用户云盘和快照指定 TagKey 对应的标签值列表，支持 TagFilterValue 过滤和 NextToken 分页
+- [CreateApp 创建 EBS 应用](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-createapp.md): 创建 EBS 数据洞察应用，通过 AppTags 关联资源标签，支持配置使用报告订阅周期（Weekly/Biweekly/Monthly）和邮箱发送
+- [CreateDiagnoseReport 创建资源诊断报告](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-creatediagnosereport.md): 触发 EBS 资源性能诊断，当前 DiagnoseType 仅支持 Performance，ResourceType 仅支持 Disk，返回 ReportId 用于后续查询
+- [DeleteApp 删除 EBS 应用](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-deleteapp.md): 删除指定 AppId 的 EBS 数据洞察应用，可选指定 Owner 限定责任人
+- [DescribeApps 查询应用详情](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describeapps.md): 查询 EBS 数据洞察 App 信息，包括标签键值、订阅状态、报告发送周期，支持按 AppNames 或 AppIds 过滤
+- [DescribeDiagnoseReport 查询资源诊断报告](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-describediagnosereport.md): 查询云盘性能诊断报告，返回严重等级(Info/Warn/Critical)和问题事件(IOPS/BPS 超限、IOHang、非 4K 对齐等)，支持按 ResourceIds、时间范围和状态过滤
+- [ModifyApp 修改应用](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-modifyapp.md): 修改 EBS 数据洞察 App 的名称、标签、订阅状态(Subscribe/UnSubscribe)和报告发送周期(Weekly/Biweekly/Monthly)，AppTags 和 SubscribeStatus 为必填参数
+- [EBS 公共错误码](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-errorcodes.md): EBS API (ebs/2021-07-30) 全量错误码表，涵盖参数校验(InvalidParameter)、权限(Forbidden)、资源不存在(NoSuchResource)、异步复制对/一致性组操作限制、配额超限等约 70 个错误码
+- [EBS API 版本说明](https://help.aliyun.com/zh/ecs/developer-reference/api-ebs-2021-07-30-changeset.md): EBS API (ebs/2021-07-30) 变更历史，按日期记录各 API 的入参变更、错误码变更等，涉及 DescribeMetricData、企业级快照策略等接口
+- [ECS V2.0 SDK 概览](https://help.aliyun.com/zh/ecs/developer-reference/ecs-v2-0-sdk-overview.md): V2.0 SDK 支持 Java/Go/Python/Node.js/C#/PHP/C++/Swift 八种语言，含各语言安装方式、GitHub 地址和 DescribeInstances 调用示例入口
+- [SDK 创建 ECS 实例（Java）](https://help.aliyun.com/zh/ecs/developer-reference/use-an-sdk-to-create-ecs-instances.md): V2.0 Java SDK 端到端示例：创建 VPC/交换机/安全组，调用 RunInstances 创建实例，通过云助手执行脚本，最后释放资源
+- [ECS Java V2.0 SDK 调用示例](https://help.aliyun.com/zh/ecs/developer-reference/use-sdk-for-java.md): Maven 依赖 alibabacloud-ecs20140526 安装，Java 代码演示 AccessKey 初始化、DescribeInstances 请求构建和运行时参数配置
+- [ECS Go V2.0 SDK 调用示例](https://help.aliyun.com/zh/ecs/developer-reference/example-on-how-to-use-ecs-sdk-for-go.md): Go SDK 安装（go get github.com/alibabacloud-go/ecs-20140526）、AccessKey 初始化客户端和 DescribeInstances 调用的完整代码示例
+- [ECS Python V2.0 SDK 调用示例](https://help.aliyun.com/zh/ecs/developer-reference/example-on-how-to-use-ecs-sdk-for-python.md): pip install alibabacloud_ecs20140526 安装，AccessKey 客户端初始化和 DescribeInstances 请求构建的完整 Python 代码示例
+- [ECS Node.js V2.0 SDK 调用示例](https://help.aliyun.com/zh/ecs/developer-reference/example-on-how-to-use-ecs-sdk-for-node-js.md): npm install @alicloud/ecs20140526 安装，含 TypeScript 和 JavaScript 两套示例代码，以 DescribeInstances 为例演示客户端初始化和请求构建
+- [ECS .NET V2.0 SDK 调用示例](https://help.aliyun.com/zh/ecs/developer-reference/example-on-how-to-use-ecs-sdk-for-net.md): dotnet add package AlibabaCloud.SDK.Ecs20140526 安装，C# 代码演示 AccessKey 初始化和 DescribeInstances 调用，含异常处理
+- [ECS PHP V2.0 SDK 调用示例](https://help.aliyun.com/zh/ecs/developer-reference/example-on-how-to-use-ecs-sdk-for-php.md): composer require alibabacloud/ecs-20140526 安装，PHP 代码演示 AccessKey 初始化和 DescribeInstances 调用，含运行时配置和异常处理
+- [CLI 创建 ECS 实例](https://help.aliyun.com/zh/ecs/developer-reference/cli-reference.md): 用阿里云 CLI 端到端创建 ECS 实例：CreateVpc/CreateVSwitch/CreateSecurityGroup/RunInstances 命令链，含完整 bash 脚本示例
+- [Terraform 创建 ECS 实例](https://help.aliyun.com/zh/ecs/developer-reference/create-and-use-an-ecs-instance-by-using-terraform.md): Terraform .tf 配置创建 VPC/交换机/安全组/ECS 实例，含 alicloud provider 配置、AccessKey 认证和完整 HCL 代码示例
+- [Terraform 弹性网卡绑定 EIP](https://help.aliyun.com/zh/ecs/developer-reference/bind-an-eip-to-an-eni-using-terraform.md): Terraform 配置 alicloud_eip_address + alicloud_eip_association 为辅助弹性网卡绑定 EIP，含 VPC/交换机/安全组资源依赖的完整 .tf 代码
+- [ROS 创建 ECS 实例](https://help.aliyun.com/zh/ecs/developer-reference/ros.md): ROS 模板自动化创建 ECS 实例，支持的 ECS 资源类型清单（ALIYUN::ECS::Instance 等），含 YAML/JSON 模板示例和资源栈管理
+- [ECS API FAQ](https://help.aliyun.com/zh/ecs/developer-reference/api-faq.md): API 开发常见问题：批量实例命名规则、通过 API 分配公网 IP 的三种方式、安全组规则 NicType 参数导致查询不全、分页 PageSize 默认仅返回 10 条
+- [ECS OpenAPI 最终一致性](https://help.aliyun.com/zh/ecs/developer-reference/final-consistency-of-alibaba-cloud-ecs-openapi-resources.md): ECS OpenAPI 的最终一致性模型：创建后立即查询可能返回 NotFound，释放后仍可能查到资源。推荐事件驱动或指数退避轮询策略处理
+- [API 错误码排查思路](https://help.aliyun.com/zh/ecs/developer-reference/error-code-error-code-troubleshooting-ideas.md): ECS API 错误码排查：错误响应含 Code/Message/Recommend 字段，常见错误包括 InvalidRegionId、NoPermission、Throttling、QuotaExceed
+- [Linux 安装 Python SDK 常见问题](https://help.aliyun.com/zh/ecs/developer-reference/faq-about-installing-alibaba-cloud-sdk-for-python-on-a-linux-ecs-instance.md): Linux ECS 上安装 Python SDK 的常见报错：egg_info 失败、ModuleNotFoundError 模块缺失、Python 版本不满足要求的排查方法和 Python3 安装步骤
+- [ECS API 流量控制](https://help.aliyun.com/zh/ecs/developer-reference/api-throttling.md): API 流控按地域和接口独立计算，超限返回 Throttling 错误码。RunInstances 每分钟创建上限 5000 台，建议请求聚合和指数退避重试
+- [ECS API 时间格式](https://help.aliyun.com/zh/ecs/developer-reference/iso-8601-time-format.md): ECS API 时间参数采用 ISO 8601 格式，对应国标 GB/T 7408-2005
+- [欠费 API 行为说明](https://help.aliyun.com/zh/ecs/developer-reference/api-behavior-for-accounts-that-have-overdue-payments.md): 账号欠费或包年包月资源过期时各 API 的可用性表，CreateInstance/AttachDisk 等写操作报错，Describe 类查询正常执行
+- [安全锁定对 API 调用的影响](https://help.aliyun.com/zh/ecs/developer-reference/api-behavior-when-an-instance-is-locked-for-security-reasons.md): 实例因安全违规被锁定（LockReason: security）后各 API 的可用性表，StopInstance/DeleteInstance 等操作受限，Describe 类查询正常
+- [API 幂等性保证](https://help.aliyun.com/zh/ecs/developer-reference/how-to-ensure-idempotence.md): 通过 ClientToken 参数（不超过 64 个 ASCII 字符）保证 API 重试幂等性，适用于 500/503 错误重试场景，参数不一致返回 IdempotentParameterMismatch 错误，RunInstances/CreateInstance/CreateDisk 等 API 均支持
+- [VPC 内网调用 API](https://help.aliyun.com/zh/ecs/developer-reference/call-api-operations-over-the-internal-network.md): 无公网 IP 的 VPC 实例通过 SDK（Java 核心库 4.5.3+）或 CLI 两种方式内网调用 ECS API，Endpoint 格式为 ecs-vpc.{regionId}.aliyuncs.com，仅支持操作同地域资源
+- [ECS API 使用规范](https://help.aliyun.com/zh/ecs/developer-reference/api-usage-specification.md): API 使用许可、访问频次限制、禁止行为（逆向工程/网络攻击/破坏系统配置）、免费期无担保声明和服务终止条款等合规要求
+
+## 产品计费
+- [ECS 计费概述](https://help.aliyun.com/zh/ecs/billing-overview.md): 计费项（实例规格/云盘/公网带宽/快照/镜像）、三种付费模式（按量/包年包月/抢占式）、欠费停机规则和成本优化方法
+- [实例规格计费](https://help.aliyun.com/zh/ecs/instance-types.md): 实例规格在包年包月、按量付费、抢占式三种模式下的计费公式，含节省停机模式停止计费和降配优化成本
+- [镜像计费](https://help.aliyun.com/zh/ecs/images.md): 公共镜像中 Red Hat/SUSE/Windows 需付许可证费用，自定义镜像按快照存储收费，云市场镜像按发布者定价
+- [块存储计费](https://help.aliyun.com/zh/ecs/block-storage-devices.md): 云盘按容量和类型计费，ESSD AutoPL 有预配置性能和性能突发额外费用，本地盘随实例免费，弹性临时盘按容量计费
+- [公网带宽计费](https://help.aliyun.com/zh/ecs/public-bandwidth.md): 按固定带宽（保障带宽）或按使用流量（仅出方向计费）两种模式，入方向流量免费
+- [快照计费](https://help.aliyun.com/zh/ecs/snapshots-1.md): 按快照类型和容量分地域计费，普通快照按小时出账，极速可用快照有额外费用，删除快照或关闭服务停止计费
+- [ECS 计费方式概述](https://help.aliyun.com/zh/ecs/overview-of-billing-methods.md): 包年包月与按量付费的对比选择，以及抢占式实例、节省计划、预留实例券等优惠计费方式说明
+- [包年包月](https://help.aliyun.com/zh/ecs/subscription.md): 预付费模式，购买 1 周至 5 年，含实例/云盘/带宽/镜像费用，到期自动停机，支持升降配和转按量付费
+- [按量付费](https://help.aliyun.com/zh/ecs/pay-as-you-go-1.md): 后付费模式，按秒计费按小时出账，实例规格有最短计费时长（1-4 vCPU 对应 10/5/2 分钟），欠费停机后释放
+- [抢占式实例计费](https://help.aliyun.com/zh/ecs/spot-instance.md): 市场价格实时浮动最高省 90%，仅实例规格计费，支持设定 1 小时保护期或无保护期，按秒计费
+- [节省计划概述](https://help.aliyun.com/zh/ecs/savings-plans.md): 承诺 1/3/5 年每小时消费金额抵扣按量付费 ECS/ECI 实例账单，分 ECS 计算型和通用型两种，最多省 83%
+- [节省计划抵扣规则](https://help.aliyun.com/zh/ecs/savings-plan-credit-rules.md): 抵扣项含实例规格、系统盘、操作系统、公网带宽和 ECI，先到期先抵扣，超出承诺消费按原价计费
+- [购买节省计划](https://help.aliyun.com/zh/ecs/purchase-savings-plan.md): 通过推荐方案或手动测算确定类型、承诺消费金额和时长后购买，支持价格计算器和历史消费推荐
+- [查询与优化节省计划](https://help.aliyun.com/zh/ecs/analysis-and-optimization-of-saving-plan-effect.md): 通过使用率报告和覆盖率报告评估节省计划效果，支持升级承诺消费金额优化成本
+- [预留实例券概述](https://help.aliyun.com/zh/ecs/reserved-instances.md): 按规格族抵扣按量付费实例计算资源费用，支持全预付/部分预付/0预付，可拆分合并和跨可用区匹配
+- [预留实例券抵扣规则](https://help.aliyun.com/zh/ecs/match-between-reserved-instances-and-pay-as-you-go-instances.md): 地域级可跨可用区跨规格大小匹配，可用区级仅同规格同可用区匹配但支持资源预留，仅抵扣计算资源费用
+- [购买预留实例券](https://help.aliyun.com/zh/ecs/purchase-reserved-instances.md): 在控制台选择资源预留类型、实例规格、操作系统平台和付费类型购买，也可通过 PurchaseReservedInstancesOffering API 购买
+- [拆分合并修改预留实例券](https://help.aliyun.com/zh/ecs/split-merge-or-modify-reserved-instances.md): 将预留实例券拆分为多张小计算力券、合并为大计算力券或修改可用区，需保证操作前后计算力总和相等，gn6i/t5 规格族不支持拆分合并
+- [查看预留实例券](https://help.aliyun.com/zh/ecs/view-reserved-instances.md): 查看预留实例券可抵扣实例、计算力因子表、使用率和覆盖率，通过 DescribeReservedInstances API 查询详情
+- [资源保障计费](https://help.aliyun.com/zh/ecs/resource-assurance-1.md): 弹性保障(一次性保障费+按量实例费)、立即生效容量预定(不论是否创建实例均按量计费)、指定时间生效容量预定(0 预付节省计划)三种模式的计费规则和示例
+- [存储容量单位包 SCU 计费](https://help.aliyun.com/zh/ecs/storage-capacity-units-1.md): 预付费存储资源包，按抵扣系数抵扣云盘和快照按量费用：高效云盘 0.35、ESSD PL1 为 1、标准快照 0.12，不支持续费或升级
+- [OSS 资源包抵扣快照费用](https://help.aliyun.com/zh/ecs/oss-storage-bag.md): 用标准-本地冗余存储包抵扣标准快照存储费用，仅支持同地域抵扣，抵扣顺序为 OSS 资源包 > SCU > 按量付费，不支持抵扣归档快照
+- [包年包月转按量付费](https://help.aliyun.com/zh/ecs/change-the-billing-method-of-an-instance-from-subscription-to-pay-as-you-go-1.md): 通过控制台或 ModifyInstanceChargeType API 将包年包月实例转为按量付费，转换后退还剩余费用，单次最多转换 20 台
+- [按量付费转包年包月](https://help.aliyun.com/zh/ecs/change-the-billing-method-of-an-ecs-instance-from-pay-as-you-go-to-subscription-1.md): 通过控制台或 ModifyInstanceChargeType API 将按量付费实例转为包年包月，预留资源并享受长期折扣
+- [转换云盘计费方式](https://help.aliyun.com/zh/ecs/switch-the-billing-method-of-a-disk.md): 数据盘在按量付费和包年包月间转换，系统盘只能随实例转换，可通过 ModifyDiskChargeType API 操作，多重挂载云盘不支持转换
+- [转换公网带宽计费方式](https://help.aliyun.com/zh/ecs/change-the-billing-method-for-network-usage-1.md): 固定公网 IP 的带宽计费在按固定带宽和按使用流量间互转，通过控制台或 ModifyInstanceNetworkSpec API 操作
+- [手动续费包年包月实例](https://help.aliyun.com/zh/ecs/manually-renew-an-instance-1.md): 通过控制台、阿里云 App 或 RenewInstance API 续费，支持批量续费，到期后 15 天内未续费实例将被释放
+- [自动续费包年包月实例](https://help.aliyun.com/zh/ecs/enable-auto-renewal-for-an-instance-1.md): 到期前 9 天起每日自动扣款，创建时设置 AutoRenew=true 或通过 ModifyInstanceAutoRenewAttribute API 批量开启/关闭
+- [续费降配包年包月实例（计费说明）](https://help.aliyun.com/zh/ecs/downgrade-instance-configurations-during-renewal.md): 到期前 15 日内续费同时降低同规格族内实例规格、变更带宽或转换数据盘为按量付费，降配后新周期重启生效
+- [续费变配到期实例（计费说明）](https://help.aliyun.com/zh/ecs/a-renewal-variable-2.md): 实例到期后释放前使用续费变配功能，续费同时升级或降低实例规格，续费完成后自动重启，新规格立即生效
+- [设置续费提醒](https://help.aliyun.com/zh/ecs/set-renewal-reminder.md): 在消息中心设置到期前 15/30 天续费提醒，默认已有 7/3/1 天提醒，支持站内信、邮箱和短信通知
+- [统一包年包月实例到期日](https://help.aliyun.com/zh/ecs/synchronize-the-expiration-dates-of-subscription-instances.md): 将多台实例通过续费统一到每月指定日期(1-28 日)，通过 RenewInstance API 设置 ExpectedRenewDay 参数实现，最短续费 1 个月
+- [企业续费场景攻略](https://help.aliyun.com/zh/ecs/enterprise-renewal-scenario-strategy.md): 企业对公汇款充值(1-5 个工作日到账)、续费订单合同申请、发票开具、汇款未到账时的紧急处理方式
+- [ECS 账单查询](https://help.aliyun.com/zh/ecs/view-billing-details.md): 在费用与成本控制台查询包年包月、按量付费和抢占式实例账单，支持按实例 ID 筛选和 CSV 导出，抢占式实例通过 acs:ecs:payType 标签过滤
+- [ECS 欠费 API 行为说明](https://help.aliyun.com/zh/ecs/overdue-payments.md): 实例或云盘欠费时各 API 的调用行为：查询类(Describe*)正常执行，创建/启停/挂盘等写操作报错，通过 OperationLocks 的 LockReason:financial 判断欠费状态
+- [ECS 退订说明](https://help.aliyun.com/zh/ecs/refund-instructions.md): 包年包月实例支持 5 天无理由全额退订和非全额退订，退订后 vCPU/内存/公网 IP 24 小时内释放、云盘 15 天内释放，按量付费资源直接释放停止计费
+
+## 常见问题
+- [ECS 购买与入门 FAQ](https://help.aliyun.com/zh/ecs/purchase-and-getting-started-faqs.md): 实例选型、地域可用区查询、资源售罄处理、付款方式、抢占式实例出价等购买阶段常见问题
+- [实例类型与规格 FAQ](https://help.aliyun.com/zh/ecs/instance-types-and-specifications-faqs.md): 企业级与入门级实例区别、规格变配限制、持久内存型实例部署、通用算力型 U1 适用场景等规格相关问题
+- [ECS 实例连接 FAQ](https://help.aliyun.com/zh/ecs/instance-connection-faq.md): SSH 连接超时、Access denied、Host key verification failed、Workbench 登录失败、VNC 连接异常等远程连接问题排查
+- [实例管理与运维 FAQ](https://help.aliyun.com/zh/ecs/instance-management-and-operations-faqs.md): 升降配费用与时长、实例信息查询、强制停止后果、释放保护、备案合规等实例运维常见问题
+- [跨地域使用 FAQ](https://help.aliyun.com/zh/ecs/cross-region-usage-faqs.md): 跨地域实例迁移、海外地域购买限制、ICP 备案要求、不同地域价格差异、网络覆盖范围等跨地域问题
+- [性能监控与排查 FAQ](https://help.aliyun.com/zh/ecs/monitoring-and-troubleshooting-for-performance-issues.md): CPU/内存/磁盘 IO 高负载排查、实例健康状态查看、云监控告警设置、Linux 启动慢排查等性能问题汇总
+- [云盘选型与购买 FAQ](https://help.aliyun.com/zh/ecs/cloud-disk-selection-and-purchase-faqs.md): ESSD/SSD/高效云盘规格对比、云盘升级路径、ESSD 计费方式、I/O 优化实例限制、块存储性能测试等选型问题
+- [云盘挂载初始化与释放 FAQ](https://help.aliyun.com/zh/ecs/disk-attachment-initialization-and-release-faqs.md): 云盘挂载数量限制、跨可用区挂载、独立云盘概念、分区格式化、云盘释放与数据保留等操作问题
+- [云盘扩容与缩容 FAQ](https://help.aliyun.com/zh/ecs/disk-resizing-and-shrinking-faqs.md): 磁盘空间不足排查、系统盘/数据盘扩容方法、growpart 分区失败处理、云盘是否支持缩容等容量问题
+- [数据保护与恢复 FAQ](https://help.aliyun.com/zh/ecs/data-protection-and-recovery-faqs.md): 更换系统盘注意事项、快照容量与计费、快照保留策略、OSS 资源包抵扣快照费用、数据丢失预防等问题
+- [数据迁移 FAQ](https://help.aliyun.com/zh/ecs/data-migration-faqs.md): 跨账号快照共享迁移、系统盘数据转移到数据盘、跨实例拷贝数据（SCP/FTP/wget）等迁移方法
+- [镜像类型与选择 FAQ](https://help.aliyun.com/zh/ecs/image-type-and-selection-faqs.md): AMD/Intel 实例与操作系统兼容性、Windows 内存限制、Docker 私有镜像库配置、图形化桌面支持等镜像选择问题
+- [公共镜像已知问题](https://help.aliyun.com/zh/ecs/known-issues-of-public-images.md): Windows/CentOS/Debian/Ubuntu/Fedora CoreOS 等公共镜像的安全漏洞和配置异常清单，含内核 Bug 和蓝屏修复方案
+- [镜像管理 FAQ](https://help.aliyun.com/zh/ecs/image-management-faqs.md): 自定义镜像创建进度与时长、跨地域复制限制、KMS 加密镜像、共享镜像权限、镜像导入格式转换等管理问题
+- [操作系统运维 FAQ](https://help.aliyun.com/zh/ecs/operating-system-operation-and-maintenance-faqs.md): 更换操作系统与初始化差异、yum 命令报错处理、systemctl 异常排查、Linux su 权限问题等 OS 运维问题
+- [云市场镜像 FAQ](https://help.aliyun.com/zh/ecs/marketplace-image-faqs.md): 云市场镜像购买方式、计费规则（随实例生命周期）、安全审核机制、退款与更换镜像流程等使用问题
+- [IP 地址管理 FAQ](https://help.aliyun.com/zh/ecs/ip-address-management-faqs.md): 公网/私网 IP 查询、公网 IP 更换与转 EIP、辅助私网 IP 指定、IPv6 配置、公网网卡禁用等 IP 管理问题
+- [网络连通性 FAQ](https://help.aliyun.com/zh/ecs/network-connectivity-faqs.md): 网站无法访问排查、ping 不通公网 IP、端口不通、TCP backlog 溢出、远程桌面端口冲突等网络连接问题
+- [网络性能 FAQ](https://help.aliyun.com/zh/ecs/network-performance-faqs.md): 收发包性能测试方法、跨地域通信丢包率、最大带宽上限、高带宽占用排查、流量计费带宽升级等性能问题
+- [计费方式 FAQ](https://help.aliyun.com/zh/ecs/billing-method-faqs.md): 包年包月产生额外费用原因、按量付费结算周期、包年包月与按量互转限制、节省停机模式触发条件等计费问题
+- [ECS 计费项 FAQ](https://help.aliyun.com/zh/ecs/billing-item-faqs.md): 实例规格、镜像许可证、ESSD 云盘、公网流量/带宽、快照存储等各计费项的收费规则和常见疑问解答
+- [ECS 成本优化 FAQ](https://help.aliyun.com/zh/ecs/cost-optimization-faqs.md): 节省计划（通用型/ECS 计算型）、预留实例券（可用区级/地域级）的购买选择、抵扣规则和折扣对比
+- [ECS 欠费释放与续费 FAQ](https://help.aliyun.com/zh/ecs/billing-and-subscription-management-faqs.md): 实例到期释放时间线（15 天保留期）、欠费数据备份、续费支付异常、5 天无理由退款等问题解答
+- [ECS 财务管理 FAQ](https://help.aliyun.com/zh/ecs/financial-management-faqs.md): 对公汇款到账时效、续费合同申请、发票开具、余额不足提醒规则、按量实例欠费数据保留策略
+
+## 动态与公告
+- [ECS 新功能发布记录](https://help.aliyun.com/zh/ecs/release-notes.md): 按年月列出 ECS 新功能和变更，含实例规格族发布、云盘/快照能力升级、镜像更新等，每条记录包含功能名称、发布地域和文档链接
+- [Anolis OS 镜像发布记录](https://help.aliyun.com/zh/ecs/anolis-os.md): Anolis OS 各版本公共镜像更新历史，含镜像 ID、内核版本和安全补丁信息，兼容 CentOS 8 软件生态
+- [CentOS 镜像发布记录](https://help.aliyun.com/zh/ecs/centos.md): CentOS 7/8 各版本公共镜像更新历史，含镜像 ID 和内核版本，CentOS 已全部 EOL 停服，建议迁移
+- [Windows Server 镜像发布记录](https://help.aliyun.com/zh/ecs/windows-server.md): Windows Server 各版本公共镜像更新历史，含镜像 ID、安全补丁和功能更新记录
+- [SUSE Linux Enterprise Server 镜像发布记录](https://help.aliyun.com/zh/ecs/suse-linux-enterprise-server.md): SLES 12/15 各版本镜像来自云市场，按实例规格差异定价，含 SAP Applications 专用版本链接
+- [Ubuntu 镜像发布记录](https://help.aliyun.com/zh/ecs/ubuntu-image.md): Ubuntu 各 LTS 和非 LTS 版本公共镜像更新历史，含镜像 ID、内核版本和安全补丁记录
+- [Debian 镜像发布记录](https://help.aliyun.com/zh/ecs/debian.md): Debian 各版本公共镜像更新历史，含镜像 ID、内核版本和安全补丁记录
+- [Fedora 镜像发布记录](https://help.aliyun.com/zh/ecs/fedora.md): Fedora 各版本公共镜像更新历史，含 x86 和 ARM 版镜像 ID、内核版本和安全补丁记录
+- [OpenSUSE 镜像发布记录](https://help.aliyun.com/zh/ecs/opensuse.md): OpenSUSE 15/16 各版本公共镜像更新历史，含镜像 ID、内核版本和安全补丁记录
+- [Rocky Linux 镜像发布记录](https://help.aliyun.com/zh/ecs/rocky-linux.md): Rocky Linux 各版本公共镜像更新历史，兼容 RHEL，含镜像 ID、内核版本和安全补丁记录
+- [CentOS Stream 镜像发布记录](https://help.aliyun.com/zh/ecs/centos-stream.md): CentOS Stream 8/9/10 公共镜像更新历史，RHEL 上游滚动更新版本，含 x86 和 ARM 镜像 ID 及内核版本
+- [AlmaLinux 镜像发布记录](https://help.aliyun.com/zh/ecs/almalinux.md): AlmaLinux 8/9/10 公共镜像更新历史，RHEL 兼容替代发行版，含 x86 和 ARM 镜像 ID 及内核版本
+- [Fedora CoreOS 镜像发布记录](https://help.aliyun.com/zh/ecs/fedora-coreos.md): Fedora CoreOS 和旧版 CoreOS 镜像更新历史，专为容器化工作负载设计，仅支持密钥对登录
+- [FreeBSD 镜像发布记录](https://help.aliyun.com/zh/ecs/freebsd.md): FreeBSD 13/14/15 公共镜像更新历史，含镜像 ID 和内核版本，支持 UEFI-Preferred 启动模式
+- [Red Hat Enterprise Linux 镜像发布记录](https://help.aliyun.com/zh/ecs/red-hat-enterprise-linux.md): RHEL 9/10 各版本镜像来自云市场，需认证实例规格才可选用，按规格差异定价，RHEL 7 已进入延长生命周期阶段
+- [ECS 产品公告](https://help.aliyun.com/zh/ecs/service-notices.md): ECS 产品变更和服务调整通知，含快照上限提升、经典网络停服、API 鉴权变更、53 端口关闭等重要公告
+- [ECS 安全公告](https://help.aliyun.com/zh/ecs/security-announcement.md): ECS 相关安全漏洞公告汇总，含 CVE-2025-32463 sudo 提权、CVE-2022-0847 DirtyPipe、CVE-2021-4034 Polkit 等 Linux/Windows 漏洞
+

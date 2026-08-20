@@ -1,0 +1,78 @@
+# Process Log — Eval 1: ECS 实例规格族整理
+
+## 任务
+用户（售前）问：阿里云云主机都有哪些实例规格族，要能跟客户讲清楚不同规格族的区别和适用场景。
+
+## 执行步骤
+
+### 1. 读取 SKILL.md 理解工作流
+- 文件：`/Users/user/Documents/github/skills/aliyun-product-query/SKILL.md`
+- 确认工作流 2（回答用户问题）：识别产品 → 检查缓存 → 检索缓存内容 → 组织回答
+- 确认回答模板：中文、先结论、再表格、附原文出处链接
+
+### 2. 识别产品
+- 用户说"云主机" → 查 `references/products.md` 别名映射 → product key = `ecs`（云服务器 ECS）
+
+### 3. 检查缓存
+- 读 `cache/_registry.json`：确认 `ecs` 已缓存，`updated_at: 2026-07-16T10:00:06Z`（当日，未过期）
+- 读 `cache/ecs/meta.json`：确认 `cached_pages_count: 721`，有大量高价值子页
+
+### 4. 检索缓存内容
+- 在 `cache/ecs/llms.md` 中 grep `规格族|实例规格|instance famil`，找到 91 处匹配
+- 识别出关键条目：
+  - line 26: 在售实例规格族汇总 → `overview-of-instance-families.md`
+  - line 27: 实例规格分类与命名 → `instance-specification-naming-and-classification.md`
+  - line 28: ECS 实例规格选型指导 → `best-practices-for-instance-type-selection.md`
+  - line 29-35: g/c/r/U/d/i/hf 各系列说明
+  - line 42-44: HPC、SCC 系列
+- 列出 `cache/ecs/pages/` 目录，确认上述高价值子页均已缓存
+
+### 5. 读取关键缓存子页
+- `cache/ecs/pages/overview-of-instance-families.md`（1-200 行）
+  - 获取 6 大规格族群分类、各系列在售规格族列表（按 Intel/AMD/海光/ARM 分组）、增强型变体、异构计算、HPC/SCC
+- `cache/ecs/pages/instance-specification-naming-and-classification.md`（1-200 行）
+  - 获取规格族群差异对比表、命名规则（g/c/r/u/i/d/hf/s 字母含义、后缀含义）、规格大小规则
+- `cache/ecs/pages/best-practices-for-instance-type-selection.md`（1-150 行）
+  - 获取按预装软件和业务场景的选型推荐表（Nginx/Redis/Kafka/MySQL/Hadoop/深度学习等）
+- `cache/ecs/pages/general-work-force.md`（1-80 行）
+  - 获取 U 实例（通用算力型）的定位和适用场景
+
+### 6. 组织回答
+- 按 SKILL.md 回答模板组织：中文、先一句话总结、再分章节表格、最后附原文出处链接
+- 结构：
+  1. 6 大规格族群总览
+  2. 企业级 x86 计算规格族（命名规则 + 各系列在售清单）
+  3. 入门级 x86
+  4. ARM 计算
+  5. 弹性裸金属
+  6. HPC/SCC
+  7. 异构计算 GPU/FPGA
+  8. 按业务场景快速选型表
+  9. 规格大小命名规则
+  10. 售前沟通要点
+- 末尾标注缓存时间 2026-07-16，并附 12 条原文出处链接
+
+### 7. 未联网
+- 全程使用本地缓存，未触发 `scripts/fetch_page.py` 或浏览器抓取
+- 缓存未过期（当日初始化），无需更新
+
+## 使用的脚本
+- 无（缓存已存在且未过期，无需运行 `scripts/update_index.py` 或 `scripts/fetch_page.py`）
+
+## 读取的缓存文件
+- `cache/_registry.json`
+- `cache/ecs/meta.json`
+- `cache/ecs/llms.md`（grep 检索）
+- `cache/ecs/pages/overview-of-instance-families.md`
+- `cache/ecs/pages/instance-specification-naming-and-classification.md`
+- `cache/ecs/pages/best-practices-for-instance-type-selection.md`
+- `cache/ecs/pages/general-work-force.md`
+
+## 读取的参考文件
+- `SKILL.md`
+- `references/products.md`
+
+## 结果
+- 成功生成 `answer.md`，覆盖 6 大规格族群、所有在售规格族分类、命名规则、业务场景选型、售前沟通要点
+- 全程基于本地缓存，未联网
+- 附 12 条原文出处链接，便于深挖
