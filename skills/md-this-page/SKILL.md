@@ -17,24 +17,32 @@ description_en: "Convert web pages to clean Markdown or extract main content, po
 
 ## 环境准备
 
-**运行解释器（重要）**：必须使用已安装 crawl4ai 的 Python 解释器调用本 skill。
-本机已在 WorkBuddy 管理型 venv 中装好依赖，直接用它：
+**首次使用先装依赖**（幂等，可重复执行；只装 Python 依赖，不下载浏览器）：
 
 ```bash
-PY=/Users/user/.workbuddy/binaries/python/envs/default/bin/python
-$PY scripts/md_this_page.py convert https://example.com/
+python3 scripts/setup.py
 ```
 
-若在其他机器/环境使用，先安装依赖：
+浏览器运行时在**抓取时自动解析**，无需手工干预：
+
+1. 启动即读取 `CDP_URL` 环境变量，**未设置则默认 `http://127.0.0.1:9222`**；
+2. 探测该端点是否为**合规可用的 CDP 浏览器**（`GET /json/version` 返回含 `webSocketDebuggerUrl`）：
+   - 合规可用 → 直接连该浏览器（复用登录态，反爬更弱）；
+   - 无效 / 不可达 / 不是合规 CDP → **自动回退本地 headless 浏览器**；
+3. 若回退本地时内核缺失，抓取会报错并提示安装，此时**再按需运行**：
 
 ```bash
-pip install -r requirements.txt      # crawl4ai + beautifulsoup4 + lxml
+python3 scripts/install_browser.py     # 安装本地 headless 内核（crawl4ai-setup，约 150MB，幂等）
+```
 
-# 设置 CDP 连接地址；不设置则使用 crawl4ai 本地 headless 浏览器
+> 设计说明：本地内核约 150MB，不在初始化时强制下载；只有真正需要回退本地且内核缺失时才提示安装。
+> 本 skill 全部用相对路径，脚本内部基于自身位置解析目录，可从任意 cwd 以绝对路径调用；
+> 统一用 `python3`（或当前已装依赖的解释器）即可，无任何机器专属硬编码路径。
+
+自定义 CDP 地址（可选；不设置则用默认 `http://127.0.0.1:9222`）：
+
+```bash
 export CDP_URL=http://127.0.0.1:9222
-
-# 仅回退模式需要：初始化本地浏览器
-crawl4ai-setup
 ```
 
 CDP 浏览器启动示例：
@@ -46,27 +54,27 @@ google-chrome --remote-debugging-port=9222
 
 ## 使用方法（CLI）
 
-所有命令在 skill 目录下执行；下面的 `python` 均指上文提到的、已装依赖的解释器（`$PY`）。脚本内部已处理路径，用绝对路径调用亦可：
+所有命令在 skill 目录下执行；`python3` 指已装依赖的解释器（首次先跑 `python3 scripts/setup.py`）。脚本内部已处理路径，用绝对路径调用亦可：
 
 ```bash
 # 网页 → Markdown（打印到 stdout）
-python scripts/md_this_page.py convert https://example.com/
+python3 scripts/md_this_page.py convert https://example.com/
 
 # 保存到文件
-python scripts/md_this_page.py convert <url> -o page.md
+python3 scripts/md_this_page.py convert <url> -o page.md
 
 # 常用开关
-python scripts/md_this_page.py convert <url> --timeout 60    # 页面超时秒数（默认 30）
-python scripts/md_this_page.py convert <url> --no-metadata   # 不含 YAML 元数据头
-python scripts/md_this_page.py convert <url> --no-images     # 移除图片（保留 alt 文本）
-python scripts/md_this_page.py convert <url> --no-links      # 移除链接（保留文本）
-python scripts/md_this_page.py convert <url> --verbose       # 输出 crawl4ai 详细日志（调试用）
+python3 scripts/md_this_page.py convert <url> --timeout 60    # 页面超时秒数（默认 45）
+python3 scripts/md_this_page.py convert <url> --no-metadata   # 不含 YAML 元数据头
+python3 scripts/md_this_page.py convert <url> --no-images     # 移除图片（保留 alt 文本）
+python3 scripts/md_this_page.py convert <url> --no-links      # 移除链接（保留文本）
+python3 scripts/md_this_page.py convert <url> --verbose       # 输出 crawl4ai 详细日志（调试用）
 
 # 提取主要内容摘要
-python scripts/md_this_page.py extract <url> --max-length 3000
+python3 scripts/md_this_page.py extract <url> --max-length 3000
 
 # 查看支持的站点策略
-python scripts/md_this_page.py sites
+python3 scripts/md_this_page.py sites
 ```
 
 **退出码**：`0` 成功 / `1` 抓取失败 / `2` URL 非法。失败时错误信息输出到 stderr，且不会写入输出文件（避免生成垃圾文件）。
@@ -160,40 +168,49 @@ site: 微信公众号
 （正文 Markdown…）
 ```
 
-**表格保真**：所有站点统一启用 `bypass_tables`（见 `src/crawler.py` 的 `MARKDOWN_OPTIONS`），
-表格以**原始 HTML**（`<table>/<tr>/<td>`）输出，而不是转成 Markdown 管道表格。
-这样可以避免合并单元格、单元格内多行/嵌套结构在转换时被破坏——
-Markdown 渲染器（GitHub、Typora、Obsidian、飞书等）普遍支持 HTML 表格。
-如需改回管道表格，只需把 `MARKDOWN_OPTIONS` 改为 `{"bypass_tables": False}`。
+**表格处理**：抓取阶段统一启用 `bypass_tables=True`（见 `src/crawler.py` 的 `MARKDOWN_OPTIONS`），
+让 crawl4ai 把表格保留为**原始 HTML**、不做它自己那套易转坏的转换；随后 `src/converter.py` 的
+`_html_tables_to_markdown` 按结构分流：
+
+- **简单表格**（无合并单元格、无嵌套表格、单元格内无图片/列表/代码块）→ 转成 Markdown **管道表格**（更整洁）；
+- **复杂表格**（含 `rowspan`/`colspan`、嵌套表格，或单元格内含块级元素）→ **保留原始 HTML**（管道表格无法表达，硬转会转坏）。
+
+Markdown 渲染器（GitHub、Typora、Obsidian、飞书等）普遍支持 HTML 表格，故复杂表格保真无碍。
+
+> 注意：`bypass_tables` 只决定 crawl4ai 抓取阶段是否保留 HTML；最终「管道 vs HTML」由 converter 依结构判定。
+> 把 `MARKDOWN_OPTIONS` 改成 `{"bypass_tables": False}` 只会让 crawl4ai 提前自行转表（复杂表格更易转坏），
+> 并**不能**让 converter 把复杂表格也变成管道表格。
 
 ## 注意事项
 
-1. **浏览器选择**：`CDP_URL` 已设置且端点可达时连接该浏览器；未设置或连不上时回退本地 headless。只有"浏览器连接失败"才会触发回退，页面级错误（超时/失效/风控）不会重试，避免无谓地翻倍耗时。
-2. **登录态复用**：CDP 模式复用浏览器默认上下文（`use_managed_browser`），已登录站点可直接抓取，也显著降低验证码概率；抓取结束不会关闭或影响用户已打开的标签页。
+1. **浏览器选择**：启动即读 `CDP_URL`（未设置默认 `http://127.0.0.1:9222`）。端点为**合规可用的 CDP 浏览器**（`/json/version` 含 `webSocketDebuggerUrl`）才连接；无效/不可达/非合规 CDP 一律回退本地 headless。只有"浏览器连接失败"才触发回退，页面级错误（超时/失效/风控）不重试，避免无谓翻倍耗时。本地内核缺失时，报错会提示运行 `scripts/install_browser.py`。
+2. **登录态复用（含安全权衡）**：CDP 模式复用浏览器默认上下文（`use_managed_browser`），已登录站点可直接抓取，也显著降低验证码概率；抓取结束不会关闭或影响用户已打开的标签页。
+   ⚠️ **安全提示**：默认会自动连接 `http://127.0.0.1:9222` 并复用该浏览器 profile 的全部登录态，被转换页面的 JS 会在这个已认证会话里执行。若转换**不受信任/钓鱼页面**，其脚本理论上可发起同会话的认证请求（CSRF 类风险）。建议：用**专用隔离 profile** 启动 CDP 浏览器（如 `--remote-debugging-port=9222 --user-data-dir=/path/to/scratch-profile`），只在其中登录确需抓取的站点，避免用装满登录态的主 profile。
 3. **错误提示**：失败时返回的是压缩后的可读说明（例如"页面正文未在超时时间内出现，常见原因是链接失效/需登录/风控"），不是 crawl4ai 的原始堆栈。
-4. **付费内容**：与原插件一致，仅能提取可见部分。
-5. **原插件不受影响**：本 skill 为独立目录，不修改 `md-this-page/` 下任何文件。
-6. **反爬提示（实测）**：
+4. **付费内容**：仅能提取可见部分。
+5. **反爬提示（实测）**：
    - CSDN 在同一浏览器/IP 高频自动化访问后会弹「安全验证」，此时需在浏览器里手动通过一次验证再抓
    - Bilibili 专栏对高频访问有间歇性频控，失败后间隔几分钟重试即可
    - 遇到超时，多半是页面被风控页/404 页替代，先人工确认 URL 有效，再用 `--timeout` 适当放宽
-7. **调试**：加 `--verbose` 可看到 crawl4ai 的完整抓取日志（默认静默，不污染输出）。
+6. **调试**：加 `--verbose` 可看到 crawl4ai 的完整抓取日志（默认静默，不污染输出）。
 
 ## 自测
 
 ```bash
-python tests/test_smoke.py unit    # 仅单元断言（不需要浏览器）：域名匹配/标题清理/YAML 转义/回退策略等
-python tests/test_smoke.py quick   # 普通网页链路
-python tests/test_smoke.py         # 单元断言 + 全部站点抓取（需 CDP 浏览器在线）
+python3 tests/test_smoke.py unit    # 仅单元断言（不需要浏览器）：域名匹配/标题清理/YAML 转义/回退策略等
+python3 tests/test_smoke.py quick   # 普通网页链路
+python3 tests/test_smoke.py         # 单元断言 + 全部站点抓取（需 CDP 浏览器在线）
 ```
 
 ## 目录结构
 
 ```
-md-this-page-skill/
+md-this-page/
 ├── SKILL.md              # 本文件
 ├── requirements.txt      # 依赖
 ├── scripts/
+│   ├── setup.py          # 初始化：装 Python 依赖（幂等）
+│   ├── install_browser.py # 按需安装本地 headless 内核（crawl4ai-setup）
 │   └── md_this_page.py   # CLI 入口（convert / extract / sites）
 ├── src/
 │   ├── crawler.py        # CDP 连接 + crawl4ai 抓取

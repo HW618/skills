@@ -2,14 +2,17 @@
 核心抓取模块：基于 crawl4ai，通过 CDP 连接外部浏览器。
 
 浏览器连接优先级：
-1. 环境变量 CDP_URL 指定的 CDP 浏览器（如 http://127.0.0.1:9222），连接前会探测端点可用性
-2. 回退：crawl4ai 自带的本地 headless 浏览器（需已执行 crawl4ai-setup）
+1. 启动时读取环境变量 CDP_URL（未设置则默认 http://127.0.0.1:9222），
+   连接前探测该端点是否为「合规且可用」的 CDP 浏览器（GET /json/version 返回含 webSocketDebuggerUrl）
+2. CDP_URL 无效 / 不可达 / 不是合规 CDP 浏览器 → 回退 crawl4ai 本地 headless 浏览器
+   （本地内核未安装时会在抓取报错中提示运行 scripts/install_browser.py）
 
 注意：只有"浏览器连接失败"才会触发回退；页面级错误（超时/链接失效/风控）不会重试，
 避免无谓地耗时翻倍。
 """
 
 import asyncio
+import json
 import logging
 import os
 import urllib.request
@@ -24,6 +27,9 @@ from .strategies import SiteStrategy, detect_strategy
 logger = logging.getLogger(__name__)
 
 _META_DIV_CLASS = "mtp-meta"
+
+# CDP_URL 未设置时默认探测的 CDP 端点
+DEFAULT_CDP_URL = "http://127.0.0.1:9222"
 
 # 正文长度低于该值视为"没抓到正文"，继续尝试下一个候选选择器
 # （部分站点存在同名空占位元素，例如掘金的 .article-content 为空壳）
@@ -47,31 +53,37 @@ _BROWSER_ERROR_KEYWORDS = (
 )
 
 
-def get_cdp_url() -> str | None:
-    """读取 CDP_URL 环境变量（去除首尾空白与尾部斜杠；未设置返回 None）"""
+def get_cdp_url() -> str:
+    """读取 CDP_URL 环境变量；未设置时返回默认 DEFAULT_CDP_URL（去除首尾空白与尾部斜杠）"""
     url = os.environ.get("CDP_URL", "").strip().rstrip("/")
-    return url or None
+    return url or DEFAULT_CDP_URL
 
 
-def cdp_reachable(cdp_url: str, timeout: float = 1.5) -> bool:
-    """探测 CDP 端点是否可用（GET /json/version）"""
+def is_valid_cdp(cdp_url: str, timeout: float = 1.5) -> bool:
+    """探测端点是否为「合规且可用」的 CDP 浏览器：
+    GET /json/version 返回 200，且响应 JSON 含 webSocketDebuggerUrl 字段。
+    非法 URL / 端口不通 / 非 CDP 服务，一律判为不可用（触发本地回退）。"""
+    if not cdp_url.startswith(("http://", "https://")):
+        return False
     try:
         with urllib.request.urlopen(f"{cdp_url}/json/version", timeout=timeout) as resp:
-            return resp.status == 200
+            if resp.status != 200:
+                return False
+            data = json.loads(resp.read().decode("utf-8", "ignore"))
+            return bool(data.get("webSocketDebuggerUrl"))
     except Exception:
         return False
 
 
 def _resolve_cdp_url() -> str | None:
-    """决定本次抓取使用哪个浏览器：CDP 可用则用，否则回退本地 headless"""
+    """决定本次抓取使用哪个浏览器：
+    读取 CDP_URL（默认 127.0.0.1:9222），若为合规可用的 CDP 浏览器则用之，
+    否则返回 None，回退本地 headless。"""
     cdp_url = get_cdp_url()
-    if not cdp_url:
-        logger.info("CDP_URL not set, using local headless browser")
-        return None
-    if cdp_reachable(cdp_url):
+    if is_valid_cdp(cdp_url):
         logger.info(f"Using CDP browser: {cdp_url}")
         return cdp_url
-    logger.warning(f"CDP endpoint unreachable ({cdp_url}); falling back to local headless browser")
+    logger.info(f"CDP endpoint invalid/unreachable ({cdp_url}); using local headless browser")
     return None
 
 
@@ -109,6 +121,12 @@ class CrawlResult:
 def _short_error(err: object) -> str:
     """把 crawl4ai/playwright 的长堆栈压缩成一句可读说明"""
     text = " ".join(str(err).split())
+    low = text.lower()
+    if ("executable doesn't exist" in low or "browsertype.launch" in low
+            or "playwright install" in low or "playwright-cli install" in low):
+        return ("无可用浏览器：CDP 端点不可用，且本地 headless 浏览器内核未安装。"
+                "请运行 python3 scripts/install_browser.py 安装本地浏览器；"
+                "或启动一个 CDP 浏览器并设置 CDP_URL（默认探测 http://127.0.0.1:9222）。")
     if "Wait condition failed" in text or "Timeout" in text or "timeout" in text:
         return ("页面正文未在超时时间内出现。常见原因：链接已失效、需要登录、"
                 "或站点触发风控。可加大 --timeout，或先在浏览器中确认该页面可正常打开。")
@@ -134,7 +152,10 @@ def _clean_title(title: str, strategy: SiteStrategy) -> str:
 
 def _build_meta_inject_js(container_selector: str, strategy: SiteStrategy) -> str:
     """生成"元数据注入"JS：启用 css_selector 后 crawl4ai 只返回正文区域，
-    页面级 title/author/date 会丢失，故在提取前将其写进正文容器内的隐藏元素。"""
+    页面级 title/author/date 会丢失，故在提取前将其写进正文容器内的隐藏元素。
+
+    title 优先用 title_selector 定位的正文标题（更干净，通常不含站点名后缀），
+    取不到再回退 document.title（仍会经 _clean_title 裁掉后缀）。"""
     return f"""
 (() => {{
     const q = s => {{ const el = s ? document.querySelector(s) : null;
@@ -145,7 +166,7 @@ def _build_meta_inject_js(container_selector: str, strategy: SiteStrategy) -> st
     const div = document.createElement('div');
     div.className = '{_META_DIV_CLASS}';
     div.style.display = 'none';
-    div.setAttribute('data-title', attr(document.title));
+    div.setAttribute('data-title', attr(q('{strategy.title_selector or ""}') || document.title));
     div.setAttribute('data-author', attr(q('{strategy.author_selector or ""}')));
     div.setAttribute('data-date', attr(q('{strategy.date_selector or ""}')));
     container.insertBefore(div, container.firstChild);
@@ -270,7 +291,8 @@ async def crawl_page(url: str, timeout_ms: int = 45000,
                      cdp_url: str | None = None, verbose: bool = False) -> CrawlResult:
     """抓取单个页面，自动按 URL 选择站点策略。
 
-    cdp_url 留空时按 CDP_URL 环境变量解析；仅在浏览器连接失败时回退本地浏览器。
+    cdp_url 留空时按 CDP_URL 环境变量解析（未设置则默认 http://127.0.0.1:9222）；
+    端点非合规 CDP 或连接失败时回退本地 headless 浏览器。
 
     正文选择器策略：按"主选择器 → 备选"逐个尝试，取到足够长的正文即采用；
     若都偏短（页面里存在同名空占位元素时会发生），则返回其中正文最长的一次。

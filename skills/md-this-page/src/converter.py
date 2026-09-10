@@ -9,22 +9,42 @@
 import re
 from urllib.parse import urljoin
 
+import yaml
 from bs4 import BeautifulSoup
 
 from .crawler import CrawlResult
 
 MAX_MARKDOWN_LENGTH = 50000
 
-# YAML 中必须加引号的情形：以指示符开头、含 ": "、含 " #"、含引号或换行
+# YAML 中必须加引号的结构性情形：以指示符开头、含 ": "、含 " #"、含引号或换行
 _YAML_NEEDS_QUOTE = re.compile(r'^[\s>|*&!%@`\[\]{},#?-]|:\s|\s#|["\n\r\t]|:\s*$')
 
 
+def _yaml_type_unsafe(text: str) -> bool:
+    """判断 YAML 是否会把该文本解析成「非字符串」或直接解析失败——两种都需加引号：
+
+    - 解析失败：如以单引号开头却无闭合（`'90后…`），产出非法 front matter，下游直接报错；
+    - 类型失真：`2024`→int、`3.14`→float、`true/yes/on`→bool、`null/~`→None，标题恰为这些值时会变类型。
+    日期（如 `2024-01-01` 解析为 date）不视为失真，保持与既有 front matter 行为一致。
+    """
+    try:
+        loaded = yaml.safe_load(f"k: {text}")
+    except Exception:
+        return True                       # 非法结构（如未闭合单引号），必须加引号
+    val = loaded.get("k") if isinstance(loaded, dict) else loaded
+    return val is None or isinstance(val, (bool, int, float))
+
+
 def _yaml_scalar(value: str) -> str:
-    """把任意文本安全地写成 YAML 标量（仅在必要时加引号，如含 ": " 或引号）"""
+    """把任意文本安全地写成 YAML 标量（仅在必要时加引号）。
+
+    加引号条件：含结构性字符（开头指示符 / ": " / 引号 / 换行等），
+    或 YAML 不会把它解析成同一字符串（数字 / 布尔 / null / 非法结构）。
+    """
     text = " ".join(str(value).split())          # 折成单行，避免换行破坏 front matter
     if not text:
         return '""'
-    if _YAML_NEEDS_QUOTE.search(text):
+    if _YAML_NEEDS_QUOTE.search(text) or _yaml_type_unsafe(text):
         return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
     return text
 

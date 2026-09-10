@@ -3,15 +3,19 @@
 MD This Page Skill — CLI 入口
 
 用法：
-    export CDP_URL=http://127.0.0.1:9222        # 可选；未设置或连不上则回退本地 headless
+    python3 scripts/setup.py                          # 首次使用先装 Python 依赖（幂等）
+    export CDP_URL=http://127.0.0.1:9222              # 可选；未设置默认探测该端点，
+                                                      # 非合规/不可达则回退本地 headless
+                                                      # （本地内核缺失时按提示跑 install_browser.py）
 
-    python scripts/md_this_page.py convert <url> [--timeout 45] [--verbose] [--no-metadata] [--no-images] [--no-links] [-o out.md]
-    python scripts/md_this_page.py extract <url> [--timeout 45] [--verbose] [--max-length 3000] [-o out.md]
-    python scripts/md_this_page.py sites        # 列出支持的站点策略
+    python3 scripts/md_this_page.py convert <url> [--timeout 45] [--verbose] [--no-metadata] [--no-images] [--no-links] [-o out.md]
+    python3 scripts/md_this_page.py extract <url> [--timeout 45] [--verbose] [--max-length 3000] [-o out.md]
+    python3 scripts/md_this_page.py sites        # 列出支持的站点策略
 """
 
 import argparse
 import asyncio
+import inspect
 import os
 import sys
 
@@ -115,7 +119,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> int:
     args = build_parser().parse_args()
-    if asyncio.iscoroutinefunction(args.func):
+    if inspect.iscoroutinefunction(args.func):
         return asyncio.run(args.func(args))
     return args.func(args)
 

@@ -2,10 +2,10 @@
 冒烟测试 + 单元断言
 
 用法：
-    export CDP_URL=http://127.0.0.1:9222
-    python tests/test_smoke.py          # 单元断言 + 全部站点抓取
-    python tests/test_smoke.py unit     # 只跑单元断言（不需要浏览器）
-    python tests/test_smoke.py quick    # 只测普通网页链路
+    export CDP_URL=http://127.0.0.1:9222   # 可选；未设置时自动探测该默认端点
+    python3 tests/test_smoke.py            # 单元断言 + 全部站点抓取
+    python3 tests/test_smoke.py unit       # 只跑单元断言（不需要浏览器）
+    python3 tests/test_smoke.py quick      # 只测普通网页链路
 """
 
 import asyncio
@@ -100,6 +100,32 @@ async def run_unit_checks() -> list:
     quote_ok = ("https://example.com/" == converter._yaml_scalar("https://example.com/")
                 and converter._yaml_scalar("Linux: 从入门到精通").startswith('"'))
     _check(r, "YAML 转义边界：必要才加引号且往返无损", all_lossless and quote_ok)
+
+    # 3c. YAML 鲁棒性（回归①）：以单引号开头的值必须加引号，否则产出非法 YAML
+    sq = converter._yaml_scalar("'90后的独立开发者")
+    try:
+        sq_ok = sq.startswith('"') and yaml.safe_load(f"k: {sq}")["k"] == "'90后的独立开发者"
+    except Exception:
+        sq_ok = False
+    _check(r, "单引号开头的值被加引号（避免非法 YAML）", sq_ok)
+
+    # 3d. YAML 鲁棒性（回归②）：数字/布尔/null 保留字面量必须加引号，否则类型失真
+    literal_ok = True
+    for lit in ("2024", "3.14", "true", "false", "yes", "no", "null", "~"):
+        out = converter._yaml_scalar(lit)
+        try:
+            parsed = yaml.safe_load(f"k: {out}")["k"]
+        except Exception:
+            parsed = None
+        literal_ok &= isinstance(parsed, str) and parsed == lit
+    _check(r, "数字/布尔/null 保留字面量保持为字符串", literal_ok)
+
+    # 3e. 反向：无结构风险的值保持裸写，避免过度加引号（URL/日期/普通文本）
+    noquote_ok = (converter._yaml_scalar("https://example.com/") == "https://example.com/"
+                  and converter._yaml_scalar("2024-01-01") == "2024-01-01"
+                  and converter._yaml_scalar("2024年") == "2024年"
+                  and converter._yaml_scalar("普通中文标题") == "普通中文标题")
+    _check(r, "URL/日期/普通文本不过度加引号", noquote_ok)
 
     # 4. 错误信息精简（不泄露 crawl4ai 堆栈）
     short = crawler._short_error(
@@ -234,6 +260,11 @@ async def run_unit_checks() -> list:
         crawler._crawl_once = original
     _check(r, "主选择器未命中时自动改用备选选择器",
            res.success and tried == [".Post-RichTextContainer", ".RichContent-inner"])
+
+    # 11. title_selector 已接线进元数据注入 JS（回归④：不再是死配置）
+    inject_js = crawler._build_meta_inject_js("#content", zhihu)   # 知乎 title_selector 含 .Post-Title
+    _check(r, "元数据注入 JS 优先用 title_selector 取标题",
+           ".Post-Title" in inject_js and "document.title" in inject_js)
 
     return r
 
