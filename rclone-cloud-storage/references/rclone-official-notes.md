@@ -59,7 +59,7 @@ Default config file lookup order includes the executable directory, `%APPDATA%/r
 This skill stores its Codex-specific default remote and upload directory in:
 
 ```text
-skills/rclone-cloud-storage/references/rclone-defaults.json
+rclone-cloud-storage/references/rclone-defaults.json
 ```
 
 This file is workflow state, not rclone's own configuration file. It should contain only non-secret values such as:

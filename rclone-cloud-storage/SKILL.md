@@ -25,7 +25,7 @@ Read [references/rclone-official-notes.md](references/rclone-official-notes.md) 
 Before upload, list, preview, default inspection, or configuration work, check the skill reference default file:
 
 ```text
-skills/rclone-cloud-storage/references/rclone-defaults.json
+rclone-cloud-storage/references/rclone-defaults.json
 ```
 
 Use this shape:
@@ -173,7 +173,7 @@ rclone config file
 Because rclone itself does not define a "default upload directory" for Codex workflows, store Codex-specific defaults in this skill reference file:
 
 ```text
-skills/rclone-cloud-storage/references/rclone-defaults.json
+rclone-cloud-storage/references/rclone-defaults.json
 ```
 
 Use this shape:
