@@ -51,10 +51,9 @@ def check_aria2p():
         return False, None
 
 def check_aria2c_daemon():
-    """Check if the skill's loopback aria2c daemon accepts its RPC secret."""
-    from aria2_env import ensure_rpc_conf, rpc_ready
-    _, secret = ensure_rpc_conf()
-    return rpc_ready(secret)
+    """Check that this skill's loopback daemon is the process answering RPC."""
+    from aria2_env import skill_daemon_ready
+    return skill_daemon_ready()
 
 def install_aria2(force=False):
     """Install aria2 based on the OS. force=True reinstalls an existing copy."""

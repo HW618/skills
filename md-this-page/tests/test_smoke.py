@@ -202,6 +202,16 @@ async def run_unit_checks() -> list:
     _check(r, "嵌套表格按外层整段保留，后续简单表格仍转管道",
            outer_html in nested_md and "| A |" in nested_md and "| 1 |" in nested_md)
 
+    # 8b3. 未闭合的 table 不能挡住后面完整表格的转换和空行
+    unclosed = CrawlResult(
+        url="https://e.com/", title="T", site_name="S", success=True,
+        markdown=("前文 <table><tr><td>未闭合"
+                  "<table><tr><th>A</th></tr><tr><td>1</td></tr></table>\n**段落**"))
+    unclosed_md = convert_to_markdown(unclosed, include_metadata=False)
+    _check(r, "未闭合表格之后的完整表格仍转管道并与段落空行分隔",
+           "未闭合" in unclosed_md and "| A |" in unclosed_md
+           and "| 1 |\n\n**段落**" in unclosed_md)
+
     # 8c. 站点策略的主选择器必须是单个选择器（逗号选择器会被 crawl4ai 重复提取）
     comma = [s.name for s in SITE_STRATEGIES if "," in (s.css_selector or "")]
     _check(r, "所有站点主选择器均为单个选择器（无逗号）",

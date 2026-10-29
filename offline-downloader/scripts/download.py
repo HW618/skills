@@ -14,7 +14,7 @@ from aria2_env import (
     RPC_PORT,
     download_dir as default_download_dir,
     ensure_rpc_conf,
-    rpc_ready,
+    skill_daemon_ready,
     start_daemon,
 )
 
@@ -50,9 +50,8 @@ def check_dependencies():
     except ImportError:
         return False, "aria2p 未安装"
     
-    _, secret = ensure_rpc_conf()
-    if not rpc_ready(secret):
-        return False, "aria2c 守护进程未运行"
+    if not skill_daemon_ready():
+        return False, "aria2c 守护进程未使用本技能的 RPC 配置"
     
     return True, "所有依赖已就绪"
 
@@ -89,21 +88,17 @@ def get_aria2_api():
         api.get_stats()
         return api
 
-    try:
-        return connect()
-    except Exception as e:
-        print(f"Error: Cannot connect to aria2c daemon: {e}")
-        print("尝试重新启动守护进程...")
+    if not skill_daemon_ready():
+        print("aria2c 未使用本技能的 RPC 配置，尝试启动...")
         ok, message = start_daemon()
         if not ok:
             print(f"Error: {message}")
             sys.exit(1)
-        time.sleep(0.5)
-        try:
-            return connect()
-        except Exception as e2:
-            print(f"Error: 仍然无法连接: {e2}")
-            sys.exit(1)
+    try:
+        return connect()
+    except Exception as e:
+        print(f"Error: Cannot connect to aria2c daemon: {e}")
+        sys.exit(1)
 
 def download_file(url, download_dir=None):
     """

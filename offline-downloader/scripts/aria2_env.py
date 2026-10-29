@@ -8,6 +8,7 @@ a skill-local config file. The secret is not placed on the aria2c command line.
 import json
 import os
 import secrets
+import socket
 import stat
 import subprocess
 import sys
@@ -88,7 +89,12 @@ def ensure_rpc_conf() -> tuple[str, str]:
 
 
 def rpc_ready(secret: str, port: int = RPC_PORT) -> bool:
-    """Return True when the local daemon accepts this RPC secret."""
+    """Return True when a local RPC call with this secret gets a result.
+
+    This is not enough to identify our daemon. aria2 drops a leading
+    ``token:`` parameter when ``--rpc-secret`` is unset, so an open daemon
+    also returns success.
+    """
     payload = json.dumps({
         "jsonrpc": "2.0",
         "id": "offline-downloader",
@@ -108,43 +114,111 @@ def rpc_ready(secret: str, port: int = RPC_PORT) -> bool:
     return isinstance(data, dict) and "result" in data
 
 
-def _process_lines() -> list[str]:
+def rpc_endpoint_open(port: int = RPC_PORT) -> bool:
+    """True when something is already accepting TCP on the RPC port."""
     try:
-        result = subprocess.run(
-            ["ps", "aux"],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        with socket.create_connection((RPC_HOST, port), timeout=1):
+            return True
     except OSError:
-        return []
-    return result.stdout.splitlines()
+        return False
+
+
+def _process_lines() -> list[str]:
+    commands = (
+        ["ps", "-axww", "-o", "command="],
+        ["ps", "aux"],
+    )
+    for argv in commands:
+        try:
+            result = subprocess.run(
+                argv,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        except OSError:
+            continue
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.splitlines()
+    return []
+
+
+def our_daemon_running(conf_path: str) -> bool:
+    """True when aria2c was started with this skill's config file."""
+    return any(
+        "aria2c" in line and conf_path in line
+        for line in _process_lines()
+    )
 
 
 def foreign_rpc_daemon(conf_path: str) -> bool:
     """True when some other aria2c RPC process is up, and ours is not."""
-    ours = False
-    other = False
+    if our_daemon_running(conf_path):
+        return False
     for line in _process_lines():
         if "aria2c" not in line:
             continue
-        if conf_path in line:
-            ours = True
-        elif "enable-rpc" in line or "rpc-listen" in line:
-            other = True
-    return other and not ours
+        if "enable-rpc" in line or "rpc-listen" in line or "--conf-path=" in line:
+            return True
+    return False
+
+
+def classify_daemon(our_process: bool, port_open: bool, authenticated: bool) -> str:
+    """Decide what to do with whatever is on the RPC port.
+
+    ``use`` means this skill's process answered with its secret.
+    ``wait`` means that process is up but RPC is not ready yet.
+    ``refuse`` means some other listener owns the port. A successful token
+    call is not proof of ownership when the other daemon has no secret.
+    ``start`` means the port is free.
+    """
+    if our_process and authenticated:
+        return "use"
+    if our_process:
+        return "wait"
+    if port_open:
+        return "refuse"
+    return "start"
+
+
+_FOREIGN_DAEMON_MSG = (
+    "检测到未使用本技能 RPC 配置的 aria2c。"
+    "未设置密钥的实例会丢掉 token: 参数并接受调用，不能当作本技能的守护进程。"
+    "请先停止该进程，再重新初始化。"
+)
+
+
+def _wait_until_ready(conf_path: str, secret: str) -> bool:
+    for _ in range(10):
+        if our_daemon_running(conf_path) and rpc_ready(secret):
+            return True
+        time.sleep(0.3)
+    return False
+
+
+def skill_daemon_ready() -> bool:
+    """True only when this skill's aria2c is running and accepts its secret."""
+    conf_path, secret = ensure_rpc_conf()
+    return our_daemon_running(conf_path) and rpc_ready(secret)
 
 
 def start_daemon() -> tuple[bool, str]:
     """Start aria2c on loopback with the skill RPC secret."""
     conf_path, secret = ensure_rpc_conf()
-    if rpc_ready(secret):
+    port_open = rpc_endpoint_open()
+    our_process = our_daemon_running(conf_path)
+    authenticated = rpc_ready(secret) if (port_open or our_process) else False
+    state = classify_daemon(our_process, port_open, authenticated)
+    if state == "start" and foreign_rpc_daemon(conf_path):
+        state = "refuse"
+    if state == "use":
         return True, "aria2c 守护进程已在运行"
-    if foreign_rpc_daemon(conf_path):
-        return False, (
-            "检测到未使用本技能 RPC 配置的 aria2c。"
-            "请先停止该进程，再重新初始化，避免继续使用无密钥且监听所有网卡的实例。"
-        )
+    if state == "wait":
+        if _wait_until_ready(conf_path, secret):
+            return True, "aria2c 守护进程已在运行"
+        return False, "aria2c 守护进程启动失败"
+    if state == "refuse":
+        return False, _FOREIGN_DAEMON_MSG
     result = subprocess.run(
         daemon_argv(conf_path),
         capture_output=True,
@@ -154,8 +228,6 @@ def start_daemon() -> tuple[bool, str]:
     if result.returncode != 0:
         detail = (result.stderr or result.stdout or "aria2c 启动失败").strip()
         return False, f"aria2c 守护进程启动失败: {detail}"
-    for _ in range(10):
-        if rpc_ready(secret):
-            return True, "aria2c 守护进程启动成功"
-        time.sleep(0.3)
+    if _wait_until_ready(conf_path, secret):
+        return True, "aria2c 守护进程启动成功"
     return False, "aria2c 守护进程启动失败"

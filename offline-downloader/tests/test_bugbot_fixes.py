@@ -24,6 +24,49 @@ class Aria2EnvTests(unittest.TestCase):
         self.assertEqual(forced[0], sys.executable)
         self.assertIn("--force-reinstall", forced)
 
+    def test_open_rpc_without_our_process_is_refused(self):
+        self.assertEqual(
+            aria2_env.classify_daemon(False, True, True),
+            "refuse",
+        )
+        self.assertEqual(aria2_env.classify_daemon(True, True, True), "use")
+        self.assertEqual(aria2_env.classify_daemon(True, True, False), "wait")
+        self.assertEqual(aria2_env.classify_daemon(False, False, False), "start")
+
+    def test_start_daemon_does_not_adopt_foreign_listener(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            original = {
+                "skill_dir": aria2_env.skill_dir,
+                "process": aria2_env._process_lines,
+                "ready": aria2_env.rpc_ready,
+                "open": aria2_env.rpc_endpoint_open,
+                "run": aria2_env.subprocess.run,
+            }
+            launched = []
+
+            def refuse_launch(argv, **kwargs):
+                launched.append(argv)
+                raise AssertionError("refused listener must not be replaced by a new aria2c")
+
+            aria2_env.skill_dir = lambda: tmp
+            aria2_env._process_lines = lambda: [
+                "aria2c --enable-rpc --rpc-listen-all=true --daemon=true"
+            ]
+            aria2_env.rpc_ready = lambda secret, port=6800: True
+            aria2_env.rpc_endpoint_open = lambda port=6800: True
+            aria2_env.subprocess.run = refuse_launch
+            try:
+                ok, message = aria2_env.start_daemon()
+            finally:
+                aria2_env.skill_dir = original["skill_dir"]
+                aria2_env._process_lines = original["process"]
+                aria2_env.rpc_ready = original["ready"]
+                aria2_env.rpc_endpoint_open = original["open"]
+                aria2_env.subprocess.run = original["run"]
+            self.assertFalse(ok)
+            self.assertIn("不能当作本技能的守护进程", message)
+            self.assertEqual(launched, [])
+
     def test_daemon_command_is_loopback_config_not_open_rpc(self):
         argv = aria2_env.daemon_argv("/tmp/skill/.aria2-rpc.conf")
         joined = " ".join(argv)

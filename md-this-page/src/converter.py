@@ -146,7 +146,10 @@ def _outer_table_spans(md: str) -> list[tuple[int, int]]:
                 if depth == 0:
                     end = pos
         if end is None:
-            break
+            # 这一处没有闭合标签。跳过它，继续处理后面完整的表格，
+            # 否则后续表格既不会转成管道表，也得不到空行分隔。
+            cursor = opened.end()
+            continue
         spans.append((opened.start(), end))
         cursor = end
     return spans
