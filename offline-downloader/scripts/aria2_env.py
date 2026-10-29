@@ -152,13 +152,17 @@ def our_daemon_running(conf_path: str) -> bool:
 
 
 def foreign_rpc_daemon(conf_path: str) -> bool:
-    """True when some other aria2c RPC process is up, and ours is not."""
+    """True when some other aria2c process is explicitly running RPC, and ours is not.
+
+    A ``--conf-path=`` by itself is not RPC. Ordinary downloads use a config
+    file too, and this check also runs while port 6800 is still free.
+    """
     if our_daemon_running(conf_path):
         return False
     for line in _process_lines():
         if "aria2c" not in line:
             continue
-        if "enable-rpc" in line or "rpc-listen" in line or "--conf-path=" in line:
+        if "enable-rpc" in line or "rpc-listen" in line:
             return True
     return False
 

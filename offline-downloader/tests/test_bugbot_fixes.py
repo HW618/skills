@@ -67,6 +67,59 @@ class Aria2EnvTests(unittest.TestCase):
             self.assertIn("不能当作本技能的守护进程", message)
             self.assertEqual(launched, [])
 
+    def test_conf_path_download_does_not_block_our_daemon(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            original = {
+                "skill_dir": aria2_env.skill_dir,
+                "process": aria2_env._process_lines,
+                "ready": aria2_env.rpc_ready,
+                "open": aria2_env.rpc_endpoint_open,
+                "run": aria2_env.subprocess.run,
+            }
+            launched = []
+
+            class _Result:
+                returncode = 1
+                stderr = "stopped in test"
+                stdout = ""
+
+            def record_launch(argv, **kwargs):
+                launched.append(list(argv))
+                return _Result()
+
+            aria2_env.skill_dir = lambda: tmp
+            aria2_env._process_lines = lambda: [
+                "aria2c --conf-path=/tmp/downloads.conf --dir=/tmp/out"
+            ]
+            aria2_env.rpc_ready = lambda secret, port=6800: False
+            aria2_env.rpc_endpoint_open = lambda port=6800: False
+            aria2_env.subprocess.run = record_launch
+            try:
+                self.assertFalse(
+                    aria2_env.foreign_rpc_daemon("/tmp/skill/.aria2-rpc.conf")
+                )
+                ok, message = aria2_env.start_daemon()
+            finally:
+                aria2_env.skill_dir = original["skill_dir"]
+                aria2_env._process_lines = original["process"]
+                aria2_env.rpc_ready = original["ready"]
+                aria2_env.rpc_endpoint_open = original["open"]
+                aria2_env.subprocess.run = original["run"]
+            self.assertFalse(ok)
+            self.assertNotIn("不能当作本技能的守护进程", message)
+            self.assertEqual(len(launched), 1)
+            self.assertEqual(launched[0][0], "aria2c")
+
+    def test_explicit_rpc_flags_still_count_as_foreign(self):
+        original = aria2_env._process_lines
+        aria2_env._process_lines = lambda: [
+            "aria2c --enable-rpc --rpc-listen-all=false --daemon=true"
+        ]
+        try:
+            self.assertTrue(aria2_env.foreign_rpc_daemon("/tmp/skill/.aria2-rpc.conf"))
+        finally:
+            aria2_env._process_lines = original
+
     def test_daemon_command_is_loopback_config_not_open_rpc(self):
         argv = aria2_env.daemon_argv("/tmp/skill/.aria2-rpc.conf")
         joined = " ".join(argv)
