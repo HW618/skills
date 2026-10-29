@@ -9,6 +9,8 @@ import os
 import subprocess
 import platform
 
+from aria2_env import pip_install_argv, start_daemon
+
 def run_command(cmd, check=True):
     """Run a shell command and return the result."""
     try:
@@ -49,15 +51,16 @@ def check_aria2p():
         return False, None
 
 def check_aria2c_daemon():
-    """Check if aria2c daemon is running."""
-    success, stdout, _ = run_command("ps aux | grep 'aria2c.*enable-rpc' | grep -v grep", check=False)
-    return success and stdout
+    """Check if the skill's loopback aria2c daemon accepts its RPC secret."""
+    from aria2_env import ensure_rpc_conf, rpc_ready
+    _, secret = ensure_rpc_conf()
+    return rpc_ready(secret)
 
-def install_aria2():
-    """Install aria2 based on the OS."""
+def install_aria2(force=False):
+    """Install aria2 based on the OS. force=True reinstalls an existing copy."""
     system = platform.system()
     
-    print("正在安装 aria2...")
+    print("正在重新安装 aria2..." if force else "正在安装 aria2...")
     
     if system == "Darwin":  # macOS
         # Check if Homebrew is installed
@@ -67,7 +70,8 @@ def install_aria2():
             print("  /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"")
             return False
         
-        success, stdout, stderr = run_command("brew install aria2")
+        brew_cmd = "brew reinstall aria2" if force else "brew install aria2"
+        success, stdout, stderr = run_command(brew_cmd)
         if success:
             print("✓ aria2 安装成功")
             return True
@@ -79,7 +83,10 @@ def install_aria2():
         # Try apt-get first (Debian/Ubuntu)
         apt_installed, _, _ = run_command("which apt-get", check=False)
         if apt_installed:
-            success, stdout, stderr = run_command("sudo apt-get update && sudo apt-get install -y aria2")
+            apt_cmd = "sudo apt-get update && sudo apt-get install -y aria2"
+            if force:
+                apt_cmd += " --reinstall"
+            success, stdout, stderr = run_command(apt_cmd)
             if success:
                 print("✓ aria2 安装成功")
                 return True
@@ -90,7 +97,8 @@ def install_aria2():
         # Try yum (CentOS/RHEL)
         yum_installed, _, _ = run_command("which yum", check=False)
         if yum_installed:
-            success, stdout, stderr = run_command("sudo yum install -y aria2")
+            yum_cmd = "sudo yum reinstall -y aria2" if force else "sudo yum install -y aria2"
+            success, stdout, stderr = run_command(yum_cmd)
             if success:
                 print("✓ aria2 安装成功")
                 return True
@@ -105,7 +113,8 @@ def install_aria2():
         # Try Chocolatey
         choco_installed, _, _ = run_command("where choco", check=False)
         if choco_installed:
-            success, stdout, stderr = run_command("choco install aria2 -y")
+            choco_cmd = "choco install aria2 -y --force" if force else "choco install aria2 -y"
+            success, stdout, stderr = run_command(choco_cmd)
             if success:
                 print("✓ aria2 安装成功")
                 return True
@@ -116,7 +125,8 @@ def install_aria2():
         # Try winget
         winget_installed, _, _ = run_command("where winget", check=False)
         if winget_installed:
-            success, stdout, stderr = run_command("winget install aria2")
+            winget_cmd = "winget install aria2 --force" if force else "winget install aria2"
+            success, stdout, stderr = run_command(winget_cmd)
             if success:
                 print("✓ aria2 安装成功")
                 return True
@@ -131,48 +141,31 @@ def install_aria2():
         print(f"错误: 不支持的操作系统 {system}")
         return False
 
-def install_aria2p():
-    """Install aria2p Python package."""
-    print("正在安装 aria2p...")
-    
-    # Try pip3 first, then pip
-    for pip_cmd in ["pip3", "pip"]:
-        pip_installed, _, _ = run_command(f"which {pip_cmd}", check=False)
-        if pip_installed:
-            success, stdout, stderr = run_command(f"{pip_cmd} install aria2p")
-            if success:
-                print("✓ aria2p 安装成功")
-                return True
-            else:
-                print(f"✗ aria2p 安装失败: {stderr}")
-                return False
-    
-    print("错误: 未找到 pip，请先安装 Python 和 pip")
+def install_aria2p(force=False):
+    """Install aria2p into the same interpreter that runs this script."""
+    print("正在重新安装 aria2p..." if force else "正在安装 aria2p...")
+    try:
+        result = subprocess.run(
+            pip_install_argv(force=force),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError as exc:
+        print(f"✗ aria2p 安装失败: {exc}")
+        return False
+    if result.returncode == 0:
+        print("✓ aria2p 安装成功")
+        return True
+    print(f"✗ aria2p 安装失败: {(result.stderr or result.stdout or '').strip()}")
     return False
 
 def start_aria2c_daemon():
-    """Start aria2c daemon."""
+    """Start aria2c on loopback with an RPC secret."""
     print("正在启动 aria2c 守护进程...")
-    
-    # Check if already running
-    if check_aria2c_daemon():
-        print("✓ aria2c 守护进程已在运行")
-        return True
-    
-    success, stdout, stderr = run_command("aria2c --enable-rpc --rpc-listen-all=true --daemon=true")
-    if success:
-        # Wait a moment and verify
-        import time
-        time.sleep(2)
-        if check_aria2c_daemon():
-            print("✓ aria2c 守护进程启动成功")
-            return True
-        else:
-            print("✗ aria2c 守护进程启动失败")
-            return False
-    else:
-        print(f"✗ aria2c 守护进程启动失败: {stderr}")
-        return False
+    ok, message = start_daemon()
+    print(("✓ " if ok else "✗ ") + message)
+    return ok
 
 def create_download_dir():
     """Create download directory if it doesn't exist."""
@@ -184,7 +177,7 @@ def create_download_dir():
         print(f"✓ 下载目录已存在: {download_dir}")
     return True
 
-def check_and_install_all():
+def check_and_install_all(force=False):
     """Check and install all dependencies."""
     print("=" * 60)
     print("离线下载 Skill 初始化")
@@ -196,12 +189,13 @@ def check_and_install_all():
     # 1. Check aria2c
     print("[1/4] 检查 aria2...")
     aria2_installed, aria2_path, aria2_version = check_aria2c()
-    if aria2_installed:
+    if aria2_installed and not force:
         print(f"✓ aria2 已安装: {aria2_path}")
         print(f"  版本: {aria2_version}")
     else:
-        print("✗ aria2 未安装")
-        if not install_aria2():
+        if not aria2_installed:
+            print("✗ aria2 未安装")
+        if not install_aria2(force=force and aria2_installed):
             all_ok = False
     
     print()
@@ -209,12 +203,13 @@ def check_and_install_all():
     # 2. Check aria2p
     print("[2/4] 检查 aria2p...")
     aria2p_installed, aria2p_version = check_aria2p()
-    if aria2p_installed:
+    if aria2p_installed and not force:
         print(f"✓ aria2p 已安装")
         print(f"  版本: {aria2p_version}")
     else:
-        print("✗ aria2p 未安装")
-        if not install_aria2p():
+        if not aria2p_installed:
+            print("✗ aria2p 未安装")
+        if not install_aria2p(force=force and aria2p_installed):
             all_ok = False
     
     print()
@@ -227,14 +222,11 @@ def check_and_install_all():
     
     # 4. Check/start daemon
     print("[4/4] 检查 aria2c 守护进程...")
-    if check_aria2c_daemon():
-        print("✓ aria2c 守护进程正在运行")
-    else:
-        if aria2_installed or check_aria2c()[0]:
-            start_aria2c_daemon()
-        else:
-            print("✗ 跳过守护进程启动（aria2 未安装）")
-            all_ok = False
+    if not (aria2_installed or check_aria2c()[0]):
+        print("✗ 跳过守护进程启动（aria2 未安装）")
+        all_ok = False
+    elif not start_aria2c_daemon():
+        all_ok = False
     
     print()
     print("=" * 60)
@@ -291,7 +283,8 @@ def main():
         download_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "downloads")
         print(f"下载目录: {'✓ 存在' if os.path.exists(download_dir) else '✗ 不存在'} ({download_dir})")
     else:
-        check_and_install_all()
+        ok = check_and_install_all(force=args.force)
+        sys.exit(0 if ok else 1)
 
 if __name__ == "__main__":
     main()

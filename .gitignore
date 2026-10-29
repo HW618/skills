@@ -13,6 +13,10 @@ codex-defaults.json
 .vscode/
 __pycache__/
 
+# offline-downloader local RPC secret and downloaded files.
+offline-downloader/.aria2-rpc.conf
+offline-downloader/downloads/
+
 # Generated UCloud product manuals saved by ucloud-product-learning.
 ucloud-product-learning/references/ucloud-*.md
 !ucloud-product-learning/references/ucloud-aliyun-product-map.md

@@ -15,13 +15,15 @@ A skill for downloading files from URLs using aria2p and managing downloaded fil
 
 ## Quick Start
 
+`<skill-dir>` is the directory that contains this `SKILL.md` after the skill is installed or symlinked. Resolve it from the installed skill, and do not hardcode a home-directory path.
+
 ### First Time Setup (Initialize)
 
 When the user says "初始化", "initialize", "setup", or when running the skill for the first time:
 
 1. Run the initialization script:
    ```bash
-   python3 /Users/houston/.claude/skills/offline-downloader/scripts/init.py
+   python3 "<skill-dir>/scripts/init.py"
    ```
 2. The script will automatically:
    - Check if aria2 is installed (install if missing)
@@ -39,7 +41,7 @@ When the user says "初始化", "initialize", "setup", or when running the skill
 
 To check the environment without installing:
 ```bash
-python3 /Users/houston/.claude/skills/offline-downloader/scripts/init.py --check-only
+python3 "<skill-dir>/scripts/init.py" --check-only
 ```
 
 ## Usage
@@ -52,7 +54,7 @@ When the user provides a URL to download:
 2. Extract the URL from the user's message
 3. Run the download script:
    ```bash
-   python3 /Users/houston/.claude/skills/offline-downloader/scripts/download.py "<URL>"
+   python3 "<skill-dir>/scripts/download.py" "<URL>"
    ```
 4. Report the download status to the user
 
@@ -67,7 +69,7 @@ When the user asks to clean up downloads:
 
 1. Run the cleanup script:
    ```bash
-   python3 /Users/houston/.claude/skills/offline-downloader/scripts/cleanup.py
+   python3 "<skill-dir>/scripts/cleanup.py"
    ```
 2. Confirm the cleanup operation with the user
 
@@ -78,12 +80,9 @@ When the user asks to clean up downloads:
 
 ## Configuration
 
-The default download directory is:
-```
-/Users/houston/.claude/skills/offline-downloader/downloads
-```
+The default download directory is `<skill-dir>/downloads`. It is derived from the skill location, so it follows the installed copy.
 
-To change the download directory, modify the `DOWNLOAD_DIR` variable in the scripts.
+Pass a directory as the second argument of `download.py` to save one download somewhere else.
 
 ## Troubleshooting
 
@@ -91,28 +90,32 @@ To change the download directory, modify the `DOWNLOAD_DIR` variable in the scri
 
 Run the initialization script to automatically install dependencies:
 ```bash
-python3 /Users/houston/.claude/skills/offline-downloader/scripts/init.py
+python3 "<skill-dir>/scripts/init.py"
 ```
+
+`--force` reinstalls aria2 and aria2p even when they are already present. Initialization exits non-zero when a dependency or the daemon fails.
 
 ### aria2c daemon not running
 
-The initialization script will start the daemon automatically. Or manually:
+The initialization script starts the daemon automatically. It listens on `127.0.0.1` only and requires the secret in `<skill-dir>/.aria2-rpc.conf`. Do not start aria2c with `--rpc-listen-all=true` or an empty RPC secret.
+
+Manual start, after that config file exists:
 ```bash
-aria2c --enable-rpc --rpc-listen-all=true --daemon=true
+aria2c --conf-path="<skill-dir>/.aria2-rpc.conf" --daemon=true
 ```
 
 ### Permission errors
 
 Ensure the download directory has write permissions:
 ```bash
-chmod 755 /Users/houston/.claude/skills/offline-downloader/downloads
+chmod 755 "<skill-dir>/downloads"
 ```
 
 ## Script Reference
 
 | Script | Purpose | Usage |
 |--------|---------|-------|
-| `init.py` | Initialize environment | `python3 init.py [--check-only]` |
+| `init.py` | Initialize environment | `python3 "<skill-dir>/scripts/init.py" [--check-only] [--force]` |
 | `download.py` | Download files | `python3 download.py <URL> [dir]` |
 | `cleanup.py` | Clean downloads | `python3 cleanup.py [--force] [--list]` |
 

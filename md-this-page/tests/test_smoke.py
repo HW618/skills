@@ -192,6 +192,16 @@ async def run_unit_checks() -> list:
     _check(r, "表格与相邻段落之间有空行（段落不会被并入表格）",
            "\n\n| A |" in adj_md and "| 1 |\n\n**段落**" in adj_md)
 
+    # 8b2. 嵌套表格必须整段保留；后面的简单表格仍转成管道表格
+    outer_html = ("<table><tr><td>外</td><td>"
+                  "<table><tr><td>内</td></tr></table>"
+                  "</td></tr></table>")
+    nested = CrawlResult(url="https://e.com/", title="T", site_name="S", success=True,
+                         markdown=outer_html + "<table><tr><th>A</th></tr><tr><td>1</td></tr></table>")
+    nested_md = convert_to_markdown(nested, include_metadata=False)
+    _check(r, "嵌套表格按外层整段保留，后续简单表格仍转管道",
+           outer_html in nested_md and "| A |" in nested_md and "| 1 |" in nested_md)
+
     # 8c. 站点策略的主选择器必须是单个选择器（逗号选择器会被 crawl4ai 重复提取）
     comma = [s.name for s in SITE_STRATEGIES if "," in (s.css_selector or "")]
     _check(r, "所有站点主选择器均为单个选择器（无逗号）",
@@ -260,6 +270,80 @@ async def run_unit_checks() -> list:
         crawler._crawl_once = original
     _check(r, "主选择器未命中时自动改用备选选择器",
            res.success and tried == [".Post-RichTextContainer", ".RichContent-inner"])
+
+    # 10c. arun 返回 success=False 的浏览器错误也要回退本地浏览器
+    class _Md:
+        def __init__(self, text):
+            self.raw_markdown = text
+
+    class _FailResult:
+        def __init__(self, message):
+            self.success = False
+            self.error_message = message
+            self.metadata = {}
+            self.html = ""
+            self.markdown = None
+
+    class _OkResult:
+        success = True
+        error_message = None
+        metadata = {}
+        html = "<p>ok</p>"
+        markdown = _Md("正文" * 300)
+
+    launched = []
+
+    class _FakeCrawler:
+        def __init__(self, config=None, **kwargs):
+            self.config = config
+            launched.append(config)
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *args):
+            return False
+
+        async def arun(self, url=None, config=None):
+            if len(launched) == 1:
+                return _FailResult("CDP connection refused: target closed")
+            return _OkResult()
+
+    original_crawler = crawler.AsyncWebCrawler
+    crawler.AsyncWebCrawler = _FakeCrawler
+    try:
+        recovered = await crawler.crawl_page(
+            "https://example.com/", cdp_url="http://127.0.0.1:9222", timeout_ms=1000)
+    finally:
+        crawler.AsyncWebCrawler = original_crawler
+    _check(r, "arun 的 CDP 失败会回退到本地浏览器",
+           recovered.success and len(launched) == 2
+           and bool(getattr(launched[0], "cdp_url", None))
+           and not getattr(launched[1], "cdp_url", None))
+
+    page_launched = []
+
+    class _PageFailCrawler:
+        def __init__(self, config=None, **kwargs):
+            page_launched.append(config)
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *args):
+            return False
+
+        async def arun(self, url=None, config=None):
+            return _FailResult("Timeout 45000ms exceeded")
+
+    crawler.AsyncWebCrawler = _PageFailCrawler
+    try:
+        page_fail = await crawler.crawl_page(
+            "https://example.com/", cdp_url="http://127.0.0.1:9222", timeout_ms=1000)
+    finally:
+        crawler.AsyncWebCrawler = original_crawler
+    _check(r, "arun 的页面级失败不回退本地浏览器",
+           (not page_fail.success) and page_fail.error_kind == "page" and len(page_launched) == 1)
 
     # 11. title_selector 已接线进元数据注入 JS（回归④：不再是死配置）
     inject_js = crawler._build_meta_inject_js("#content", zhihu)   # 知乎 title_selector 含 .Post-Title

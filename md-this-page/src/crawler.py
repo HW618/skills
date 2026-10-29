@@ -140,6 +140,12 @@ def _is_browser_error(err: object) -> bool:
     return any(k in text for k in _BROWSER_ERROR_KEYWORDS)
 
 
+def _classify_failure(err: object) -> tuple[str, str]:
+    """返回 (面向使用者的说明, error_kind)。异常和 success=False 共用。"""
+    kind = "browser" if _is_browser_error(err) else "page"
+    return _short_error(err), kind
+
+
 def _clean_title(title: str, strategy: SiteStrategy) -> str:
     """去掉页面标题里的站点名后缀（如 'xxx - 简书'）"""
     t = title.strip()
@@ -253,12 +259,13 @@ async def _crawl_once(url: str, strategy: SiteStrategy, cdp_url: str | None,
         async with AsyncWebCrawler(config=build_browser_config(cdp_url, verbose)) as crawler:
             result = await crawler.arun(url=url, config=run_cfg)
     except Exception as e:
-        out.error = _short_error(e)
-        out.error_kind = "browser" if _is_browser_error(e) else "page"
+        out.error, out.error_kind = _classify_failure(e)
         return out
 
     if not result.success:
-        out.error = _short_error(result.error_message or "抓取失败")
+        # crawl4ai 经常用 success=False 吞掉连接失败，而不是抛异常。
+        # 不标成 browser 的话，上层不会回退到本地 headless。
+        out.error, out.error_kind = _classify_failure(result.error_message or "抓取失败")
         return out
 
     meta = dict(result.metadata or {})

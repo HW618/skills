@@ -9,8 +9,17 @@ import os
 import time
 import subprocess
 
+from aria2_env import (
+    RPC_HOST,
+    RPC_PORT,
+    download_dir as default_download_dir,
+    ensure_rpc_conf,
+    rpc_ready,
+    start_daemon,
+)
+
 # Default download directory (skill's downloads subdirectory)
-DOWNLOAD_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "downloads")
+DOWNLOAD_DIR = default_download_dir()
 
 def run_command(cmd, check=True):
     """Run a shell command and return the result."""
@@ -41,33 +50,22 @@ def check_dependencies():
     except ImportError:
         return False, "aria2p 未安装"
     
-    # Check daemon
-    success, stdout, _ = run_command("ps aux | grep 'aria2c.*enable-rpc' | grep -v grep", check=False)
-    if not (success and stdout):
+    _, secret = ensure_rpc_conf()
+    if not rpc_ready(secret):
         return False, "aria2c 守护进程未运行"
     
     return True, "所有依赖已就绪"
 
 def auto_init():
-    """Automatically initialize dependencies if needed."""
-    ok, msg = check_dependencies()
-    if ok:
-        return True
-    
-    print(f"检测到问题: {msg}")
+    """Run init.py with the same interpreter and surface a non-zero exit."""
+    init_script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "init.py")
     print("正在自动初始化...")
     print()
-    
-    # Run init script
-    init_script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "init.py")
-    success, stdout, stderr = run_command(f"python3 {init_script}")
-    
-    if success:
-        print(stdout)
+    result = subprocess.run([sys.executable, init_script], check=False)
+    if result.returncode == 0:
         return True
-    else:
-        print(f"初始化失败: {stderr}")
-        return False
+    print(f"初始化失败，请手动运行: {sys.executable} {init_script}")
+    return False
 
 def ensure_download_dir():
     """Create download directory if it doesn't exist."""
@@ -77,40 +75,34 @@ def ensure_download_dir():
 def get_aria2_api():
     """Initialize and return aria2p API connection."""
     import aria2p
-    
-    try:
+
+    _, secret = ensure_rpc_conf()
+
+    def connect():
         api = aria2p.API(
             aria2p.Client(
-                host="http://localhost",
-                port=6800,
-                secret=""
+                host=f"http://{RPC_HOST}",
+                port=RPC_PORT,
+                secret=secret,
             )
         )
-        # Test connection
         api.get_stats()
         return api
+
+    try:
+        return connect()
     except Exception as e:
         print(f"Error: Cannot connect to aria2c daemon: {e}")
         print("尝试重新启动守护进程...")
-        
-        # Try to restart daemon
-        run_command("aria2c --enable-rpc --rpc-listen-all=true --daemon=true", check=False)
-        time.sleep(2)
-        
+        ok, message = start_daemon()
+        if not ok:
+            print(f"Error: {message}")
+            sys.exit(1)
+        time.sleep(0.5)
         try:
-            api = aria2p.API(
-                aria2p.Client(
-                    host="http://localhost",
-                    port=6800,
-                    secret=""
-                )
-            )
-            api.get_stats()
-            return api
+            return connect()
         except Exception as e2:
             print(f"Error: 仍然无法连接: {e2}")
-            print("请手动启动 aria2c 守护进程:")
-            print("  aria2c --enable-rpc --rpc-listen-all=true --daemon=true")
             sys.exit(1)
 
 def download_file(url, download_dir=None):
@@ -187,9 +179,7 @@ def main():
     ok, msg = check_dependencies()
     if not ok:
         print(f"检测到问题: {msg}")
-        print("正在自动初始化...")
         if not auto_init():
-            print("初始化失败，请手动运行: python3 /Users/houston/.claude/skills/offline-downloader/scripts/init.py")
             sys.exit(1)
         print()
     

@@ -113,20 +113,68 @@ def _table_to_pipe(html_table: str) -> str:
     return "\n".join(lines)
 
 
+_TABLE_OPEN = re.compile(r"<table\b[^>]*>", re.I)
+_TABLE_CLOSE = re.compile(r"</table\s*>", re.I)
+
+
+def _outer_table_spans(md: str) -> list[tuple[int, int]]:
+    """Locate outermost <table>…</table> spans, including nested tables.
+
+    A non-greedy match stops at the first </table>, which slices a nested
+    table apart before conversion can decide to keep the whole block as HTML.
+    """
+    spans: list[tuple[int, int]] = []
+    cursor = 0
+    while True:
+        opened = _TABLE_OPEN.search(md, cursor)
+        if not opened:
+            break
+        depth = 1
+        pos = opened.end()
+        end = None
+        while depth:
+            nxt_open = _TABLE_OPEN.search(md, pos)
+            nxt_close = _TABLE_CLOSE.search(md, pos)
+            if not nxt_close:
+                break
+            if nxt_open and nxt_open.start() < nxt_close.start():
+                depth += 1
+                pos = nxt_open.end()
+            else:
+                depth -= 1
+                pos = nxt_close.end()
+                if depth == 0:
+                    end = pos
+        if end is None:
+            break
+        spans.append((opened.start(), end))
+        cursor = end
+    return spans
+
+
 def _html_tables_to_markdown(md: str) -> str:
     """把残留的 HTML 表格块转成 Markdown 表格（转换失败则保留原样）。
 
     表格块前后统一补空行：Markdown 表格与 HTML 块都必须与相邻段落空行分隔，
     否则紧跟其后的段落会被渲染器并入表格（表现为"最后一段话跑到表格里"）。
+    嵌套表格按最外层整段处理，避免内层 </table> 把外层表格截断。
     """
-    def repl(match: re.Match) -> str:
+    spans = _outer_table_spans(md)
+    if not spans:
+        return md
+    parts: list[str] = []
+    cursor = 0
+    for start, end in spans:
+        parts.append(md[cursor:start])
+        raw = md[start:end]
         try:
-            table = _table_to_pipe(match.group(0))
+            table = _table_to_pipe(raw)
         except Exception:
-            table = match.group(0)
-        return "\n\n" + table.strip() + "\n\n"
-
-    return re.sub(r"<table\b.*?</table>", repl, md, flags=re.S | re.I)
+            table = raw
+        parts.append("\n\n" + table.strip() + "\n\n")
+        cursor = end
+    parts.append(md[cursor:])
+    return "".join(parts)
 
 
 def _yaml_header(result: CrawlResult) -> list[str]:

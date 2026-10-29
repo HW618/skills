@@ -1,5 +1,7 @@
 # Offline Downloader 使用说明
 
+文中的 `<skill-dir>` 是本技能安装或链接后的目录，也就是包含 `SKILL.md` 的那一层。不要写成某个用户的主目录路径。
+
 ## 快速开始
 
 ### 1. 安装依赖
@@ -18,13 +20,21 @@ choco install aria2
 
 #### 安装 aria2p
 ```bash
-pip install aria2p
+python3 -m pip install aria2p
 ```
 
 ### 2. 启动 aria2c 守护进程
 
+优先运行初始化脚本。它会生成 `<skill-dir>/.aria2-rpc.conf`：只监听 `127.0.0.1`，并写入 RPC 密钥。
+
 ```bash
-aria2c --enable-rpc --rpc-listen-all=true --daemon=true
+python3 "<skill-dir>/scripts/init.py"
+```
+
+配置文件已经存在时，也可以手动启动：
+
+```bash
+aria2c --conf-path="<skill-dir>/.aria2-rpc.conf" --daemon=true
 ```
 
 ### 3. 使用下载功能
@@ -32,10 +42,10 @@ aria2c --enable-rpc --rpc-listen-all=true --daemon=true
 #### 命令行方式
 ```bash
 # 下载单个文件
-python /Users/houston/.claude/skills/offline-downloader/scripts/download.py "https://example.com/file.zip"
+python3 "<skill-dir>/scripts/download.py" "https://example.com/file.zip"
 
 # 下载到指定目录
-python /Users/houston/.claude/skills/offline-downloader/scripts/download.py "https://example.com/file.zip" "/path/to/save"
+python3 "<skill-dir>/scripts/download.py" "https://example.com/file.zip" "/path/to/save"
 ```
 
 #### 通过 Skill 触发
@@ -49,13 +59,13 @@ python /Users/houston/.claude/skills/offline-downloader/scripts/download.py "htt
 #### 命令行方式
 ```bash
 # 列出下载目录中的文件
-python /Users/houston/.claude/skills/offline-downloader/scripts/cleanup.py --list
+python3 "<skill-dir>/scripts/cleanup.py" --list
 
 # 清理下载目录（需要确认）
-python /Users/houston/.claude/skills/offline-downloader/scripts/cleanup.py
+python3 "<skill-dir>/scripts/cleanup.py"
 
 # 强制清理（跳过确认）
-python /Users/houston/.claude/skills/offline-downloader/scripts/cleanup.py --force
+python3 "<skill-dir>/scripts/cleanup.py" --force
 ```
 
 #### 通过 Skill 触发
@@ -68,34 +78,14 @@ python /Users/houston/.claude/skills/offline-downloader/scripts/cleanup.py --for
 
 ### 默认下载目录
 ```
-/Users/houston/.claude/skills/offline-downloader/downloads
+<skill-dir>/downloads
 ```
 
 ### 修改下载目录
-编辑 `scripts/download.py` 和 `scripts/cleanup.py` 中的 `DOWNLOAD_DIR` 变量。
+单次下载可以把目录作为 `download.py` 的第二个参数。默认目录由技能所在位置决定。
 
 ### aria2c 配置
-可以通过配置文件自定义 aria2c 行为：
-```bash
-# 创建配置文件
-mkdir -p ~/.aria2
-cat > ~/.aria2/aria2.conf << 'CONF'
-# RPC 设置
-enable-rpc=true
-rpc-listen-all=true
-rpc-allow-origin-all=true
-
-# 下载设置
-max-concurrent-downloads=5
-continue=true
-max-connection-per-server=16
-min-split-size=1M
-split=16
-
-# 下载目录
-dir=/Users/houston/.claude/skills/offline-downloader/downloads
-CONF
-```
+初始化脚本写入 `<skill-dir>/.aria2-rpc.conf`，其中 `rpc-listen-all=false`，并带有 `rpc-secret`。不要改成监听所有网卡，也不要清空密钥。这个文件只应当前用户可读。
 
 ## 支持的协议
 
@@ -113,8 +103,8 @@ CONF
 # 检查进程
 ps aux | grep aria2c
 
-# 启动守护进程
-aria2c --enable-rpc --rpc-listen-all=true --daemon=true
+# 启动守护进程（使用技能生成的本机配置）
+aria2c --conf-path="<skill-dir>/.aria2-rpc.conf" --daemon=true
 ```
 
 ### Q: 下载速度慢
@@ -151,7 +141,7 @@ aria2p resume --all
 
 ### 使用 magnet 链接
 ```bash
-python /Users/houston/.claude/skills/offline-downloader/scripts/download.py "magnet:?xt=urn:btih:..."
+python3 "<skill-dir>/scripts/download.py" "magnet:?xt=urn:btih:..."
 ```
 
 ### 批量下载
